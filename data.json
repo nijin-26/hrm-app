@@ -1,0 +1,65 @@
+{
+  "employees": [
+    {
+      "id": 1001,
+      "firstName": "Nijin",
+      "lastName": "N",
+      "dateOfBirth": "26-08-2000",
+      "dateOfJoin": "11-06-2023",
+      "email": "nijin@qburst.com",
+      "mobile": "+9112121212",
+      "department": "Frontend",
+      "role": "trainee",
+      "skills": [
+        { "id": "REACT005", "name": "React.js" },
+        { "id": "JS001", "name": "Javascript" }
+      ]
+    },
+    {
+      "id": 1001,
+      "firstName": "Ashwin",
+      "lastName": "S",
+      "dateOfBirth": "24-06-2000",
+      "dateOfJoin": "11-06-2023",
+      "email": "nijin@qburst.com",
+      "mobile": "+9112121212",
+      "department": "Frontend",
+      "role": "trainee",
+      "skills": [{ "id": "PY002", "name": "Python" }]
+    }
+  ],
+  "skills": [
+    { "id": "HTMLCSS017", "name": "HTML/CSS" },
+    { "id": "JS001", "name": "Javascript" },
+    { "id": "TS014", "name": "TypeScript" },
+    { "id": "PY002", "name": "Python" },
+    { "id": "RS003", "name": "Rust" },
+    { "id": "PHP004", "name": "PHP" },
+    { "id": "REACT005", "name": "React.js" },
+    { "id": "ANG007", "name": "AngularJS" },
+    { "id": "JAVA008", "name": "Java" },
+    { "id": "CPP009", "name": "C++" },
+    { "id": "RUBY010", "name": "Ruby" },
+    { "id": "NODE011", "name": "Node.js" },
+    { "id": "EXPRESSJS022", "name": "Express.js" },
+    { "id": "SWIFT012", "name": "Swift" },
+    { "id": "KOTLIN013", "name": "Kotlin" },
+    { "id": "GO016", "name": "Go" },
+    { "id": "SQL018", "name": "SQL" },
+    { "id": "ROR019", "name": "Ruby on Rails" },
+    { "id": "LARAVEL020", "name": "Laravel" },
+    { "id": "VUEJS021", "name": "Vue.js" },
+    { "id": "DJANGO023", "name": "Django" },
+    { "id": "FLASK027", "name": "Flask" },
+    { "id": "GRAPHQL031", "name": "GraphQL" },
+    { "id": "RESTAPI032", "name": "RESTful API" },
+    { "id": "MONGODB033", "name": "MongoDB" },
+    { "id": "MYSQL034", "name": "MySQL" },
+    { "id": "POSTGRESQL035", "name": "PostgreSQL" },
+    { "id": "NOSQL037", "name": "NoSQL" },
+    { "id": "REDIS038", "name": "Redis" },
+    { "id": "DOCKER040", "name": "Docker" },
+    { "id": "AWS042", "name": "AWS" },
+    { "id": "GIT046", "name": "Git" }
+  ]
+}
