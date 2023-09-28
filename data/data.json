@@ -8,6 +8,7 @@
       "dateOfJoin": "11-06-2023",
       "email": "nijin@qburst.com",
       "mobile": "+9112121212",
+      "address": "XYZ KLM",
       "department": "Frontend",
       "role": "trainee",
       "skills": [
@@ -23,6 +24,7 @@
       "dateOfJoin": "11-06-2023",
       "email": "nijin@qburst.com",
       "mobile": "+9112121212",
+      "address": "XYZ TVM",
       "department": "Frontend",
       "role": "trainee",
       "skills": [{ "id": "PY002", "name": "Python" }]
@@ -51,14 +53,9 @@
     { "id": "DJANGO023", "name": "Django" },
     { "id": "FLASK027", "name": "Flask" },
     { "id": "GRAPHQL031", "name": "GraphQL" },
-    { "id": "RESTAPI032", "name": "RESTful API" },
     { "id": "MONGODB033", "name": "MongoDB" },
     { "id": "MYSQL034", "name": "MySQL" },
     { "id": "POSTGRESQL035", "name": "PostgreSQL" },
-    { "id": "NOSQL037", "name": "NoSQL" },
-    { "id": "REDIS038", "name": "Redis" },
-    { "id": "DOCKER040", "name": "Docker" },
-    { "id": "AWS042", "name": "AWS" },
     { "id": "GIT046", "name": "Git" }
   ]
 }
