@@ -16,7 +16,7 @@
       ]
     },
     {
-      "id": 1001,
+      "id": 1002,
       "firstName": "Ashwin",
       "lastName": "S",
       "dateOfBirth": "24-06-2000",
@@ -33,7 +33,6 @@
     { "id": "JS001", "name": "Javascript" },
     { "id": "TS014", "name": "TypeScript" },
     { "id": "PY002", "name": "Python" },
-    { "id": "RS003", "name": "Rust" },
     { "id": "PHP004", "name": "PHP" },
     { "id": "REACT005", "name": "React.js" },
     { "id": "ANG007", "name": "AngularJS" },
