@@ -1,5 +1,5 @@
 {
-  "employees": [
+  "employee": [
     {
       "id": 1001,
       "firstName": "Nijin",
@@ -8,13 +8,11 @@
       "dateOfJoin": "11-06-2023",
       "email": "nijin@qburst.com",
       "mobile": "+9112121212",
-      "address": "XYZ KLM",
-      "department": "Frontend",
-      "role": "trainee",
-      "skills": [
-        { "id": "REACT005", "name": "React.js" },
-        { "id": "JS001", "name": "Javascript" }
-      ]
+      "workLocation": "Calicut",
+      "department": ["D2"],
+      "role": ["R1"],
+      "skills": ["REACT005", "JS001"],
+      "projects": ["P1"]
     },
     {
       "id": 1002,
@@ -24,13 +22,76 @@
       "dateOfJoin": "11-06-2023",
       "email": "nijin@qburst.com",
       "mobile": "+9112121212",
-      "address": "XYZ TVM",
-      "department": "Frontend",
-      "role": "trainee",
-      "skills": [{ "id": "PY002", "name": "Python" }]
+      "workLocation": "TVM",
+      "department": ["D1"],
+      "role": ["R1"],
+      "skills": ["PY002", "Python"],
+      "projects": ["P1"]
     }
   ],
-  "skills": [
+
+  "department": [
+    {
+      "id": "D1",
+      "name": "Development"
+    },
+    {
+      "id": "D2",
+      "name": "DevOps"
+    },
+    {
+      "id": "D3",
+      "name": "CloudOps"
+    },
+    {
+      "id": "D4",
+      "name": "QA"
+    },
+    {
+      "id": "D5",
+      "name": "User Experience"
+    },
+    {
+      "id": "D6",
+      "name": "User Interface"
+    }
+  ],
+  "role": [
+    {
+      "id": "R1",
+      "role": "Engineer"
+    },
+    {
+      "id": "R2",
+      "role": "Senior Engineer"
+    },
+    {
+      "id": "R3",
+      "role": "Lead Engineer"
+    },
+    {
+      "id": "R4",
+      "role": "Associate Architect"
+    },
+    {
+      "id": "R5",
+      "role": "Architect"
+    },
+    {
+      "id": "R6",
+      "role": "Senior Architect"
+    },
+    {
+      "id": "R7",
+      "role": "Associate Director"
+    },
+    {
+      "id": "R8",
+      "role": "Director"
+    }
+  ],
+
+  "skill": [
     { "id": "HTMLCSS017", "name": "HTML/CSS" },
     { "id": "JS001", "name": "Javascript" },
     { "id": "TS014", "name": "TypeScript" },
