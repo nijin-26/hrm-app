@@ -3,7 +3,7 @@
   --secondary-color: #e0a96d;
   --bg-color: rgba(221, 195, 165, 0.161);
   --max-width: 1200px;
-  /* --bg-color: #DDC3A5; */
+  /* --bg-color: #ddc3a5; */
 }
 
 /* Common Class */
@@ -19,9 +19,10 @@
 
 input,
 select {
-  padding: 16px 20px;
+  padding: 12px 20px;
   border-radius: 8px;
-  border: none;
+  border: 1px solid #ccc;
+  background-color: #fff;
   outline: none;
 }
 
@@ -40,8 +41,6 @@ header {
   margin: 0 auto;
   padding: 0 16px;
   height: 80px;
-  justify-content: center;
-  align-items: center;
 }
 
 .search-employee-form {
@@ -63,21 +62,35 @@ main {
   font-weight: 500;
 }
 
-.skills-fitler-dropdown {
-  display: inline-block;
+.topbar-container {
+  margin: 20px 0;
+}
+
+.topbar-header {
+  align-items: center;
+  gap: 20px;
+}
+
+.filter-container {
+  height: 0px;
+  overflow: hidden;
+  gap: 10px;
+  transition: 0.6s;
+}
+
+.filter-container.open-filter-options {
+  height: 52px;
 }
 
 .skill-search-input {
-  width: 100%;
-  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
 .dropdown-content {
   display: none;
-  width: 20%;
   position: absolute;
+  width: 25%;
   background-color: white;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   max-height: 150px;
@@ -92,10 +105,12 @@ ul {
 ul li {
   padding: 10px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 ul li:hover {
-  background-color: red;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 .add-employee-btn {
@@ -112,21 +127,32 @@ ul li:hover {
 }
 
 .employee-list-container {
-  margin: 50px 0;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 
 table {
-  border: 1px solid black;
   width: 100%;
-  border-radius: 50%;
+  text-align: center;
 }
 
 table,
 th,
 td {
   padding: 16px;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  text-align: center;
   border-collapse: collapse;
+}
+
+tr {
+  transition: 0.4s ease-in;
+  cursor: pointer;
+}
+
+tr:not(:first-child):hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+tr:not(:last-child) {
+  border-bottom: 1px solid black;
 }

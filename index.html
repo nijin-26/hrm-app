@@ -19,46 +19,70 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
     <header>
-      <div class="header-container flex">
-        <!-- TODO: Logo -->
+      <div class="header-container flex justify-between">
+        <img
+          src="./assets/images/logo.png"
+          alt="HR Management App Logo"
+          width="40"
+        />
         <form class="search-employee-form">
           <!-- TODO: Search Icon. -->
           <input type="text" placeholder="Search Employee" />
         </form>
-        <!-- TODO: Hamburger Icon -->
+        <img
+          style="visibility: hidden"
+          src="./assets/images/hamburger_menu.png"
+          alt="Hamburger Menu"
+          width="40"
+        />
       </div>
     </header>
     <main>
-      <h1 class="heading">Employees</h1>
-      <section class="flex justify-between">
-        <div class="filter-container">
-          <select name="designation" class="designation-filter">
-            <option value="Designation">Designation</option>
-          </select>
-          <select name="role" class="role-filter">
-            <option value="Role">Role</option>
-          </select>
-          <div class="skills-fitler-dropdown">
-            <input
-              class="skill-search-input"
-              type="text"
-              placeholder="Search for Skills"
+      <section class="topbar-container flex justify-between">
+        <div>
+          <div class="flex topbar-header">
+            <h1 class="heading">Employees</h1>
+            <img
+              width="20"
+              class="enable-filter-btn"
+              src="./assets/images/icons/enable-filter.svg"
+              alt="enable-filter-icon"
             />
-            <div class="dropdown-content">
-              <ul class="skill-list">
-                <li data-skill="HTML">HTML</li>
-                <li data-skill="CSS">CSS</li>
-                <li data-skill="JavaScript">JavaScript</li>
-              </ul>
+          </div>
+          <div class="filter-container flex">
+            <select name="department" class="department-filter">
+              <option value="Department">Department</option>
+            </select>
+            <select name="role" class="role-filter">
+              <option value="Role">Role</option>
+            </select>
+            <div class="skills-fitler-dropdown">
+              <input
+                class="skill-search-input"
+                type="text"
+                placeholder="Search for Skills"
+              />
+              <div class="dropdown-content">
+                <ul class="skill-list">
+                  <li data-skill="HTML">HTML</li>
+                  <li data-skill="CSS">CSS</li>
+                  <li data-skill="JavaScript">JavaScript</li>
+                </ul>
+              </div>
             </div>
+            <img src="./assets/images/icons/clear_filter_icon.svg" alt="" />
           </div>
         </div>
         <button class="add-employee-btn flex justify-between">
-          <img width="20" src="./images/icons/add_user_icon.svg" alt="" />
+          <img
+            width="20"
+            src="./assets/images/icons/add_user_icon.svg"
+            alt=""
+          />
         </button>
       </section>
 
@@ -78,9 +102,17 @@
             <td>11/07/2023</td>
             <td></td>
           </tr>
+          <tr>
+            <td>1</td>
+            <td>Nijin</td>
+            <td>nijin@qburst.com</td>
+            <td>11/07/2023</td>
+            <td></td>
+          </tr>
         </table>
         <!-- TODO: Pagination -->
       </section>
     </main>
+    <script src="./js/script.js"></script>
   </body>
 </html>
