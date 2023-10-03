@@ -13,18 +13,73 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <header>
-      <!-- TODO: Search input -->
+      <div class="header-container flex">
+        <!-- TODO: Logo -->
+        <form class="search-employee-form">
+          <!-- TODO: Search Icon. -->
+          <input type="text" placeholder="Search Employee" />
+        </form>
+        <!-- TODO: Hamburger Icon -->
+      </div>
     </header>
     <main>
-      <section>
-        <!-- TODO: Filters & Add button -->
+      <h1 class="heading">Employees</h1>
+      <section class="flex justify-between">
+        <div class="filter-container">
+          <select name="designation" class="designation-filter">
+            <option value="Designation">Designation</option>
+          </select>
+          <select name="role" class="role-filter">
+            <option value="Role">Role</option>
+          </select>
+          <div class="skills-fitler-dropdown">
+            <input
+              class="skill-search-input"
+              type="text"
+              placeholder="Search for Skills"
+            />
+            <div class="dropdown-content">
+              <ul class="skill-list">
+                <li data-skill="HTML">HTML</li>
+                <li data-skill="CSS">CSS</li>
+                <li data-skill="JavaScript">JavaScript</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <button class="add-employee-btn flex justify-between">
+          <img width="20" src="./images/icons/add_user_icon.svg" alt="" />
+        </button>
       </section>
-      <section>
-        <!-- TODO: Table  or Gallery view of Employee-->
+
+      <section class="employee-list-container">
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Hire Date</th>
+            <th>Actions</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Nijin</td>
+            <td>nijin@qburst.com</td>
+            <td>11/07/2023</td>
+            <td></td>
+          </tr>
+        </table>
+        <!-- TODO: Pagination -->
       </section>
     </main>
   </body>
