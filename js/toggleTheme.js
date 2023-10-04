@@ -1,24 +1,23 @@
 const toggleThemeBtn = document.querySelector(".toggle-mode");
 const body = document.querySelector("body");
 
-const toggleTheme = (e) => {
-  if (toggleThemeBtn.textContent === "light_mode") {
-    body.classList.remove("dark-theme");
-    toggleThemeBtn.textContent = "mode_night";
-    localStorage.setItem("theme", "light_mode");
-  } else {
-    body.classList.add("dark-theme");
-    toggleThemeBtn.textContent = "light_mode";
-    localStorage.setItem("theme", "mode_night");
-  }
+const setDark = () => {
+  body.classList.add("dark-theme");
+  toggleThemeBtn.textContent = "light_mode";
+  localStorage.setItem("theme", "mode_night");
+};
+
+const setLight = () => {
+  body.classList.remove("dark-theme");
+  toggleThemeBtn.textContent = "mode_night";
+  localStorage.setItem("theme", "light_mode");
 };
 
 document.addEventListener("DOMContentLoaded", () => {
   const currentTheme = localStorage.getItem("theme");
-  if (currentTheme) {
-    toggleTheme.textContent = currentTheme;
-    toggleTheme();
-  }
+  currentTheme === "light_mode" ? setLight() : setDark();
 });
 
-toggleThemeBtn.addEventListener("click", toggleTheme);
+toggleThemeBtn.addEventListener("click", (e) =>
+  e.target.textContent === "light_mode" ? setLight() : setDark()
+);

@@ -7,9 +7,11 @@
 }
 
 .dark-theme {
-  --primary-color: red;
+  --primary-color: rgb(75, 13, 232);
   --secondary-color: black;
-  --bg-color: blue;
+  --bg-color: black;
+  /* --font-color: white; */
+  color: white;
 }
 
 /* Common Class Start */
