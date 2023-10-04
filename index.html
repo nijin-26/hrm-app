@@ -31,7 +31,7 @@
         />
         <form class="search-employee-form">
           <!-- TODO: Search Icon. -->
-          <input type="text" placeholder="Search Employee" />
+          <input type="text" placeholder="Search Employee by Name" />
         </form>
         <img
           style="visibility: hidden"
@@ -46,19 +46,33 @@
         <div>
           <div class="flex topbar-header">
             <h1 class="heading">Employees</h1>
-            <img
-              width="20"
-              class="enable-filter-btn"
-              src="./assets/images/icons/enable-filter.svg"
-              alt="enable-filter-icon"
-            />
+            <button class="btn enable-filter-btn">
+              <img
+                width="20"
+                src="./assets/images/icons/enable-filter.svg"
+                alt="enable-filter-icon"
+              />
+            </button>
           </div>
           <div class="filter-container flex">
-            <select name="department" class="department-filter">
-              <option value="Department">Department</option>
+            <select
+              name="department"
+              class="department-filter"
+              autocomplete="off"
+            >
+              <option value="Department" disabled selected>Department</option>
+              <option value="">Development</option>
+              <option value="">DevOps</option>
+              <option value="">QA</option>
+              <option value="">User Experience</option>
             </select>
-            <select name="role" class="role-filter">
-              <option value="Role">Role</option>
+            <select name="role" class="role-filter" autocomplete="off">
+              <option value="Role" disabled selected>Role</option>
+              <option value="Role">Engineer</option>
+              <option value="Role">Senior Engineer</option>
+              <option value="Role">Lead Engineer</option>
+              <option value="Role">Architect</option>
+              <option value="Role">Intern</option>
             </select>
             <div class="skills-fitler-dropdown">
               <input
@@ -74,14 +88,20 @@
                 </ul>
               </div>
             </div>
-            <img src="./assets/images/icons/clear_filter_icon.svg" alt="" />
+            <button class="btn secondary-btn clear-filter-btn">
+              <img
+                src="./assets/images/icons/clear_filter_icon.svg"
+                alt="clear filter"
+                width="25"
+              />
+            </button>
           </div>
         </div>
-        <button class="add-employee-btn flex justify-between">
+        <button class="btn add-employee-btn flex justify-between">
           <img
             width="20"
             src="./assets/images/icons/add_user_icon.svg"
-            alt=""
+            alt="add employee icon"
           />
         </button>
       </section>
@@ -103,9 +123,9 @@
             <td></td>
           </tr>
           <tr>
-            <td>1</td>
-            <td>Nijin</td>
-            <td>nijin@qburst.com</td>
+            <td>2</td>
+            <td>Ashwin</td>
+            <td>ashwin.nair@qburst.com</td>
             <td>11/07/2023</td>
             <td></td>
           </tr>

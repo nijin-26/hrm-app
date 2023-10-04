@@ -1,21 +1,33 @@
 const filterContainer = document.querySelector(".filter-container");
-const openFilterBtn = document.querySelector(".enable-filter-btn");
-
-openFilterBtn.addEventListener("click", () => {
-  filterContainer.classList.toggle("open-filter-options");
-});
-
-const searchSkillInput = document.querySelector(".skill-search-input");
 const skillList = document.querySelector(".dropdown-content");
+
+// Buttons
+const openFilterBtn = document.querySelector(".enable-filter-btn");
+const clearFilterBtn = document.querySelector(".clear-filter-btn");
+const addEmployeeBtn = document.querySelector(".add-employee-btn");
+
+// Input
+const searchSkillInput = document.querySelector(".skill-search-input");
+
+openFilterBtn.addEventListener("click", () =>
+  filterContainer.classList.toggle("open-filter-options")
+);
+
+clearFilterBtn.addEventListener("click", () =>
+  filterContainer.classList.toggle("open-filter-options")
+);
+
+addEmployeeBtn.addEventListener("click", () => {
+  console.log("Add employee btn clicked");
+});
 
 const selectedSkillsArray = [];
 
-// Show the dropdown when input is focused
-searchSkillInput.addEventListener("focus", () => {
-  skillList.style.display = "block";
-});
+searchSkillInput.addEventListener(
+  "focus",
+  () => (skillList.style.display = "block")
+);
 
-// Hide the dropdown when input is blurred
 searchSkillInput.addEventListener("blur", () => {
   setTimeout(() => {
     skillList.style.display = "none";
