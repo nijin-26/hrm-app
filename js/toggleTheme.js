@@ -1,4 +1,4 @@
-const toggleThemeBtn = document.querySelector(".toggle-mode");
+const toggleThemeBtn = document.querySelector(".toggle-theme");
 const body = document.querySelector("body");
 
 const setDark = () => {
