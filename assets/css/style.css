@@ -6,7 +6,22 @@
   /* --bg-color: #ddc3a5; */
 }
 
+.dark-theme {
+  --primary-color: red;
+  --secondary-color: black;
+  --bg-color: blue;
+}
+
 /* Common Class Start */
+
+/* Style for Google Material Fonts */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 40;
+  color: #fff;
+  font-size: 32px;
+  cursor: pointer;
+  user-select: none;
+}
 
 .flex {
   display: flex;
