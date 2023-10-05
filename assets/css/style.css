@@ -57,6 +57,12 @@ select {
   outline: none;
 }
 
+.error-tag {
+  color: red;
+  text-align: center;
+  font-weight: 500;
+}
+
 /* Common Class End */
 
 body {
@@ -179,12 +185,14 @@ ul li:hover {
 }
 
 .employee-list-container {
+  min-width: 100%;
   border: 1px solid var(--font-color);
   border-radius: 10px;
 }
 
 table {
-  width: 100%;
+  min-width: 100%;
+  overflow-x: auto;
   text-align: center;
 }
 
@@ -205,6 +213,19 @@ tr:not(:first-child):hover {
   color: var(--primary-color);
 }
 
-tr:not(:last-child) {
+tr:not(:last-child),
+thead {
   border-bottom: 1px solid var(--font-color);
+}
+
+.action-btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+}
+
+.action-btn-container > span:hover {
+  color: white;
+  transition: .2s;
 }

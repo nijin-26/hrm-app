@@ -98,40 +98,21 @@
       </section>
 
       <section class="employee-list-container">
-        <table>
-          <tr>
+        <table class="employee-list-table">
+          <thead>
             <th>ID</th>
             <th>Full Name</th>
             <th>Email</th>
             <th>Hire Date</th>
             <th>Actions</th>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Nijin</td>
-            <td>nijin@qburst.com</td>
-            <td>11/07/2023</td>
-            <td>
-              <span class="material-symbols-outlined"> edit_note </span>
-              <span class="material-symbols-outlined"> person_remove </span>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Ashwin</td>
-            <td>ashwin.nair@qburst.com</td>
-            <td>11/07/2023</td>
-            <td>
-              <span class="material-symbols-outlined"> edit_note </span>
-              <span class="material-symbols-outlined"> person_remove </span>
-            </td>
-          </tr>
+          </thead>
         </table>
         <!-- TODO: Pagination -->
       </section>
     </main>
-    <script src="./js/toggleTheme.js"></script>
     <script src="./js/script.js" type="module"></script>
+    <script src="./js/toggleTheme.js" type="module"></script>
     <script src="./js/lib/firebase.js" type="module"></script>
+    <script src="./js/fetchData.js" type="module"></script>
   </body>
 </html>
