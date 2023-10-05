@@ -59,17 +59,17 @@
               class="department-filter"
               autocomplete="off"
             >
-              <option value="Department" disabled selected>Department</option>
-              <option value="">Development</option>
-              <option value="">DevOps</option>
-              <option value="">QA</option>
-              <option value="">User Experience</option>
+              <option value="" disabled selected>Department</option>
+              <option value="D1">Development</option>
+              <option value="D2">DevOps</option>
+              <option value="D3">QA</option>
+              <option value="D4">User Experience</option>
             </select>
             <select name="role" class="role-filter" autocomplete="off">
-              <option value="Role" disabled selected>Role</option>
-              <option value="Role">Engineer</option>
-              <option value="Role">Senior Engineer</option>
-              <option value="Role">Lead Engineer</option>
+              <option value="" disabled selected>Role</option>
+              <option value="R1">Engineer</option>
+              <option value="R2">Senior Engineer</option>
+              <option value="R3">Lead Engineer</option>
               <option value="Role">Architect</option>
               <option value="Role">Intern</option>
             </select>
@@ -99,14 +99,15 @@
 
       <section class="employee-list-container">
         <table class="employee-list-table">
-          <thead>
+          <tr id="table-header">
             <th>ID</th>
             <th>Full Name</th>
             <th>Email</th>
             <th>Hire Date</th>
             <th>Actions</th>
-          </thead>
+          </tr>
         </table>
+        <p class="error-tag">No data found. Add an employee.</p>
         <!-- TODO: Pagination -->
       </section>
     </main>

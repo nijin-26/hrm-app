@@ -58,6 +58,7 @@ select {
 }
 
 .error-tag {
+  display: none;
   color: red;
   text-align: center;
   font-weight: 500;
@@ -188,11 +189,11 @@ ul li:hover {
   min-width: 100%;
   border: 1px solid var(--font-color);
   border-radius: 10px;
+  overflow-x: scroll;
 }
 
 table {
-  min-width: 100%;
-  overflow-x: auto;
+  width: 100%;
   text-align: center;
 }
 
@@ -214,7 +215,7 @@ tr:not(:first-child):hover {
 }
 
 tr:not(:last-child),
-thead {
+#table-header {
   border-bottom: 1px solid var(--font-color);
 }
 
@@ -227,5 +228,5 @@ thead {
 
 .action-btn-container > span:hover {
   color: white;
-  transition: .2s;
+  transition: 0.2s;
 }

@@ -1,3 +1,5 @@
+import { filterTable } from "./fetchData.js";
+
 const filterContainer = document.querySelector(".filter-container");
 const skillList = document.querySelector(".dropdown-content");
 
@@ -13,9 +15,12 @@ openFilterBtn.addEventListener("click", () =>
   filterContainer.classList.toggle("open-filter-options")
 );
 
-clearFilterBtn.addEventListener("click", () =>
-  filterContainer.classList.toggle("open-filter-options")
-);
+clearFilterBtn.addEventListener("click", () => {
+  filterContainer.classList.toggle("open-filter-options");
+  document.querySelector(".department-filter").value = "";
+  document.querySelector(".role-filter").value = "";
+  filterTable();
+});
 
 addEmployeeBtn.addEventListener("click", () => {
   console.log("Add employee btn clicked");
