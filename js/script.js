@@ -38,3 +38,41 @@ searchSkillInput.addEventListener("blur", () => {
     skillList.style.display = "none";
   }, 200);
 });
+
+searchSkillInput.addEventListener("input", (e) => {
+  const searchValue = e.target.value.toLowerCase();
+  const skills = skillList.querySelectorAll("li");
+
+  skills.forEach((skill) => {
+    const skillName = skill.dataset.skill.toLowerCase();
+    if (skillName.includes(searchValue)) {
+      skill.style.display = "block";
+    } else {
+      skill.style.display = "none";
+    }
+  });
+});
+
+skillList.addEventListener("click", (e) => {
+  if (e.target.tagName === "LI") {
+    let skillID = e.target.dataset.skill;
+    const skillName = e.target.textContent;
+
+    const isSkillSelected = selectedSkillsArray.some(
+      (skill) => skillID in skill
+    );
+    if (!isSkillSelected) {
+      selectedSkillsArray.push({ id: skillID, name: skillName });
+      renderSelectedSkills();
+    }
+  }
+});
+
+const renderSelectedSkills = () => {
+  // selectedSkillsArray.forEach((skill) => {
+  //   const p = document.createElement("p");
+  //   p.textContent = skill.name;
+  //   document.querySelector(".skills-fitler-dropdown").append(p);
+  // });
+  // console.log("render selected skills", selectedSkillsArray);
+};

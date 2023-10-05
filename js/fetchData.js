@@ -6,6 +6,7 @@ const employeeListingContainer = document.querySelector(
 const employeeTable = document.querySelector(".employee-list-table");
 const departmentFilterInput = document.querySelector(".department-filter");
 const roleFilterInput = document.querySelector(".role-filter");
+const skillList = document.querySelector(".skill-list");
 
 let employeeData;
 
@@ -15,6 +16,16 @@ const fetchEmployees = (dataCallback) => {
     if (snapshot.exists()) dataCallback(snapshot.val());
     else dataCallback([]);
   });
+  // dataCallback([]);
+};
+
+const fetchSkills = (dataCallback) => {
+  const skillsRef = ref(db, "skill/");
+  onValue(skillsRef, (snapshot) => {
+    if (snapshot.exists()) dataCallback(snapshot.val());
+    else dataCallback([]);
+  });
+  dataCallback([]);
 };
 
 const renderTable = (dataArr) => {
@@ -52,10 +63,20 @@ const renderTable = (dataArr) => {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
+  fetchSkills((skills) => {
+    for (const skillID in skills) {
+      const li = document.createElement("li");
+      li.textContent = skills[skillID].name;
+      li.dataset.skill = skillID;
+      skillList.append(li);
+    }
+  });
+
   fetchEmployees((employeeArr) => {
     employeeData = employeeArr;
     renderTable(employeeArr);
   });
+
   employeeTable.addEventListener("click", (e) => {
     if (e.target.id === "edit-action-btn") {
       console.log("Edit btn clicked", e.target.dataset);
