@@ -70,18 +70,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 export const filterTable = () => {
-  const selectedDepartment = departmentFilterInput.value || "";
-  const selectedRole = roleFilterInput.value || "";
+  const selectedDepartment = departmentFilterInput.value;
+  const selectedRole = roleFilterInput.value;
 
   const filteredEmployees = employeeData.filter((employee) => {
-    if (
-      employee.department[0] === selectedDepartment ||
-      employee.role[0] === selectedRole
-    )
-      return employee;
+    if (selectedDepartment !== "" && selectedRole !== "")
+      return (
+        employee.department[0] === selectedDepartment &&
+        employee.role[0] === selectedRole
+      );
+    else if (selectedDepartment !== "" && selectedRole === "")
+      return employee.department[0] === selectedDepartment;
+    else if (selectedRole !== "" && selectedDepartment === "")
+      return employee.role[0] === selectedRole;
+    else return employee;
   });
-
-  console.log(filteredEmployees, "filtered employees");
 
   renderTable(filteredEmployees);
 };
