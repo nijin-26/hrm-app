@@ -55,24 +55,19 @@ searchSkillInput.addEventListener("input", (e) => {
 
 skillList.addEventListener("click", (e) => {
   if (e.target.tagName === "LI") {
+    e.target.style.display = "none";
     let skillID = e.target.dataset.skill;
     const skillName = e.target.textContent;
 
-    const isSkillSelected = selectedSkillsArray.some(
-      (skill) => skillID in skill
-    );
-    if (!isSkillSelected) {
+    if (!selectedSkillsArray.some((skill) => skill.id === skillID)) {
       selectedSkillsArray.push({ id: skillID, name: skillName });
-      renderSelectedSkills();
+      const temp = `<p data-skill-id=${skillID} class="selected-skill-tag flex"> 
+      <span>${skillName}</span> 
+      <span class="material-symbols-outlined remove-selected-skill-tag">
+          do_not_disturb_on
+      </span>
+      </p>`;
+      document.querySelector(".selected-skill").innerHTML += temp;
     }
   }
 });
-
-const renderSelectedSkills = () => {
-  // selectedSkillsArray.forEach((skill) => {
-  //   const p = document.createElement("p");
-  //   p.textContent = skill.name;
-  //   document.querySelector(".skills-fitler-dropdown").append(p);
-  // });
-  // console.log("render selected skills", selectedSkillsArray);
-};
