@@ -23,11 +23,21 @@ clearFilterBtn.addEventListener("click", () => {
   filterTable();
 });
 
+const resetSkillFilter = () => {
+  searchSkillInput.value = "";
+  searchSkillInput.dispatchEvent(new Event("input"));
+  document
+    .querySelectorAll(".selected-skill > p")
+    .forEach((tagEl) => tagEl.remove());
+  selectedSkillsArray = [];
+  filterTable();
+};
+
 addEmployeeBtn.addEventListener("click", () => {
   console.log("Add employee btn clicked");
 });
 
-let selectedSkillsArray = [];
+export let selectedSkillsArray = [];
 
 searchSkillInput.addEventListener(
   "focus",
@@ -45,18 +55,26 @@ searchSkillInput.addEventListener("input", (e) => {
   const skills = skillList.querySelectorAll("li");
 
   skills.forEach((skill) => {
-    const skillName = skill.dataset.skill.toLowerCase();
-    if (skillName.includes(searchValue)) {
-      skill.style.display = "block";
-    } else {
-      skill.style.display = "none";
+    const skillName = skill.innerText.toLowerCase();
+    const isSkillSelected = selectedSkillsArray.some((s) =>
+      s.name.toLowerCase().includes(searchValue)
+    );
+    if (skillName.includes(searchValue) && !isSkillSelected) {
+      return (skill.style.display = "block");
+    } else if (isSkillSelected) {
+      return (skill.style.display = "none");
     }
+    skill.style.display = "none";
   });
 });
 
 skillList.addEventListener("click", (e) => {
   if (e.target.tagName === "LI") {
-    e.target.style.display = "none";
+    searchSkillInput.value = "";
+    searchSkillInput.dispatchEvent(new Event("input"));
+    setTimeout(() => {
+      e.target.style.display = "none";
+    }, 200);
     let skillID = e.target.dataset.skill;
     const skillName = e.target.textContent;
 
@@ -69,6 +87,7 @@ skillList.addEventListener("click", (e) => {
       </span>
       </p>`;
       document.querySelector(".selected-skill").innerHTML += temp;
+      filterTable();
     }
   }
 });
@@ -83,12 +102,6 @@ document.querySelector(".selected-skill").addEventListener("click", (e) => {
     document.querySelector(
       `.skill-list > [data-skill="${targetSkillId}"]`
     ).style.display = "block";
+    filterTable();
   }
 });
-
-const resetSkillFilter = () => {
-  document
-    .querySelectorAll(".selected-skill > p")
-    .forEach((tagEl) => tagEl.remove());
-  selectedSkillsArray = [];
-};

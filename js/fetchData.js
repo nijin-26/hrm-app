@@ -1,4 +1,5 @@
 import { db, ref, onValue } from "./lib/firebase.js";
+import { selectedSkillsArray } from "./script.js";
 
 const employeeListingContainer = document.querySelector(
   ".employee-list-container"
@@ -37,7 +38,6 @@ const renderTable = (dataArr) => {
     });
   } else {
     document.querySelector(".error-tag").style.display = "none";
-    // employeeTable.style.display = "";
   }
 
   document
@@ -95,16 +95,37 @@ export const filterTable = () => {
   const selectedRole = roleFilterInput.value;
 
   const filteredEmployees = employeeData.filter((employee) => {
-    if (selectedDepartment !== "" && selectedRole !== "")
+    if (selectedDepartment !== "" && selectedRole !== "") {
+      console.log("first if");
       return (
         employee.department[0] === selectedDepartment &&
         employee.role[0] === selectedRole
       );
-    else if (selectedDepartment !== "" && selectedRole === "")
+    } else if (
+      selectedDepartment !== "" &&
+      selectedRole !== "" &&
+      selectedSkillsArray.length !== 0
+    ) {
+      console.log("inside second else if");
+      const filteredBySkill = selectedSkillsArray.every((selectedSkill) => {
+        if (selectedSkill.id in employee.skill) return employee;
+      });
+      return (
+        employee.department[0] === selectedDepartment &&
+        employee.role[0] === selectedRole &&
+        filteredBySkill
+      );
+    } else if (selectedDepartment !== "" && selectedRole === "")
       return employee.department[0] === selectedDepartment;
     else if (selectedRole !== "" && selectedDepartment === "")
       return employee.role[0] === selectedRole;
-    else return employee;
+    else if (selectedSkillsArray.length !== 0) {
+      console.log("last else if");
+      const filteredBySkill = selectedSkillsArray.every((selectedSkill) => {
+        if (selectedSkill.id in employee.skill) return employee;
+      });
+      return filteredBySkill;
+    } else return employee;
   });
 
   renderTable(filteredEmployees);
