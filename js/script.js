@@ -19,6 +19,7 @@ clearFilterBtn.addEventListener("click", () => {
   filterContainer.classList.toggle("open-filter-options");
   document.querySelector(".department-filter").value = "";
   document.querySelector(".role-filter").value = "";
+  resetSkillFilter();
   filterTable();
 });
 
@@ -26,7 +27,7 @@ addEmployeeBtn.addEventListener("click", () => {
   console.log("Add employee btn clicked");
 });
 
-const selectedSkillsArray = [];
+let selectedSkillsArray = [];
 
 searchSkillInput.addEventListener(
   "focus",
@@ -61,9 +62,9 @@ skillList.addEventListener("click", (e) => {
 
     if (!selectedSkillsArray.some((skill) => skill.id === skillID)) {
       selectedSkillsArray.push({ id: skillID, name: skillName });
-      const temp = `<p data-skill-id=${skillID} class="selected-skill-tag flex"> 
+      const temp = `<p  class="selected-skill-tag flex"> 
       <span>${skillName}</span> 
-      <span class="material-symbols-outlined remove-selected-skill-tag">
+      <span class="material-symbols-outlined remove-selected-skill-tag" data-skill-id=${skillID}>
           do_not_disturb_on
       </span>
       </p>`;
@@ -71,3 +72,23 @@ skillList.addEventListener("click", (e) => {
     }
   }
 });
+
+document.querySelector(".selected-skill").addEventListener("click", (e) => {
+  if (e.target.classList.contains("remove-selected-skill-tag")) {
+    const targetSkillId = e.target.dataset.skillId;
+    e.target.parentElement.remove();
+    selectedSkillsArray = selectedSkillsArray.filter(
+      (skill) => skill.id !== targetSkillId
+    );
+    document.querySelector(
+      `.skill-list > [data-skill="${targetSkillId}"]`
+    ).style.display = "block";
+  }
+});
+
+const resetSkillFilter = () => {
+  document
+    .querySelectorAll(".selected-skill > p")
+    .forEach((tagEl) => tagEl.remove());
+  selectedSkillsArray = [];
+};
