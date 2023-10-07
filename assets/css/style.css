@@ -219,7 +219,7 @@ ul li:hover {
   min-width: 100%;
   border: 1px solid var(--font-color);
   border-radius: 10px;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 table {

@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     for (const skillID in skills) {
       const li = document.createElement("li");
       li.textContent = skills[skillID].name;
-      li.dataset.skill = skillID;
+      li.dataset.skillId = skillID;
       skillList.append(li);
     }
   });
@@ -96,7 +96,6 @@ export const filterTable = () => {
 
   const filteredEmployees = employeeData.filter((employee) => {
     if (selectedDepartment !== "" && selectedRole !== "") {
-      console.log("first if");
       return (
         employee.department[0] === selectedDepartment &&
         employee.role[0] === selectedRole
@@ -120,7 +119,7 @@ export const filterTable = () => {
     else if (selectedRole !== "" && selectedDepartment === "")
       return employee.role[0] === selectedRole;
     else if (selectedSkillsArray.length !== 0) {
-      console.log("last else if");
+      console.log("selected skills last else if");
       const filteredBySkill = selectedSkillsArray.every((selectedSkill) => {
         if (selectedSkill.id in employee.skill) return employee;
       });

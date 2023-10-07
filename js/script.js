@@ -39,15 +39,15 @@ addEmployeeBtn.addEventListener("click", () => {
 
 export let selectedSkillsArray = [];
 
-searchSkillInput.addEventListener(
-  "focus",
-  () => (skillList.style.display = "block")
-);
+searchSkillInput.addEventListener("focus", () => {
+  skillList.style.display = "block";
+  searchSkillInput.dispatchEvent(new Event("input"));
+});
 
 searchSkillInput.addEventListener("blur", () => {
   setTimeout(() => {
     skillList.style.display = "none";
-  }, 200);
+  }, 50);
 });
 
 searchSkillInput.addEventListener("input", (e) => {
@@ -55,30 +55,34 @@ searchSkillInput.addEventListener("input", (e) => {
   const skills = skillList.querySelectorAll("li");
 
   skills.forEach((skill) => {
-    const skillName = skill.innerText.toLowerCase();
-    const isSkillSelected = selectedSkillsArray.some((s) =>
-      s.name.toLowerCase().includes(searchValue)
+    const isSkillSelected = selectedSkillsArray.some(
+      (selSkill) => selSkill.id === skill.dataset.skillId
     );
-    if (skillName.includes(searchValue) && !isSkillSelected) {
-      return (skill.style.display = "block");
-    } else if (isSkillSelected) {
-      return (skill.style.display = "none");
+
+    if (searchValue === "") {
+      if (!isSkillSelected) {
+        skill.style.display = "block";
+      } else {
+        skill.style.display = "none";
+      }
+    } else if (
+      !isSkillSelected &&
+      skill.textContent.toLowerCase().includes(searchValue)
+    ) {
+      skill.style.display = "block";
+    } else {
+      skill.style.display = "none";
     }
-    skill.style.display = "none";
   });
 });
 
 skillList.addEventListener("click", (e) => {
   if (e.target.tagName === "LI") {
-    searchSkillInput.value = "";
-    searchSkillInput.dispatchEvent(new Event("input"));
-    setTimeout(() => {
-      e.target.style.display = "none";
-    }, 200);
-    let skillID = e.target.dataset.skill;
+    let skillID = e.target.dataset.skillId;
     const skillName = e.target.textContent;
 
     if (!selectedSkillsArray.some((skill) => skill.id === skillID)) {
+      searchSkillInput.value = "";
       selectedSkillsArray.push({ id: skillID, name: skillName });
       const temp = `<p  class="selected-skill-tag flex"> 
       <span>${skillName}</span> 
@@ -94,14 +98,15 @@ skillList.addEventListener("click", (e) => {
 
 document.querySelector(".selected-skill").addEventListener("click", (e) => {
   if (e.target.classList.contains("remove-selected-skill-tag")) {
+    console.log("remove el is called");
     const targetSkillId = e.target.dataset.skillId;
     e.target.parentElement.remove();
     selectedSkillsArray = selectedSkillsArray.filter(
       (skill) => skill.id !== targetSkillId
     );
+    filterTable();
     document.querySelector(
       `.skill-list > [data-skill="${targetSkillId}"]`
     ).style.display = "block";
-    filterTable();
   }
 });
