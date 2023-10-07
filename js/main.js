@@ -65,17 +65,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
   });
 
-  searchSkillInput.addEventListener("input", (e) =>
-    renderSkillDropdown(e, selectedSkillsArray)
-  );
+  searchSkillInput.addEventListener("input", (e) => renderSkillDropdown(e));
 
   searchSkillInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter")
-      renderSelectedSkills(event, selectedSkillsArray, setSelectedSkills);
+    if (event.key === "Enter") {
+      skillList.style.display = "none";
+      renderSelectedSkills(event, setSelectedSkills);
+      return;
+    } else if (event.key === "Backspace" && event.target.value === "") {
+      if (selectedSkillsArray.length !== 0) {
+        removeSelectedSkills(event, setSelectedSkills);
+      }
+    } else {
+      skillList.style.display = "block";
+    }
   });
 
   skillList.addEventListener("click", (e) =>
-    renderSelectedSkills(e, selectedSkillsArray, setSelectedSkills)
+    renderSelectedSkills(e, setSelectedSkills)
   );
 
   clearFilterBtn.addEventListener("click", () => {

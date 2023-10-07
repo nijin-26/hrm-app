@@ -1,4 +1,5 @@
 import { filterTable } from "./filter.js";
+import { selectedSkillsArray } from "./main.js";
 
 const searchSkillInput = document.querySelector(".skill-search-input");
 const skillList = document.querySelector(".dropdown-content > .skill-list");
@@ -51,7 +52,7 @@ export const renderTable = (dataArr) => {
 };
 
 // <<<<< Function to render/view skills drop down when input changes. >>>>>>>>
-export const renderSkillDropdown = (e, selectedSkillsArray) => {
+export const renderSkillDropdown = (e) => {
   const searchValue = e.target.value.toLowerCase();
   const skills = skillList.querySelectorAll("li");
 
@@ -78,11 +79,7 @@ export const renderSkillDropdown = (e, selectedSkillsArray) => {
 };
 
 // <<<<< Function to render/view selected skills >>>>>>>>
-export const renderSelectedSkills = (
-  e,
-  selectedSkillsArray,
-  setSelectedSkills
-) => {
+export const renderSelectedSkills = (e, setSelectedSkills) => {
   let target;
   const skills = skillList.querySelectorAll("li");
 
@@ -116,23 +113,26 @@ export const renderSelectedSkills = (
 };
 
 // <<<<< Function to remove skills from selected list >>>>>>>>
-export const removeSelectedSkills = (
-  e,
-  selectedSkillsArray,
-  setSelectedSkills
-) => {
-  if (e.target.classList.contains("remove-selected-skill-tag")) {
-    const targetSkillId = e.target.dataset.skillId;
-    e.target.parentElement.remove();
+export const removeSelectedSkills = (e, setSelectedSkills) => {
+  let targetSkillId;
 
-    const updatedSkillList = selectedSkillsArray.filter(
-      (skill) => skill.id !== targetSkillId
-    );
-    setSelectedSkills(updatedSkillList);
+  if (e.type === "keydown") targetSkillId = selectedSkillsArray.at(-1).id;
+  else if (e.target.classList.contains("remove-selected-skill-tag"))
+    targetSkillId = e.target.dataset.skillId;
+  else return;
 
-    filterTable();
-    document.querySelector(
-      `.skill-list > [data-skill-id="${targetSkillId}"]`
-    ).style.display = "block";
-  }
+  document
+    .querySelector(`.selected-skill  [data-skill-id="${targetSkillId}"]`)
+    .parentElement.remove();
+
+  const updatedSkillList = selectedSkillsArray.filter(
+    (skill) => skill.id !== targetSkillId
+  );
+
+  setSelectedSkills(updatedSkillList);
+
+  filterTable();
+  document.querySelector(
+    `.skill-list > [data-skill-id="${targetSkillId}"]`
+  ).style.display = "block";
 };
