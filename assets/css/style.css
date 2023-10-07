@@ -135,6 +135,7 @@ main {
 .filter-container.open-filter-options {
   height: 60px;
 }
+
 .filter-container > select {
   height: 100%;
 }

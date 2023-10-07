@@ -6,8 +6,10 @@ import {
   renderSelectedSkills,
   renderSkillDropdown,
 } from "./ui.js";
+import { toggleTheme } from "./toggleTheme.js";
 import { filterTable } from "./filter.js";
 
+const searchEmployeeInput = document.querySelector(".search-employee-input");
 const employeeTable = document.querySelector(".employee-list-table");
 const departmentFilterInput = document.querySelector(".department-filter");
 const roleFilterInput = document.querySelector(".role-filter");
@@ -31,12 +33,12 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTable(employeeArr);
   });
 
+  departmentFilterInput.addEventListener("input", filterTable);
+  roleFilterInput.addEventListener("input", filterTable);
+
   const setSelectedSkills = (selectedSkills) => {
     selectedSkillsArray = selectedSkills;
   };
-
-  departmentFilterInput.addEventListener("input", filterTable);
-  roleFilterInput.addEventListener("input", filterTable);
 
   employeeTable.addEventListener("click", (e) => {
     if (e.target.id === "edit-action-btn") {
@@ -66,20 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   searchSkillInput.addEventListener("input", (e) => renderSkillDropdown(e));
-
-  searchSkillInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      skillList.style.display = "none";
-      renderSelectedSkills(event, setSelectedSkills);
-      return;
-    } else if (event.key === "Backspace" && event.target.value === "") {
-      if (selectedSkillsArray.length !== 0) {
-        removeSelectedSkills(event, setSelectedSkills);
-      }
-    } else {
-      skillList.style.display = "block";
-    }
-  });
 
   skillList.addEventListener("click", (e) =>
     renderSelectedSkills(e, setSelectedSkills)
@@ -112,4 +100,42 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", (e) =>
       removeSelectedSkills(e, selectedSkillsArray, setSelectedSkills)
     );
+
+  // <<<<<< Keyboard Shortcuts >>>>>>>>>>>>>
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "/" && document.activeElement !== searchSkillInput) {
+      e.preventDefault();
+      searchEmployeeInput.focus();
+    }
+  });
+
+  searchEmployeeInput.addEventListener(
+    "keydown",
+    (e) => e.key === "Escape" && searchEmployeeInput.blur()
+  );
+
+  document.addEventListener("keydown", (e) => {
+    if (
+      (e.ctrlKey || e.metaKey) &&
+      e.shiftKey &&
+      (e.key === "f" || e.key === "F")
+    ) {
+      toggleTheme();
+    }
+  });
+
+  searchSkillInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      skillList.style.display = "none";
+      renderSelectedSkills(event, setSelectedSkills);
+      return;
+    } else if (event.key === "Backspace" && event.target.value === "") {
+      if (selectedSkillsArray.length !== 0) {
+        removeSelectedSkills(event, setSelectedSkills);
+      }
+    } else {
+      skillList.style.display = "block";
+    }
+  });
 });

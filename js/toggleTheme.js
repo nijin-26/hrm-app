@@ -21,3 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 toggleThemeBtn.addEventListener("click", (e) =>
   e.target.textContent === "light_mode" ? setLight() : setDark()
 );
+
+export const toggleTheme = () => {
+  toggleThemeBtn.textContent === "light_mode" ? setLight() : setDark();
+};
