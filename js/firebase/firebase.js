@@ -20,4 +20,21 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-export { db, ref, onValue };
+export const fetchEmployees = (dataCallback) => {
+  const employeeRef = ref(db, "employee/");
+  onValue(employeeRef, (snapshot) => {
+    if (snapshot.exists()) dataCallback(snapshot.val());
+    else dataCallback([]);
+  });
+};
+
+export const fetchSkills = (dataCallback) => {
+  const skillsRef = ref(db, "skill/");
+  onValue(skillsRef, (snapshot) => {
+    if (snapshot.exists()) dataCallback(snapshot.val());
+    else dataCallback([]);
+  });
+  dataCallback([]);
+};
+
+// export { db, ref, onValue };
