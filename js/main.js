@@ -69,6 +69,11 @@ document.addEventListener("DOMContentLoaded", () => {
     renderSkillDropdown(e, selectedSkillsArray)
   );
 
+  searchSkillInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter")
+      renderSelectedSkills(event, selectedSkillsArray, setSelectedSkills);
+  });
+
   skillList.addEventListener("click", (e) =>
     renderSelectedSkills(e, selectedSkillsArray, setSelectedSkills)
   );

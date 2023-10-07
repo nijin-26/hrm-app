@@ -15,9 +15,8 @@ export const filterTable = () => {
         employee.role[0] === selectedRole
       );
     else if (
-      (selectedDepartment !== "" &&
-        selectedRole !== "" &&
-        selectedSkillsArray.length !== 0) ||
+      selectedDepartment !== "" &&
+      selectedRole !== "" &&
       selectedSkillsArray.length !== 0
     ) {
       const filteredBySkill = selectedSkillsArray.every((selectedSkill) => {
@@ -32,7 +31,12 @@ export const filterTable = () => {
       return employee.department[0] === selectedDepartment;
     else if (selectedRole !== "" && selectedDepartment === "")
       return employee.role[0] === selectedRole;
-    else return employee;
+    else if (selectedSkillsArray.length !== 0) {
+      const filteredBySkill = selectedSkillsArray.every((selectedSkill) => {
+        if (selectedSkill.id in employee.skill) return employee;
+      });
+      return filteredBySkill;
+    } else return employee;
   });
 
   renderTable(filteredEmployees);

@@ -83,23 +83,35 @@ export const renderSelectedSkills = (
   selectedSkillsArray,
   setSelectedSkills
 ) => {
-  if (e.target.tagName === "LI") {
-    let skillID = e.target.dataset.skillId;
-    const skillName = e.target.textContent;
+  let target;
+  const skills = skillList.querySelectorAll("li");
 
-    if (!selectedSkillsArray.some((skill) => skill.id === skillID)) {
-      searchSkillInput.value = "";
-      selectedSkillsArray.push({ id: skillID, name: skillName });
-      setSelectedSkills(selectedSkillsArray);
-      const temp = `<p  class="selected-skill-tag flex"> 
-      <span>${skillName}</span> 
+  if (e.type === "keydown") {
+    Array.from(skills).some((skillEl) => {
+      if (skillEl.style.display === "block") {
+        target = skillEl;
+        return true;
+      }
+      return false;
+    });
+  } else if (e.target.tagName === "LI") target = e.target;
+  else return;
+
+  let skillID = target.dataset.skillId;
+  const skillName = target.textContent;
+
+  if (!selectedSkillsArray.some((skill) => skill.id === skillID)) {
+    searchSkillInput.value = "";
+    selectedSkillsArray.push({ id: skillID, name: skillName });
+    setSelectedSkills(selectedSkillsArray);
+    const temp = `<p  class="selected-skill-tag flex">
+      <span>${skillName}</span>
       <span class="material-symbols-outlined remove-selected-skill-tag" data-skill-id=${skillID}>
           do_not_disturb_on
       </span>
       </p>`;
-      selectedSkillsContainer.innerHTML += temp;
-      filterTable();
-    }
+    selectedSkillsContainer.innerHTML += temp;
+    filterTable();
   }
 };
 
@@ -120,7 +132,7 @@ export const removeSelectedSkills = (
 
     filterTable();
     document.querySelector(
-      `.skill-list > [data-skill="${targetSkillId}"]`
+      `.skill-list > [data-skill-id="${targetSkillId}"]`
     ).style.display = "block";
   }
 };

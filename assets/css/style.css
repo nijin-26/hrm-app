@@ -143,6 +143,10 @@ main {
   overflow-y: auto;
 }
 
+.dropdown-content li {
+  display: block;
+}
+
 ul {
   list-style: none;
   padding: 0;
