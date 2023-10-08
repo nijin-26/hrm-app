@@ -88,12 +88,17 @@ header {
   height: 80px;
 }
 
-.search-employee-form {
+.search-employee-container {
   width: 30%;
   position: relative;
 }
-
-.search-employee-form input {
+.search-employee-container .search-icon {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  color: var(--primary-color);
+}
+.search-employee-container input {
   width: 100%;
 }
 
@@ -287,7 +292,8 @@ ul li:hover {
 
 table {
   width: 100%;
-  text-align: center;
+  text-align: left;
+  table-layout: fixed;
 }
 
 table,
@@ -314,9 +320,8 @@ tr:not(:last-child),
 
 .action-btn-container {
   display: flex;
-  justify-content: center;
   gap: 20px;
-  padding: 10px;
+  padding: 10px 16px;
 }
 
 .action-btn-container > span:hover {

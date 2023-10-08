@@ -126,6 +126,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // <<<<< To get out of search skill input field >>>>>>
+  searchSkillInput.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") searchSkillInput.blur();
+  });
+
   // <<<<< To toggle theme & toggle filter options
   document.addEventListener("keydown", (e) => {
     if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
