@@ -1,28 +1,23 @@
 const toggleThemeBtn = document.querySelector(".toggle-theme");
-const body = document.querySelector("body");
+const body = document.body;
 
-const setDark = () => {
-  console.log("set dark is called");
-  body.classList.add("dark-theme");
-  toggleThemeBtn.textContent = "light_mode";
-  localStorage.setItem("theme", "mode_night");
-};
-
-const setLight = () => {
-  body.classList.remove("dark-theme");
-  toggleThemeBtn.textContent = "mode_night";
-  localStorage.setItem("theme", "light_mode");
+const setTheme = (theme) => {
+  body.classList.toggle("dark-theme", theme === "mode_night");
+  toggleThemeBtn.textContent =
+    theme === "mode_night" ? "light_mode" : "mode_night";
+  localStorage.setItem("theme", theme);
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  const currentTheme = localStorage.getItem("theme");
-  if (currentTheme) currentTheme === "light_mode" ? setLight() : setDark();
+  const currentTheme = localStorage.getItem("theme") || "light_mode";
+  setTheme(currentTheme);
 });
 
-toggleThemeBtn.addEventListener("click", (e) =>
-  e.target.textContent === "light_mode" ? setLight() : setDark()
-);
-
 export const toggleTheme = () => {
-  toggleThemeBtn.textContent === "light_mode" ? setLight() : setDark();
+  const currentTheme = body.classList.contains("dark-theme")
+    ? "light_mode"
+    : "mode_night";
+  setTheme(currentTheme);
 };
+
+toggleThemeBtn.addEventListener("click", toggleTheme);
