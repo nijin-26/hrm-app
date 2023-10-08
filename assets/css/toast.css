@@ -1,0 +1,62 @@
+/* Styles for the toast container */
+section.toast-container {
+  position: fixed;
+  top: 15%;
+  right: 0;
+  width: 400px;
+  overflow: hidden;
+}
+
+/* Common styles for toast messages */
+.toast-container > * {
+  position: relative;
+  height: 100px;
+  color: #fff;
+  border-radius: 50px 0 0 50px;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: 0.6s;
+}
+
+.toast-container .success {
+  background: linear-gradient(135deg, #00cc66, #007a33);
+}
+
+.toast-container .warning {
+  background: linear-gradient(135deg, #ffcc00, #ff6600);
+}
+
+.toast-container .error {
+  background: linear-gradient(135deg, #ff3333, #cc0000);
+}
+
+.toast-container > *.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* section.toast-container {
+  position: fixed;
+  top: 15%;
+  right: 0;
+  width: 400px;
+}
+
+.toast-container > * {
+  height: 100px;
+  color: #fff;
+  border-radius: 50px 0 0 50px;
+  transition: 0.6s;
+}
+
+.toast-container .success {
+  background: linear-gradient(135deg, #00cc66, #007a33);
+}
+
+.toast-container .warning {
+  background: linear-gradient(135deg, #ffcc00, #ff6600);
+}
+
+.toast-container .error {
+  background: linear-gradient(135deg, #ff3333, #cc0000);
+} */
