@@ -7,7 +7,7 @@ import {
   renderSkillDropdown,
 } from "./ui.js";
 import { toggleTheme } from "./toggleTheme.js";
-import { filterTable } from "./filter.js";
+import { filterByEmployeeName, filterTable } from "./filter.js";
 
 const searchEmployeeInput = document.querySelector(".search-employee-input");
 const employeeTable = document.querySelector(".employee-list-table");
@@ -33,24 +33,16 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTable(employeeArr);
   });
 
+  searchEmployeeInput.addEventListener("input", (e) => {
+    filterByEmployeeName();
+  });
+
   departmentFilterInput.addEventListener("input", filterTable);
   roleFilterInput.addEventListener("input", filterTable);
 
   const setSelectedSkills = (selectedSkills) => {
     selectedSkillsArray = selectedSkills;
   };
-
-  employeeTable.addEventListener("click", (e) => {
-    if (e.target.id === "edit-action-btn") {
-      console.log("Edit btn clicked", e.target.dataset);
-    } else if (e.target.id === "delete-action-btn") {
-      console.log("Delte btn is clicked");
-    } else if (e.target.tagName === "TH") {
-      console.log("head clicked");
-    } else {
-      console.log(e.target.closest("tr").dataset);
-    }
-  });
 
   openFilterBtn.addEventListener("click", () =>
     filterContainer.classList.toggle("open-filter-options")
@@ -101,8 +93,21 @@ document.addEventListener("DOMContentLoaded", () => {
       removeSelectedSkills(e, selectedSkillsArray, setSelectedSkills)
     );
 
-  // <<<<<< Keyboard Shortcuts >>>>>>>>>>>>>
+  employeeTable.addEventListener("click", (e) => {
+    if (e.target.id === "edit-action-btn") {
+      console.log("Edit btn clicked", e.target.dataset);
+    } else if (e.target.id === "delete-action-btn") {
+      console.log("Delte btn is clicked");
+    } else if (e.target.tagName === "TH") {
+      console.log("head clicked");
+    } else {
+      console.log(e.target.closest("tr").dataset);
+    }
+  });
 
+  // <<<<<< Keyboard Shortcuts / Events - START  >>>>>>>>>>>>>
+
+  // <<<<<< To focus on the search field >>>>>>>>>>
   document.addEventListener("keydown", (e) => {
     if (e.key === "/" && document.activeElement !== searchSkillInput) {
       e.preventDefault();
@@ -110,21 +115,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // <<<<< To get out of search field >>>>>>>>
   searchEmployeeInput.addEventListener(
     "keydown",
     (e) => e.key === "Escape" && searchEmployeeInput.blur()
   );
 
+  // <<<<< To toggle theme & toggle filter options
   document.addEventListener("keydown", (e) => {
-    if (
-      (e.ctrlKey || e.metaKey) &&
-      e.shiftKey &&
-      (e.key === "f" || e.key === "F")
-    ) {
-      toggleTheme();
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+      if (e.key === "e" || e.key === "E") toggleTheme();
+      else if (e.key === "f" || e.key === "F")
+        filterContainer.classList.toggle("open-filter-options");
     }
   });
 
+  // <<<<<< To add or remove selected skills >>>>>>>>
   searchSkillInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       skillList.style.display = "none";
@@ -138,4 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
       skillList.style.display = "block";
     }
   });
+
+  // <<<<<< Keyboard Shortcuts / Events - END  >>>>>>>>>>>>>
 });

@@ -1,14 +1,30 @@
 import { renderTable } from "./ui.js";
 import { employeeData, selectedSkillsArray } from "./main.js";
 
+const searchEmployeeInput = document.querySelector(".search-employee-input");
 const departmentFilterInput = document.querySelector(".department-filter");
 const roleFilterInput = document.querySelector(".role-filter");
+
+let searchedEmployeeList = [];
+
+export const filterByEmployeeName = () => {
+  const searchedEmployeeName = searchEmployeeInput.value.toLowerCase();
+
+  searchedEmployeeList = employeeData.filter((employee) =>
+    employee.fullName.toLowerCase().includes(searchedEmployeeName)
+  );
+
+  filterTable();
+};
 
 export const filterTable = () => {
   const selectedDepartment = departmentFilterInput.value;
   const selectedRole = roleFilterInput.value;
 
-  const filteredEmployees = employeeData.filter((employee) => {
+  let employeeList = employeeData;
+  if (searchedEmployeeList.length !== 0) employeeList = searchedEmployeeList;
+
+  const filteredEmployees = employeeList.filter((employee) => {
     if (selectedDepartment !== "" && selectedRole !== "")
       return (
         employee.department[0] === selectedDepartment &&
