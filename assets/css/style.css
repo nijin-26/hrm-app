@@ -296,6 +296,18 @@ table {
   table-layout: fixed;
 }
 
+th {
+  position: relative;
+}
+
+th .sort-indicator {
+  width: 24;
+  height: 24;
+  position: absolute;
+  top: 20%;
+  /* transform: translateY(-50%); */
+}
+
 table,
 th,
 td {

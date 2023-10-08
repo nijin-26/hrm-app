@@ -2,8 +2,22 @@ import { filteredEmployees } from "./filter.js";
 import { employeeData } from "./main.js";
 import { renderTable } from "./ui.js";
 
+const headers = document.querySelectorAll(".employee-list-table th");
+
 export let currentSortColumn = "";
 let currentSortFlag = 1;
+
+function toggleSortIndicator(column) {
+  headers.forEach((header) => {
+    const indicator = header.querySelector(".sort-indicator");
+    if (header.dataset.column === column) {
+      indicator.textContent =
+        currentSortFlag === 1 ? "arrow_drop_down" : "arrow_drop_up";
+    } else {
+      indicator.textContent = "";
+    }
+  });
+}
 
 export const sortTable = (column) => {
   currentSortColumn = column;
@@ -18,4 +32,5 @@ export const sortTable = (column) => {
   });
   currentSortFlag = currentSortFlag * -1;
   renderTable(sortedEmployeeData);
+  toggleSortIndicator(column);
 };
