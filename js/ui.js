@@ -7,17 +7,37 @@ const selectedSkillsContainer = document.querySelector(".selected-skill");
 const tableErrorTag = document.querySelector(".error-tag");
 const employeeTable = document.querySelector(".employee-list-table");
 
-// <<<<< Function to render/view all skills fetched from db >>>>>>>>
+const createSkillListItem = (skillID, name) => {
+  const li = document.createElement("li");
+  li.textContent = name;
+  li.dataset.skillId = skillID;
+  return li;
+};
+
+const createEmployeeTableRow = (employee) => {
+  const temp = `
+    <td> ${employee.id} </td>
+    <td> ${employee.fullName} </td>
+    <td> ${employee.email} </td>
+    <td> ${employee.dateOfJoin} </td>
+    <td class="action-btn-container">
+    <span id="edit-action-btn" class="material-symbols-outlined"  data-employee-id="${employee.id}"> edit_document </span>
+    <span id="delete-action-btn" class="material-symbols-outlined" data-employee-id="${employee.id}"> person_remove </span>
+    </td>
+  `;
+  const tr = document.createElement("tr");
+  tr.innerHTML = temp;
+  tr.dataset.employeeId = employee.id;
+  return tr;
+};
+
 export const renderSkills = (skills) => {
   for (const skillID in skills) {
-    const li = document.createElement("li");
-    li.textContent = skills[skillID].name;
-    li.dataset.skillId = skillID;
+    const li = createSkillListItem(skillID, skills[skillID].name);
     skillList.append(li);
   }
 };
 
-// <<<<< Function to render/view all or filtered + sorted employees in the table. >>>>>>>>
 export const renderTable = (dataArr) => {
   const allRows = document.querySelectorAll("tr");
 
@@ -25,33 +45,21 @@ export const renderTable = (dataArr) => {
     tableErrorTag.style.display = "block";
     allRows.forEach((el) => {
       if (el.id !== "table-header") el.style.display = "none";
-      return;
     });
   } else {
     tableErrorTag.style.display = "none";
   }
 
-  allRows.forEach((el) => el.id !== "table-header" && el.remove());
+  allRows.forEach((el) => {
+    if (el.id !== "table-header") el.remove();
+  });
 
   dataArr.forEach((employee) => {
-    const temp = `
-        <td> ${employee.id} </td>
-        <td> ${employee.fullName} </td>
-        <td> ${employee.email} </td>
-        <td> ${employee.dateOfJoin} </td>
-        <td class="action-btn-container">
-        <span id="edit-action-btn" class="material-symbols-outlined"  data-employee-id="${employee.id}"> edit_document </span>
-        <span id="delete-action-btn" class="material-symbols-outlined" data-employee-id="${employee.id}"> person_remove </span>
-        </td>
-    `;
-    const tr = document.createElement("tr");
-    tr.innerHTML = temp;
-    tr.dataset.employeeId = employee.id;
+    const tr = createEmployeeTableRow(employee);
     employeeTable.append(tr);
   });
 };
 
-// <<<<< Function to render/view skills drop down when input changes. >>>>>>>>
 export const renderSkillDropdown = (e) => {
   const searchValue = e.target.value.toLowerCase();
   const skills = skillList.querySelectorAll("li");
@@ -62,11 +70,7 @@ export const renderSkillDropdown = (e) => {
     );
 
     if (searchValue === "") {
-      if (!isSkillSelected) {
-        skill.style.display = "block";
-      } else {
-        skill.style.display = "none";
-      }
+      skill.style.display = isSkillSelected ? "none" : "block";
     } else if (
       !isSkillSelected &&
       skill.textContent.toLowerCase().includes(searchValue)
@@ -78,7 +82,6 @@ export const renderSkillDropdown = (e) => {
   });
 };
 
-// <<<<< Function to render/view selected skills >>>>>>>>
 export const renderSelectedSkills = (e, setSelectedSkills) => {
   let target;
   const skills = skillList.querySelectorAll("li");
@@ -91,8 +94,11 @@ export const renderSelectedSkills = (e, setSelectedSkills) => {
       }
       return false;
     });
-  } else if (e.target.tagName === "LI") target = e.target;
-  else return;
+  } else if (e.target.tagName === "LI") {
+    target = e.target;
+  } else {
+    return;
+  }
 
   let skillID = target.dataset.skillId;
   const skillName = target.textContent;
@@ -112,18 +118,24 @@ export const renderSelectedSkills = (e, setSelectedSkills) => {
   }
 };
 
-// <<<<< Function to remove skills from selected list >>>>>>>>
 export const removeSelectedSkills = (e, setSelectedSkills) => {
   let targetSkillId;
 
-  if (e.type === "keydown") targetSkillId = selectedSkillsArray.at(-1).id;
-  else if (e.target.classList.contains("remove-selected-skill-tag"))
+  if (e.type === "keydown") {
+    targetSkillId = selectedSkillsArray.at(-1).id;
+  } else if (e.target.classList.contains("remove-selected-skill-tag")) {
     targetSkillId = e.target.dataset.skillId;
-  else return;
+  } else {
+    return;
+  }
 
-  document
-    .querySelector(`.selected-skill  [data-skill-id="${targetSkillId}"]`)
-    .parentElement.remove();
+  const selectedSkillTag = document.querySelector(
+    `.selected-skill [data-skill-id="${targetSkillId}"]`
+  );
+
+  if (selectedSkillTag) {
+    selectedSkillTag.parentElement.remove();
+  }
 
   const updatedSkillList = selectedSkillsArray.filter(
     (skill) => skill.id !== targetSkillId
@@ -133,7 +145,11 @@ export const removeSelectedSkills = (e, setSelectedSkills) => {
 
   filterTable();
 
-  document.querySelector(
+  const skillListItem = document.querySelector(
     `.skill-list > [data-skill-id="${targetSkillId}"]`
-  ).style.display = "block";
+  );
+
+  if (skillListItem) {
+    skillListItem.style.display = "block";
+  }
 };
