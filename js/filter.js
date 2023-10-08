@@ -1,60 +1,46 @@
 import { renderTable } from "./ui.js";
 import { employeeData, selectedSkillsArray } from "./main.js";
+import { currentSortColumn, sortTable } from "./sort.js";
 
 const searchEmployeeInput = document.querySelector(".search-employee-input");
 const departmentFilterInput = document.querySelector(".department-filter");
 const roleFilterInput = document.querySelector(".role-filter");
 
-let searchedEmployeeList = [];
-
-export const filterByEmployeeName = () => {
-  const searchedEmployeeName = searchEmployeeInput.value.toLowerCase();
-
-  searchedEmployeeList = employeeData.filter((employee) =>
-    employee.fullName.toLowerCase().includes(searchedEmployeeName)
-  );
-
-  if (searchedEmployeeList.length !== 0) filterTable();
-  else renderTable(searchedEmployeeList);
-};
+export let filteredEmployees = [];
 
 export const filterTable = () => {
+  const searchEmployeeName = searchEmployeeInput.value.toLowerCase();
   const selectedDepartment = departmentFilterInput.value;
   const selectedRole = roleFilterInput.value;
 
-  let employeeList = employeeData;
-  if (searchedEmployeeList.length !== 0) employeeList = searchedEmployeeList;
+  filteredEmployees = employeeData;
 
-  const filteredEmployees = employeeList.filter((employee) => {
-    if (selectedDepartment !== "" && selectedRole !== "")
-      return (
-        employee.department === selectedDepartment &&
-        employee.role === selectedRole
-      );
-    else if (
-      selectedDepartment !== "" &&
-      selectedRole !== "" &&
-      selectedSkillsArray.length !== 0
-    ) {
-      const filteredBySkill = selectedSkillsArray.every((selectedSkill) => {
-        if (employee.skill.includes(selectedSkill.id)) return employee;
-      });
-      return (
-        employee.department === selectedDepartment &&
-        employee.role === selectedRole &&
-        filteredBySkill
-      );
-    } else if (selectedDepartment !== "" && selectedRole === "")
-      return employee.department === selectedDepartment;
-    else if (selectedRole !== "" && selectedDepartment === "")
-      return employee.role === selectedRole;
-    else if (selectedSkillsArray.length !== 0) {
-      const filteredBySkill = selectedSkillsArray.every((selectedSkill) => {
-        if (employee.skill.includes(selectedSkill.id)) return employee;
-      });
-      return filteredBySkill;
-    } else return employee;
-  });
+  if (searchEmployeeName !== "") {
+    filteredEmployees = filteredEmployees.filter((employee) =>
+      employee.fullName.toLowerCase().includes(searchEmployeeName)
+    );
+  }
 
-  renderTable(filteredEmployees);
+  if (selectedDepartment !== "") {
+    filteredEmployees = filteredEmployees.filter(
+      (employee) => employee.department === selectedDepartment
+    );
+  }
+
+  if (selectedRole !== "") {
+    filteredEmployees = filteredEmployees.filter(
+      (employee) => employee.role === selectedRole
+    );
+  }
+
+  if (selectedSkillsArray.length > 0) {
+    filteredEmployees = filteredEmployees.filter((employee) => {
+      return selectedSkillsArray.every((selectedSkill) =>
+        employee.skill.includes(selectedSkill.id)
+      );
+    });
+  }
+
+  if (currentSortColumn) sortTable(currentSortColumn);
+  else renderTable(filteredEmployees);
 };

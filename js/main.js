@@ -7,7 +7,8 @@ import {
   renderSkillDropdown,
 } from "./ui.js";
 import { toggleTheme } from "./toggleTheme.js";
-import { filterByEmployeeName, filterTable } from "./filter.js";
+import { filterTable } from "./filter.js";
+import { sortTable } from "./sort.js";
 
 const searchEmployeeInput = document.querySelector(".search-employee-input");
 const employeeTable = document.querySelector(".employee-list-table");
@@ -34,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   searchEmployeeInput.addEventListener("input", () => {
-    filterByEmployeeName();
+    filterTable();
   });
 
   departmentFilterInput.addEventListener("input", filterTable);
@@ -70,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
     searchEmployeeInput.value = "";
     departmentFilterInput.value = "";
     roleFilterInput.value = "";
-    filterByEmployeeName();
     resetSkillFilter();
     filterTable();
   });
@@ -92,16 +92,17 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .querySelector(".selected-skill")
     .addEventListener("click", (e) =>
-      removeSelectedSkills(e, selectedSkillsArray, setSelectedSkills)
+      removeSelectedSkills(e, setSelectedSkills)
     );
 
+  // <<<< Employee Table Events >>>>>>>>>>
   employeeTable.addEventListener("click", (e) => {
     if (e.target.id === "edit-action-btn") {
       console.log("Edit btn clicked", e.target.dataset);
     } else if (e.target.id === "delete-action-btn") {
       console.log("Delte btn is clicked");
     } else if (e.target.tagName === "TH") {
-      console.log("head clicked");
+      if (e.target.dataset.column) sortTable(e.target.dataset.column);
     } else {
       console.log(e.target.closest("tr").dataset);
     }

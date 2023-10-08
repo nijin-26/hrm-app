@@ -132,6 +132,7 @@ export const removeSelectedSkills = (e, setSelectedSkills) => {
   setSelectedSkills(updatedSkillList);
 
   filterTable();
+
   document.querySelector(
     `.skill-list > [data-skill-id="${targetSkillId}"]`
   ).style.display = "block";
