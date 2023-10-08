@@ -9,6 +9,8 @@ section.toast-container {
 
 /* Common styles for toast messages */
 .toast-container > * {
+  margin: 10px 0;
+  padding: 10px 20px;
   position: relative;
   height: 100px;
   color: #fff;
@@ -16,6 +18,17 @@ section.toast-container {
   transform: translateX(100%);
   opacity: 0;
   transition: 0.6s;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 20px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.toast-container .toast-icon {
+  color: #fff;
+  font-size: 56px;
 }
 
 .toast-container .success {
