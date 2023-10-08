@@ -4,6 +4,7 @@ import {
   ref,
   onValue,
 } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+import { showToast } from "../utils/toast.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCVJaFfoEBM3-ZqT89iRzQ-1K9dKIoThO8",
@@ -20,21 +21,34 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+let loadingState = false;
+export const isLoading = () => loadingState;
+
 export const fetchEmployees = (dataCallback) => {
+  loadingState = true;
   const employeeRef = ref(db, "employee/");
-  onValue(employeeRef, (snapshot) => {
-    if (snapshot.exists()) dataCallback(snapshot.val());
-    else dataCallback([]);
-  });
+  onValue(
+    employeeRef,
+    (snapshot) => {
+      loadingState = false;
+      if (snapshot.exists()) dataCallback(snapshot.val());
+      else dataCallback([]);
+    },
+    (error) => showToast("error", "Error from fetch employees", error)
+  );
 };
 
 export const fetchSkills = (dataCallback) => {
+  loadingState = true;
   const skillsRef = ref(db, "skill/");
-  onValue(skillsRef, (snapshot) => {
-    if (snapshot.exists()) dataCallback(snapshot.val());
-    else dataCallback([]);
-  });
+  onValue(
+    skillsRef,
+    (snapshot) => {
+      loadingState = false;
+      if (snapshot.exists()) dataCallback(snapshot.val());
+      else dataCallback([]);
+    },
+    (error) => showToast("error", "Error from fetching skills", error)
+  );
   dataCallback([]);
 };
-
-// export { db, ref, onValue };

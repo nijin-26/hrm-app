@@ -32,6 +32,7 @@
 
     <title>HRM App</title>
     <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/loading-spinner.css" />
   </head>
   <body>
     <header>
@@ -59,7 +60,7 @@
             <h1 class="heading">Employees</h1>
             <button class="btn enable-filter-btn tooltip">
               <span class="material-symbols-outlined"> filter_list </span>
-              <span class="tooltiptext">Toggle filters.</span>
+              <span class="tooltiptext">Toggle filters</span>
             </button>
           </div>
           <div class="filter-container open-filter-options flex">
@@ -95,14 +96,18 @@
               </div>
 
               <div class="dropdown-content">
-                <ul class="skill-list"></ul>
+                <ul class="skill-list">
+                  <div class="flex loader-container skills-loader">
+                    <span class="loader"></span>
+                  </div>
+                </ul>
               </div>
             </div>
             <div class="tooltip">
               <button class="btn secondary-btn clear-filter-btn">
                 <span class="material-symbols-outlined"> filter_list_off </span>
               </button>
-              <span class="tooltiptext">Clear filters.</span>
+              <span class="tooltiptext">Clear filters</span>
             </div>
           </div>
         </div>
@@ -134,6 +139,9 @@
             <th>Actions</th>
           </tr>
         </table>
+        <div class="flex loader-container table-data-loader">
+          <span class="loader"></span>
+        </div>
         <p class="error-tag">No data found. Add an employee.</p>
         <!-- TODO: Pagination -->
       </section>

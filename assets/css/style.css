@@ -216,6 +216,7 @@ main {
 
 .dropdown-content li {
   display: block;
+  color: var(--primary-color);
 }
 
 ul {

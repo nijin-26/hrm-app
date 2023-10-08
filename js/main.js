@@ -1,4 +1,4 @@
-import { fetchEmployees, fetchSkills } from "./firebase/firebase.js";
+import { fetchEmployees, fetchSkills, isLoading } from "./firebase/firebase.js";
 import {
   renderTable,
   renderSkills,
@@ -18,6 +18,10 @@ const filterContainer = document.querySelector(".filter-container");
 const searchSkillInput = document.querySelector(".skill-search-input");
 const skillList = document.querySelector(".dropdown-content");
 const selectedSkillsContainer = document.querySelector(".selected-skill");
+const tableLoader = document.querySelector(
+  ".loader-container.table-data-loader"
+);
+const skillsLoader = document.querySelector(".loader-container.skills-loader");
 
 // Buttons
 const openFilterBtn = document.querySelector(".enable-filter-btn");
@@ -55,9 +59,13 @@ const handleEmployeeTableClick = (e) => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  fetchSkills((skills) => renderSkills(skills));
+  fetchSkills((skills) => {
+    if (skills && !isLoading()) skillsLoader.style.display = "none";
+    renderSkills(skills);
+  });
 
   fetchEmployees((employeeArr) => {
+    if (employeeArr && !isLoading()) tableLoader.style.display = "none";
     employeeData = employeeArr;
     renderTable(employeeArr);
   });
