@@ -14,7 +14,8 @@ export const filterByEmployeeName = () => {
     employee.fullName.toLowerCase().includes(searchedEmployeeName)
   );
 
-  filterTable();
+  if (searchedEmployeeList.length !== 0) filterTable();
+  else renderTable(searchedEmployeeList);
 };
 
 export const filterTable = () => {
@@ -27,8 +28,8 @@ export const filterTable = () => {
   const filteredEmployees = employeeList.filter((employee) => {
     if (selectedDepartment !== "" && selectedRole !== "")
       return (
-        employee.department[0] === selectedDepartment &&
-        employee.role[0] === selectedRole
+        employee.department === selectedDepartment &&
+        employee.role === selectedRole
       );
     else if (
       selectedDepartment !== "" &&
@@ -36,20 +37,20 @@ export const filterTable = () => {
       selectedSkillsArray.length !== 0
     ) {
       const filteredBySkill = selectedSkillsArray.every((selectedSkill) => {
-        if (selectedSkill.id in employee.skill) return employee;
+        if (employee.skill.includes(selectedSkill.id)) return employee;
       });
       return (
-        employee.department[0] === selectedDepartment &&
-        employee.role[0] === selectedRole &&
+        employee.department === selectedDepartment &&
+        employee.role === selectedRole &&
         filteredBySkill
       );
     } else if (selectedDepartment !== "" && selectedRole === "")
-      return employee.department[0] === selectedDepartment;
+      return employee.department === selectedDepartment;
     else if (selectedRole !== "" && selectedDepartment === "")
-      return employee.role[0] === selectedRole;
+      return employee.role === selectedRole;
     else if (selectedSkillsArray.length !== 0) {
       const filteredBySkill = selectedSkillsArray.every((selectedSkill) => {
-        if (selectedSkill.id in employee.skill) return employee;
+        if (employee.skill.includes(selectedSkill.id)) return employee;
       });
       return filteredBySkill;
     } else return employee;
