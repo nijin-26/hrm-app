@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTable(employeeArr);
   });
 
-  searchEmployeeInput.addEventListener("input", (e) => {
+  searchEmployeeInput.addEventListener("input", () => {
     filterByEmployeeName();
   });
 
@@ -67,8 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   clearFilterBtn.addEventListener("click", () => {
     filterContainer.classList.toggle("open-filter-options");
+    searchEmployeeInput.value = "";
     departmentFilterInput.value = "";
     roleFilterInput.value = "";
+    filterByEmployeeName();
     resetSkillFilter();
     filterTable();
   });
@@ -115,11 +117,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // <<<<< To get out of search field >>>>>>>>
-  searchEmployeeInput.addEventListener(
-    "keydown",
-    (e) => e.key === "Escape" && searchEmployeeInput.blur()
-  );
+  // <<<<< To get out of search field & clear the input >>>>>>>>
+  searchEmployeeInput.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      searchEmployeeInput.blur();
+      // searchEmployeeInput.value = "";
+      // filterByEmployeeName();
+    }
+  });
 
   // <<<<< To toggle theme & toggle filter options
   document.addEventListener("keydown", (e) => {

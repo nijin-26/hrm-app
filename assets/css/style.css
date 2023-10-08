@@ -56,7 +56,7 @@ input,
 select {
   padding: 12px 20px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--primary-color);
   background-color: #fff;
   outline: none;
 }
@@ -150,6 +150,7 @@ main {
 }
 
 .skill-search-view-container {
+  border: 1px solid var(--primary-color);
   width: 100%;
   height: 100%;
   padding: 0 12px;
