@@ -57,8 +57,9 @@
         <div>
           <div class="flex topbar-header">
             <h1 class="heading">Employees</h1>
-            <button class="btn enable-filter-btn">
+            <button class="btn enable-filter-btn tooltip">
               <span class="material-symbols-outlined"> filter_list </span>
+              <span class="tooltiptext">Toggle filters.</span>
             </button>
           </div>
           <div class="filter-container open-filter-options flex">
@@ -97,9 +98,12 @@
                 <ul class="skill-list"></ul>
               </div>
             </div>
-            <button class="btn secondary-btn clear-filter-btn">
-              <span class="material-symbols-outlined"> filter_list_off </span>
-            </button>
+            <div class="tooltip">
+              <button class="btn secondary-btn clear-filter-btn">
+                <span class="material-symbols-outlined"> filter_list_off </span>
+              </button>
+              <span class="tooltiptext">Clear filters.</span>
+            </div>
           </div>
         </div>
         <button class="btn add-employee-btn flex justify-between">

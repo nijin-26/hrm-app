@@ -7,8 +7,10 @@
 }
 
 .dark-theme {
-  --primary-color: #6d5f6d;
+  --primary-color: #36454f;
+  /* --primary-color: #6d5f6d; */
   --secondary-color: #e0a96d;
+  /* --secondary-color: #ffbd59; */
   --bg-color: #202020;
   --font-color: #ffffff;
 }
@@ -66,6 +68,35 @@ select {
   color: red;
   text-align: center;
   font-weight: 500;
+}
+
+/*  Styles for tooltip */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  width: 150px;
+  padding: 5px;
+  text-align: center;
+  background-color: var(--primary-color);
+  border: 1px solid var(--secondary-color);
+  color: #fff;
+  border-radius: 5px;
+  z-index: 1;
+  position: absolute;
+  right: -160px;
+  top: 50%;
+  transform: translateY(-50%);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 0.9;
 }
 
 /* Common Class End */
