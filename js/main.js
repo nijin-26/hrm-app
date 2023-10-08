@@ -106,55 +106,41 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       console.log(e.target.closest("tr").dataset);
     }
+
+    // <<<<<< Keyboard shortcuts for Skill Search Input >>>>>>>>
+    searchSkillInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        skillList.style.display = "none";
+        renderSelectedSkills(event, setSelectedSkills);
+        return;
+      } else if (event.key === "Backspace" && event.target.value === "") {
+        if (selectedSkillsArray.length !== 0) {
+          removeSelectedSkills(event, setSelectedSkills);
+        }
+      } else {
+        skillList.style.display = "block";
+      }
+    });
   });
 
-  // <<<<<< Keyboard Shortcuts / Events - START  >>>>>>>>>>>>>
+  // <<<<<< Keyboard Shortcuts / Events for Document - START  >>>>>>>>>>>>>
 
-  // <<<<<< To focus on the search field >>>>>>>>>>
   document.addEventListener("keydown", (e) => {
     if (e.key === "/" && document.activeElement !== searchSkillInput) {
       e.preventDefault();
       searchEmployeeInput.focus();
-    }
-  });
-
-  // <<<<< To get out of search field & clear the input >>>>>>>>
-  searchEmployeeInput.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      searchEmployeeInput.blur();
-      // searchEmployeeInput.value = "";
-      // filterByEmployeeName();
-    }
-  });
-
-  // <<<<< To get out of search skill input field >>>>>>
-  searchSkillInput.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") searchSkillInput.blur();
-  });
-
-  // <<<<< To toggle theme & toggle filter options
-  document.addEventListener("keydown", (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+    } else if (e.key === "Escape") {
+      if (document.activeElement === searchEmployeeInput) {
+        searchEmployeeInput.blur();
+      } else if (document.activeElement === searchSkillInput) {
+        searchSkillInput.blur();
+      }
+    } else if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
       if (e.key === "e" || e.key === "E") toggleTheme();
       else if (e.key === "f" || e.key === "F")
         filterContainer.classList.toggle("open-filter-options");
     }
   });
 
-  // <<<<<< To add or remove selected skills >>>>>>>>
-  searchSkillInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      skillList.style.display = "none";
-      renderSelectedSkills(event, setSelectedSkills);
-      return;
-    } else if (event.key === "Backspace" && event.target.value === "") {
-      if (selectedSkillsArray.length !== 0) {
-        removeSelectedSkills(event, setSelectedSkills);
-      }
-    } else {
-      skillList.style.display = "block";
-    }
-  });
-
-  // <<<<<< Keyboard Shortcuts / Events - END  >>>>>>>>>>>>>
+  // <<<<<< Keyboard Shortcuts / Events for Document - END  >>>>>>>>>>>>>
 });
