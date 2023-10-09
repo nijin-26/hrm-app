@@ -135,7 +135,7 @@ header {
 
 main {
   max-width: var(--max-width);
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 0 16px;
 }
 
@@ -198,6 +198,7 @@ main {
   padding: 0 8px;
   flex: 1;
   border: none;
+  overflow: hidden;
 }
 
 .dropdown-content {
@@ -262,11 +263,11 @@ ul li:hover {
 }
 
 .selected-skill {
-  position: relative;
-  display: none;
+  /* position: relative; */
+  /* display: none; */
   /* flex: 1; */
-  max-width: 200px;
   height: 100%;
+  max-width: 260px;
   font-size: 12px;
   gap: 2px;
   color: var(--font-color);
@@ -296,7 +297,7 @@ ul li:hover {
   align-items: center;
   gap: 6px;
   border-radius: 50px;
-  padding: 6px;
+  padding: 8px;
 }
 
 .selected-skill-tag:nth-child(even) {

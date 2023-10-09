@@ -30,7 +30,8 @@ export const showToast = (type, msg, payloadObj) => {
 
   timeOutId_2 = setTimeout(() => {
     toastContainer.querySelector(`.${type}`).remove();
-  }, 6000);
+    clearTimeout(timeOutId_1);
+  }, 5000);
 };
 
 // showToast("warning");

@@ -31,7 +31,7 @@ export const fetchEmployees = (dataCallback) => {
     employeeRef,
     (snapshot) => {
       loadingState = false;
-      showToast("success", "Employee data & skills fetched successfully.");
+      // showToast("success", "Employee data & skills fetched successfully.");
       if (snapshot.exists()) dataCallback(snapshot.val());
       else dataCallback([]);
     },

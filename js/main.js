@@ -143,7 +143,7 @@ document.addEventListener("keydown", (e) => {
       searchSkillInput.blur();
     }
   } else if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
-    if (e.key === "e" || e.key === "E") toggleTheme();
+    if (e.key === "l" || e.key === "L") toggleTheme();
     else if (e.key === "f" || e.key === "F")
       filterContainer.classList.toggle("open-filter-options");
   }
