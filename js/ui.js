@@ -1,11 +1,14 @@
 import { filterTable } from "./filter.js";
-import { selectedSkillsArray } from "./main.js";
+import { employeeData, selectedSkillsArray } from "./main.js";
 
 const searchSkillInput = document.querySelector(".skill-search-input");
 const skillList = document.querySelector(".dropdown-content > .skill-list");
 const selectedSkillsContainer = document.querySelector(".selected-skill");
 const tableErrorTag = document.querySelector(".error-tag");
 const employeeTable = document.querySelector(".employee-list-table");
+const modalContainer = document.querySelector(".modal");
+const modalContent = document.querySelector(".modal-content");
+const overlayContainer = document.querySelector(".overlay");
 
 const createSkillListItem = (skillID, name) => {
   const li = document.createElement("li");
@@ -21,8 +24,8 @@ const createEmployeeTableRow = (employee) => {
     <td> ${employee.email} </td>
     <td> ${employee.dateOfJoin} </td>
     <td class="action-btn-container">
-    <span id="edit-action-btn" class="material-symbols-outlined"  data-employee-id="${employee.id}"> edit_document </span>
-    <span id="delete-action-btn" class="material-symbols-outlined" data-employee-id="${employee.id}"> person_remove </span>
+    <span class="material-symbols-outlined edit-action-btn"   data-employee-id="${employee.id}"> edit_document </span>
+    <span class="material-symbols-outlined delete-action-btn" data-employee-id="${employee.id}"> person_remove </span>
     </td>
   `;
   const tr = document.createElement("tr");
@@ -152,4 +155,45 @@ export const removeSelectedSkills = (e, setSelectedSkills) => {
   if (skillListItem) {
     skillListItem.style.display = "block";
   }
+};
+
+export const viewEmployee = (employeeId) => {
+  const selectedEmployee = employeeData.find(
+    (employee) => employee.id === parseInt(employeeId)
+  );
+
+  overlayContainer.classList.add("open");
+  modalContainer.classList.add("open");
+
+  const employeeDetailsContainer = `
+    <div class="view-employee-container flex">
+    <div class="view-employee-image">
+      <img src="./assets/images/placeholder-image.png" width="200" alt="" />
+    </div>
+    <div class="employee-details-container">
+      <span>${selectedEmployee.id}</span>
+      <h1>${selectedEmployee.fullName}</h1>
+      <h2>Development - Trainee</h2>
+      <div class="employee-email">
+        <span class="material-symbols-outlined"> mail </span><span>${selectedEmployee.email}</span>
+      </div>
+      <div class="employee-mobile">
+        <span class="material-symbols-outlined"> call </span><span>${selectedEmployee.mobile}</span>
+      </div>
+      <div class="employee-work-location">
+        <span class="material-symbols-outlined"> location_on </span
+        ><span>${selectedEmployee.workLocation}</span>
+      </div>
+      <div class="employee-join-date">
+        <span class="material-symbols-outlined"> calendar_month </span
+        ><span>${selectedEmployee.dateOfJoin}</span>
+      </div>
+      <div class="employee-dob">
+        <span class="material-symbols-outlined"> cake </span><span>${selectedEmployee.dateOfBirth}</span>
+      </div>
+    </div>
+  </div>
+  `;
+  modalContent.innerHTML = employeeDetailsContainer;
+  // modalContainer.append(employeeDetailsContainer);
 };

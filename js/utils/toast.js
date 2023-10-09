@@ -34,10 +34,7 @@ export const showToast = (type, msg, payloadObj) => {
   }, 5000);
 };
 
-// showToast("warning");
-
 window.addEventListener("unload", () => {
-  console.log("unload");
   clearTimeout(timeOutId_1);
   clearTimeout(timeOutId_2);
 });

@@ -5,6 +5,7 @@ import {
   removeSelectedSkills,
   renderSelectedSkills,
   renderSkillDropdown,
+  viewEmployee,
 } from "./ui.js";
 import { toggleTheme } from "./toggleTheme.js";
 import { filterTable } from "./filter.js";
@@ -22,11 +23,14 @@ const tableLoader = document.querySelector(
   ".loader-container.table-data-loader"
 );
 const skillsLoader = document.querySelector(".loader-container.skills-loader");
+const modalContainer = document.querySelector(".modal");
+const overlayContainer = document.querySelector(".overlay");
 
 // Buttons
 const openFilterBtn = document.querySelector(".enable-filter-btn");
 const clearFilterBtn = document.querySelector(".clear-filter-btn");
 const addEmployeeBtn = document.querySelector(".add-employee-btn");
+const modalCloseBtn = document.querySelector(".modal-close-btn");
 
 export let selectedSkillsArray = [];
 export let employeeData = [];
@@ -47,14 +51,14 @@ const resetSkillFilter = () => {
 
 // <<<< Employee Table Events >>>>>>>>>>
 const handleEmployeeTableClick = (e) => {
-  if (e.target.id === "edit-action-btn") {
-    console.log("Edit btn clicked", e.target.dataset);
-  } else if (e.target.id === "delete-action-btn") {
+  if (e.target.classList.contains("edit-action-btn")) {
+    console.log("Edit btn clicked", e.target.dataset.employeeId);
+  } else if (e.target.classList.contains("delete-action-btn")) {
     console.log("Delete btn is clicked");
   } else if (e.target.tagName === "TH" && e.target.dataset.column) {
     sortTable(e.target.dataset.column);
   } else {
-    console.log(e.target.closest("tr").dataset);
+    viewEmployee(e.target.closest("tr").dataset.employeeId);
   }
 };
 
@@ -113,6 +117,16 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   employeeTable.addEventListener("click", handleEmployeeTableClick);
+
+  overlayContainer.addEventListener("click", (e) => {
+    overlayContainer.classList.remove("open");
+    modalContainer.classList.remove("open");
+  });
+
+  modalCloseBtn.addEventListener("click", (e) => {
+    overlayContainer.classList.remove("open");
+    modalContainer.classList.remove("open");
+  });
 
   // <<<<<< Keyboard shortcuts for Skill Search Input >>>>>>>>
   searchSkillInput.addEventListener("keydown", (event) => {

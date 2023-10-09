@@ -32,6 +32,7 @@
 
     <title>HRM App</title>
     <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/modal.css" />
     <link rel="stylesheet" href="assets/css/loading-spinner.css" />
     <link rel="stylesheet" href="assets/css/toast.css" />
   </head>
@@ -148,10 +149,13 @@
       </section>
     </main>
 
-    <section class="toast-container"></section>
+    <div class="overlay"></div>
+    <div class="modal">
+      <span class="material-symbols-outlined modal-close-btn">cancel</span>
+      <div class="modal-content"></div>
+    </div>
 
-    <div class="overlay open"></div>
-    <div class="modal open"></div>
+    <section class="toast-container"></section>
 
     <script src="./js/main.js" type="module"></script>
     <script src="./js/ui.js" type="module"></script>
