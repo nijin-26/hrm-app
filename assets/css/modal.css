@@ -12,21 +12,22 @@
 }
 
 .modal {
-  padding: 10px 16px;
+  display: none;
+  padding: 16px;
   position: fixed;
-  height: 80vh;
+  /* height: 80vh; */
   background-color: #fff;
   border-radius: 6px;
   overflow: auto;
   z-index: 3;
 }
 
-.modal-close-btn {
+/* .modal-close-btn {
   display: none;
-}
+} */
 
 .modal.open .modal-close-btn {
-  display: block;
+  /* display: block; */
   position: absolute;
   right: 10px;
   top: 10px;
@@ -39,6 +40,7 @@
 }
 
 .modal.open {
+  display: block;
   width: 600px;
   top: 50%;
   left: 50%;

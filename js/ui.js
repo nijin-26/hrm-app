@@ -167,28 +167,32 @@ export const viewEmployee = (employeeId) => {
 
   const employeeDetailsContainer = `
     <div class="view-employee-container flex">
-    <div class="view-employee-image">
-      <img src="./assets/images/placeholder-image.png" width="200" alt="" />
+    <div class="view-employee-image flex">
+      <img src="./assets/images/placeholder-image.png" width="200" alt="employee_image" />
+      <p>${selectedEmployee.id}</p>
     </div>
     <div class="employee-details-container">
-      <span>${selectedEmployee.id}</span>
       <h1>${selectedEmployee.fullName}</h1>
       <h2>Development - Trainee</h2>
-      <div class="employee-email">
-        <span class="material-symbols-outlined"> mail </span><span>${selectedEmployee.email}</span>
+      <div class="employee-detail-tag employee-email">
+        <span class="material-symbols-outlined"> mail </span><span>
+        <a href="mailto:${selectedEmployee.email}">${selectedEmployee.email}</a>
+        </span>
       </div>
-      <div class="employee-mobile">
-        <span class="material-symbols-outlined"> call </span><span>${selectedEmployee.mobile}</span>
+      <div class="employee-detail-tag employee-mobile">
+        <span class="material-symbols-outlined"> call </span><span>
+        <a href="tel:${selectedEmployee.mobile}">${selectedEmployee.mobile}</a>
+        </span>
       </div>
-      <div class="employee-work-location">
+      <div class="employee-detail-tag employee-work-location">
         <span class="material-symbols-outlined"> location_on </span
         ><span>${selectedEmployee.workLocation}</span>
       </div>
-      <div class="employee-join-date">
+      <div class="employee-detail-tag employee-join-date">
         <span class="material-symbols-outlined"> calendar_month </span
         ><span>${selectedEmployee.dateOfJoin}</span>
       </div>
-      <div class="employee-dob">
+      <div class="employee-detail-tag employee-dob">
         <span class="material-symbols-outlined"> cake </span><span>${selectedEmployee.dateOfBirth}</span>
       </div>
     </div>
