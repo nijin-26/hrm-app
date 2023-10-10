@@ -3,6 +3,7 @@ import {
   getDatabase,
   ref,
   onValue,
+  update,
 } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 import { showToast } from "../utils/toast.js";
 
@@ -32,8 +33,18 @@ export const fetchEmployees = (dataCallback) => {
     (snapshot) => {
       loadingState = false;
       // showToast("success", "Employee data & skills fetched successfully.");
-      if (snapshot.exists()) dataCallback(snapshot.val());
-      else dataCallback([]);
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const dataArr = [];
+        for (const key in data) {
+          const object = {
+            id: key,
+            ...data[key],
+          };
+          dataArr.push(object);
+        }
+        dataCallback(dataArr);
+      } else dataCallback([]);
     },
     (error) => showToast("error", "Error from fetch employees", error)
   );
@@ -46,15 +57,22 @@ export const fetchSkills = (dataCallback) => {
     skillsRef,
     (snapshot) => {
       loadingState = false;
-      if (snapshot.exists()) dataCallback(snapshot.val());
-      else dataCallback([]);
+      if (snapshot.exists()) {
+        dataCallback(snapshot.val());
+      } else dataCallback([]);
     },
     (error) => showToast("error", "Error from fetching skills", error)
   );
   dataCallback([]);
 };
 
-export const deleteEmployee = (dataCallback) => {
+export const deleteEmployee = (employeeId, isDeleted) => {
   loadingState = true;
-  const employeeRef = ref(db, `employee/`);
+  const employeeRef = ref(db, "employee/");
+  update(employeeRef, { [employeeId]: null }, (error) =>
+    showToast("error", "Error occured while removing the employee", error)
+  ).then(() => {
+    isDeleted();
+    showToast("success", "The selected employee is deleted successfuly");
+  });
 };

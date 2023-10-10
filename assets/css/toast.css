@@ -1,5 +1,6 @@
 /* Styles for the toast container */
 section.toast-container {
+  z-index: 100;
   position: fixed;
   top: 15%;
   right: 0;

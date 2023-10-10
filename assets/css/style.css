@@ -47,11 +47,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  /* padding: 20px; */
+  padding: 10px 16px;
   border-radius: 70px;
   border: none;
   transition: 0.3s;
   cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.btn-secondary {
+  border: 1px solid var(--primary-color);
+  background-color: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 input,
@@ -237,6 +258,7 @@ ul li:hover {
 }
 
 .add-employee-btn {
+  padding: 20px;
   background-color: var(--secondary-color);
   border: 1px solid #ccc;
   box-shadow: 8px 8px 12px #00000062, -8px -8px 12px #ffffff51;
@@ -391,4 +413,29 @@ tr:not(:last-child),
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.delete-employee-confirmation {
+  padding: 16px;
+}
+
+.delete-employee-confirmation p {
+  color: var(--primary-color);
+  font-weight: 500;
+  line-height: 1.8;
+}
+
+.delete-employee-confirmation input {
+  width: 100%;
+}
+
+.delete-employee-modal-btns {
+  margin-top: 20px;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.delete-employee-modal-btns .disabled {
+  background-color: #908f8f;
+  color: #ccc;
 }

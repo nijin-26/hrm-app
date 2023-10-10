@@ -1,4 +1,9 @@
-import { fetchEmployees, fetchSkills, isLoading } from "./firebase/firebase.js";
+import {
+  deleteEmployee,
+  fetchEmployees,
+  fetchSkills,
+  isLoading,
+} from "./firebase/firebase.js";
 import {
   renderTable,
   renderSkills,
@@ -6,6 +11,8 @@ import {
   renderSelectedSkills,
   renderSkillDropdown,
   viewEmployee,
+  closeModal,
+  deleteBtnHandler,
 } from "./ui.js";
 import { toggleTheme } from "./toggleTheme.js";
 import { filterTable } from "./filter.js";
@@ -24,6 +31,7 @@ const tableLoader = document.querySelector(
 );
 const skillsLoader = document.querySelector(".loader-container.skills-loader");
 const modalContainer = document.querySelector(".modal");
+const modalContent = document.querySelector(".modal-content");
 const overlayContainer = document.querySelector(".overlay");
 
 // Buttons
@@ -37,6 +45,10 @@ export let employeeData = [];
 
 const setSelectedSkills = (selectedSkills) => {
   selectedSkillsArray = selectedSkills;
+};
+
+const isModalOpen = () => {
+  return overlayContainer.classList.contains("open") ? true : false;
 };
 
 const resetSkillFilter = () => {
@@ -54,7 +66,7 @@ const handleEmployeeTableClick = (e) => {
   if (e.target.classList.contains("edit-action-btn")) {
     console.log("Edit btn clicked", e.target.dataset.employeeId);
   } else if (e.target.classList.contains("delete-action-btn")) {
-    console.log("Delete btn is clicked");
+    deleteBtnHandler(e.target.dataset.employeeId);
   } else if (e.target.tagName === "TH" && e.target.dataset.column) {
     sortTable(e.target.dataset.column);
   } else {
@@ -118,15 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   employeeTable.addEventListener("click", handleEmployeeTableClick);
 
-  overlayContainer.addEventListener("click", (e) => {
-    overlayContainer.classList.remove("open");
-    modalContainer.classList.remove("open");
-  });
-
-  modalCloseBtn.addEventListener("click", (e) => {
-    overlayContainer.classList.remove("open");
-    modalContainer.classList.remove("open");
-  });
+  overlayContainer.addEventListener("click", closeModal);
+  modalCloseBtn.addEventListener("click", closeModal);
 
   // <<<<<< Keyboard shortcuts for Skill Search Input >>>>>>>>
   searchSkillInput.addEventListener("keydown", (event) => {
@@ -147,19 +152,21 @@ document.addEventListener("DOMContentLoaded", () => {
 // <<<<<< Keyboard Shortcuts / Events for Document - START  >>>>>>>>>>>>>
 
 document.addEventListener("keydown", (e) => {
-  if (e.key === "/" && document.activeElement !== searchSkillInput) {
-    e.preventDefault();
-    searchEmployeeInput.focus();
-  } else if (e.key === "Escape") {
-    if (document.activeElement === searchEmployeeInput) {
-      searchEmployeeInput.blur();
-    } else if (document.activeElement === searchSkillInput) {
-      searchSkillInput.blur();
+  if (!isModalOpen()) {
+    if (e.key === "/" && document.activeElement !== searchSkillInput) {
+      e.preventDefault();
+      searchEmployeeInput.focus();
+    } else if (e.key === "Escape") {
+      if (document.activeElement === searchEmployeeInput) {
+        searchEmployeeInput.blur();
+      } else if (document.activeElement === searchSkillInput) {
+        searchSkillInput.blur();
+      }
+    } else if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+      if (e.key === "l" || e.key === "L") toggleTheme();
+      else if (e.key === "f" || e.key === "F")
+        filterContainer.classList.toggle("open-filter-options");
     }
-  } else if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
-    if (e.key === "l" || e.key === "L") toggleTheme();
-    else if (e.key === "f" || e.key === "F")
-      filterContainer.classList.toggle("open-filter-options");
   }
 });
 

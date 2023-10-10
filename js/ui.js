@@ -1,5 +1,7 @@
 import { filterTable } from "./filter.js";
+import { deleteEmployee } from "./firebase/firebase.js";
 import { employeeData, selectedSkillsArray } from "./main.js";
+import { showToast } from "./utils/toast.js";
 
 const searchSkillInput = document.querySelector(".skill-search-input");
 const skillList = document.querySelector(".dropdown-content > .skill-list");
@@ -157,13 +159,22 @@ export const removeSelectedSkills = (e, setSelectedSkills) => {
   }
 };
 
-export const viewEmployee = (employeeId) => {
-  const selectedEmployee = employeeData.find(
-    (employee) => employee.id === parseInt(employeeId)
-  );
-
+export const openModal = () => {
   overlayContainer.classList.add("open");
   modalContainer.classList.add("open");
+};
+
+export const closeModal = () => {
+  overlayContainer.classList.remove("open");
+  modalContainer.classList.remove("open");
+};
+
+export const viewEmployee = (employeeId) => {
+  const selectedEmployee = employeeData.find(
+    (employee) => employee.id === employeeId
+  );
+
+  openModal();
 
   const employeeDetailsContainer = `
     <div class="view-employee-container flex">
@@ -199,5 +210,56 @@ export const viewEmployee = (employeeId) => {
   </div>
   `;
   modalContent.innerHTML = employeeDetailsContainer;
-  // modalContainer.append(employeeDetailsContainer);
+};
+
+export const deleteBtnHandler = (employeeId) => {
+  const confirmationContent = `
+  <form class="delete-employee-confirmation" data-employee-id="${employeeId}">
+    <p>
+      To confirm the deletion of this employee, please enter their ID, "${employeeId}"
+      in the field below. Deletion cannot be undone.
+    </p>
+    <input
+      required
+      id="delete-confirmation-id-input"
+      type="text"
+      placeholder="Enter the employee's ID to proceed."
+    />
+    <div class="flex delete-employee-modal-btns">
+      <button type="button" class="btn btn-secondary delete-cancel-btn">Cancel</button>
+      <button type="submit" class="btn btn-primary delete-btn disabled" disabled>Delete</button>
+    </div>
+  </form>
+  `;
+
+  modalContent.innerHTML = confirmationContent;
+  openModal();
+
+  const deleteConfirmationForm = document.querySelector(
+    ".delete-employee-confirmation"
+  );
+  const deleteBtn = document.querySelector(".delete-btn");
+  const cancelBtn = document.querySelector(".delete-cancel-btn");
+  const confirmationInput = document.querySelector(
+    "#delete-confirmation-id-input"
+  );
+
+  confirmationInput.addEventListener("input", (e) => {
+    if (e.target.value === "") {
+      deleteBtn.disabled = true;
+      deleteBtn.classList.add("disabled");
+    } else {
+      deleteBtn.disabled = false;
+      deleteBtn.classList.remove("disabled");
+    }
+  });
+
+  deleteConfirmationForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (confirmationInput.value === employeeId)
+      deleteEmployee(e.target.dataset.employeeId, () => closeModal());
+    else showToast("warning", "You have entered a wrong ID. Please Try again.");
+  });
+
+  cancelBtn.addEventListener("click", closeModal);
 };

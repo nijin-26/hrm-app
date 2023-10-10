@@ -24,6 +24,8 @@ export const showToast = (type, msg, payloadObj) => {
         <p>${msg ? msg : defaultMsgs[type]}</p>
     </div>`;
 
+  // toastContainer.querySelector("div").classList.add("active");
+
   timeOutId_1 = setTimeout(() => {
     toastContainer.querySelector(`.${type}`).classList.remove("active");
   }, 3000);
@@ -31,10 +33,13 @@ export const showToast = (type, msg, payloadObj) => {
   timeOutId_2 = setTimeout(() => {
     toastContainer.querySelector(`.${type}`).remove();
     clearTimeout(timeOutId_1);
-  }, 5000);
+  }, 3200);
 };
 
 window.addEventListener("unload", () => {
   clearTimeout(timeOutId_1);
   clearTimeout(timeOutId_2);
 });
+
+// showToast("error");
+// showToast("success");
