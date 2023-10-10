@@ -10,11 +10,13 @@ let currentSortFlag = 1;
 function toggleSortIndicator(column) {
   headers.forEach((header) => {
     const indicator = header.querySelector(".sort-indicator");
-    if (header.dataset.column === column) {
-      indicator.textContent =
-        currentSortFlag === 1 ? "arrow_drop_down" : "arrow_drop_up";
-    } else {
-      indicator.textContent = "";
+    if (indicator) {
+      if (header.dataset.column === column) {
+        indicator.innerHTML =
+          currentSortFlag === 1 ? "arrow_drop_down" : "arrow_drop_up";
+      } else {
+        indicator.innerHTML = "";
+      }
     }
   });
 }

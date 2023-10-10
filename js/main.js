@@ -67,8 +67,9 @@ const handleEmployeeTableClick = (e) => {
     console.log("Edit btn clicked", e.target.dataset.employeeId);
   } else if (e.target.classList.contains("delete-action-btn")) {
     deleteBtnHandler(e.target.dataset.employeeId);
-  } else if (e.target.tagName === "TH" && e.target.dataset.column) {
-    sortTable(e.target.dataset.column);
+  } else if (e.target.tagName === "TH") {
+    if (e.target.dataset.column) sortTable(e.target.dataset.column);
+    else return;
   } else {
     viewEmployee(e.target.closest("tr").dataset.employeeId);
   }
