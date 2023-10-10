@@ -1,7 +1,6 @@
 {
-  "employee": [
-    {
-      "id": 1001,
+  "employeeObject": {
+    "1001": {
       "fullName": "Nijin Nazar",
       "dateOfBirth": "26-08-2000",
       "dateOfJoin": "11-06-2023",
@@ -13,8 +12,7 @@
       "role": "R1",
       "skill": ["REACT005", "JS001"]
     },
-    {
-      "id": 1002,
+    "1002": {
       "fullName": "Ashwin Nair",
       "dateOfBirth": "24-06-2000",
       "dateOfJoin": "11-06-2023",
@@ -26,8 +24,7 @@
       "role": "R1",
       "skill": ["PY002"]
     },
-    {
-      "id": 1003,
+    "1003": {
       "fullName": "Anita Rao",
       "dateOfBirth": "15-02-1995",
       "dateOfJoin": "01-07-2023",
@@ -39,8 +36,7 @@
       "role": "R2",
       "skill": ["JS001", "JAVA008"]
     },
-    {
-      "id": 1004,
+    "1004": {
       "fullName": "Sandeep Patel",
       "dateOfBirth": "10-04-1998",
       "dateOfJoin": "15-07-2023",
@@ -52,8 +48,7 @@
       "role": "R3",
       "skill": ["HTMLCSS017", "PHP004"]
     },
-    {
-      "id": 1005,
+    "1005": {
       "fullName": "Sara Smith",
       "dateOfBirth": "20-01-1990",
       "dateOfJoin": "05-08-2023",
@@ -65,8 +60,7 @@
       "role": "R4",
       "skill": ["REACT005", "SQL018"]
     },
-    {
-      "id": 1006,
+    "1006": {
       "fullName": "Rajesh Kumar",
       "dateOfBirth": "05-03-1993",
       "dateOfJoin": "10-09-2023",
@@ -78,8 +72,7 @@
       "role": "R5",
       "skill": ["ANG007", "MYSQL034"]
     },
-    {
-      "id": 1007,
+    "1007": {
       "fullName": "Linda Jones",
       "dateOfBirth": "12-11-1991",
       "dateOfJoin": "20-10-2023",
@@ -91,8 +84,7 @@
       "role": "R6",
       "skill": ["NODE011", "LARAVEL020"]
     },
-    {
-      "id": 1008,
+    "1008": {
       "fullName": "Ravi Mishra",
       "dateOfBirth": "08-09-1996",
       "dateOfJoin": "05-11-2023",
@@ -104,8 +96,7 @@
       "role": "R7",
       "skill": ["EXPRESSJS022", "GIT046"]
     },
-    {
-      "id": 1009,
+    "1009": {
       "fullName": "Priya Gupta",
       "dateOfBirth": "30-07-1994",
       "dateOfJoin": "15-12-2023",
@@ -117,8 +108,7 @@
       "role": "R8",
       "skill": ["RUBY010", "GRAPHQL031"]
     },
-    {
-      "id": 1010,
+    "1010": {
       "fullName": "Amit Verma",
       "dateOfBirth": "17-05-1997",
       "dateOfJoin": "25-01-2024",
@@ -130,69 +120,26 @@
       "role": "R2",
       "skill": ["KOTLIN013", "MONGODB033"]
     }
-  ],
+  },
 
-  "department": [
-    {
-      "id": "D1",
-      "name": "Development"
-    },
-    {
-      "id": "D2",
-      "name": "DevOps"
-    },
-    {
-      "id": "D3",
-      "name": "CloudOps"
-    },
-    {
-      "id": "D4",
-      "name": "QA"
-    },
-    {
-      "id": "D5",
-      "name": "User Experience"
-    },
-    {
-      "id": "D6",
-      "name": "User Interface"
-    }
-  ],
-  "role": [
-    {
-      "id": "R1",
-      "role": "Engineer"
-    },
-    {
-      "id": "R2",
-      "role": "Senior Engineer"
-    },
-    {
-      "id": "R3",
-      "role": "Lead Engineer"
-    },
-    {
-      "id": "R4",
-      "role": "Associate Architect"
-    },
-    {
-      "id": "R5",
-      "role": "Architect"
-    },
-    {
-      "id": "R6",
-      "role": "Senior Architect"
-    },
-    {
-      "id": "R7",
-      "role": "Associate Director"
-    },
-    {
-      "id": "R8",
-      "role": "Director"
-    }
-  ],
-
+  "department": {
+    "D1": "Development",
+    "D2": "DevOps",
+    "D3": "CloudOps",
+    "D4": "QA",
+    "D5": "User Experience",
+    "D6": "User Interface"
+  },
+  "role": {
+    "R1": "Engineer",
+    "R2": "Senior Engineer",
+    "R3": "Lead Engineer",
+    "R4": "Associate Architect",
+    "R5": "Architect",
+    "R6": "Senior Architect",
+    "R7": "Associate Director",
+    "R8": "Director"
+  },
   "skill": {
     "HTMLCSS017": { "name": "HTML/CSS" },
     "JS001": { "name": "Javascript" },

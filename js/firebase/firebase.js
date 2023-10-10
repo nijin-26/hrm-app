@@ -53,3 +53,8 @@ export const fetchSkills = (dataCallback) => {
   );
   dataCallback([]);
 };
+
+export const deleteEmployee = (dataCallback) => {
+  loadingState = true;
+  const employeeRef = ref(db, `employee/`);
+};
