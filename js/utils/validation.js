@@ -1,7 +1,7 @@
-const validationError = {};
+const errorMsg = {};
 
-export const validateForm = (formData) => {
-  return validationError;
+export const validateForm = (data) => {
+  if (data.fullName) return validationError;
 };
 
 // export const isValidName = (name) => {};
