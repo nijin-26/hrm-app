@@ -12,34 +12,38 @@ const defaultMsgs = {
   warning: "Warning. Please check again.",
 };
 
-let timeOutId_1;
-let timeOutId_2;
+// let timeOutId_1;
+// let timeOutId_2;
 
 export const showToast = (type, msg, payloadObj) => {
-  toastContainer.innerHTML += `  
-   <div class="${type} active">
-        <span class="material-symbols-outlined toast-icon">${
-          icons[type]
-        } </span>
-        <p>${msg ? msg : defaultMsgs[type]}</p>
-    </div>`;
+  const toast = document.createElement("div");
+  toast.innerHTML = `
+    <span class="material-symbols-outlined toast-icon">${icons[type]}</span>
+    <p>${msg ? msg : defaultMsgs[type]}</p>
+  `;
+  toastContainer.appendChild(toast);
 
-  // toastContainer.querySelector("div").classList.add("active");
+  setTimeout(() => toast.classList.add(type, "active"), 300);
 
-  timeOutId_1 = setTimeout(() => {
-    toastContainer.querySelector(`.${type}`).classList.remove("active");
-  }, 3000);
+  setTimeout(() => {
+    toast.classList.remove("active");
 
-  timeOutId_2 = setTimeout(() => {
-    toastContainer.querySelector(`.${type}`).remove();
-    clearTimeout(timeOutId_1);
-  }, 3200);
+    setTimeout(() => {
+      toast.remove();
+    }, 300);
+  }, 3300);
+
+  // timeOutId_1 = setTimeout(() => {
+  //   toastContainer.querySelector(`.${type}`).classList.remove("active");
+  // }, 3000);
+
+  // timeOutId_2 = setTimeout(() => {
+  //   toastContainer.querySelector(`.${type}`).remove();
+  //   clearTimeout(timeOutId_1);
+  // }, 3200);
 };
 
-window.addEventListener("unload", () => {
-  clearTimeout(timeOutId_1);
-  clearTimeout(timeOutId_2);
-});
-
-// showToast("error");
-// showToast("success");
+// window.addEventListener("unload", () => {
+//   clearTimeout(timeOutId_1);
+//   clearTimeout(timeOutId_2);
+// });

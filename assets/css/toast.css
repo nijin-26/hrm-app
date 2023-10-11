@@ -4,7 +4,8 @@ section.toast-container {
   position: fixed;
   top: 15%;
   right: 0;
-  width: 400px;
+  min-width: 280px;
+  max-width: 350px;
   overflow: hidden;
 }
 
@@ -13,7 +14,7 @@ section.toast-container {
   margin: 10px 0;
   padding: 10px 20px;
   position: relative;
-  height: 100px;
+  min-height: 80px;
   color: #fff;
   border-radius: 50px 0 0 50px;
   transform: translateX(100%);
@@ -29,7 +30,7 @@ section.toast-container {
 
 .toast-container .toast-icon {
   color: #fff;
-  font-size: 56px;
+  font-size: 46px;
 }
 
 .toast-container .success {
@@ -42,6 +43,10 @@ section.toast-container {
 
 .toast-container .error {
   background: linear-gradient(135deg, #ff3333, #cc0000);
+}
+
+.toast-container > * {
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 .toast-container > *.active {

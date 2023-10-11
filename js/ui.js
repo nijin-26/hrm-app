@@ -1,5 +1,5 @@
 import { filterTable } from "./filter.js";
-import { deleteEmployee } from "./firebase/firebase.js";
+import { addEmployee, deleteEmployee } from "./firebase/firebase.js";
 import { employeeData, selectedSkillsArray } from "./main.js";
 import { showToast } from "./utils/toast.js";
 
@@ -14,6 +14,7 @@ import {
   overlayContainer,
   body,
 } from "./utils/elementSelectors.js";
+import { validateForm } from "./utils/validation.js";
 
 const createSkillListItem = (skillID, name) => {
   const li = document.createElement("li");
@@ -185,7 +186,11 @@ export const viewEmployee = (employeeId) => {
   const employeeDetailsContainer = `
     <div class="view-employee-container flex">
     <div class="view-employee-image flex">
-      <img src="./assets/images/placeholder-image.png" width="200" alt="employee_image" />
+      <img src="${
+        selectedEmployee.imageURL !== ""
+          ? selectedEmployee.imageURL
+          : "./assets/images/placeholder-image.png"
+      }" width="200" alt="employee_image" />
       <p>${selectedEmployee.id}</p>
     </div>
     <div class="employee-details-container">
@@ -210,7 +215,9 @@ export const viewEmployee = (employeeId) => {
         ><span>${selectedEmployee.dateOfJoin}</span>
       </div>
       <div class="employee-detail-tag employee-dob">
-        <span class="material-symbols-outlined"> cake </span><span>${selectedEmployee.dateOfBirth}</span>
+        <span class="material-symbols-outlined"> cake </span><span>${
+          selectedEmployee.dateOfBirth
+        }</span>
       </div>
     </div>
   </div>
@@ -362,7 +369,11 @@ export const renderAddEmployeeForm = () => {
       <div class="input-group flex justify-between">
       // TODO: Skills containers
       </div>
+        <div class="flex loader-container add-employee-loader">
+                    <span class="loader"></span>
+         </div>
       <div class="input-group btns flex">
+  
         <button
           type="button"
           class="btn btn-secondary add-emp-cancel-btn"
@@ -394,15 +405,34 @@ export const renderAddEmployeeForm = () => {
   const department = empAddForm.querySelector("select.emp-department");
   const role = empAddForm.querySelector("select.emp-role");
   // TODO: Skills containers
+
+  const addEmpLoader = empAddForm.querySelector(".add-employee-loader");
   const cancelBtn = empAddForm.querySelector("button.add-emp-cancel-btn");
   const submitBtn = empAddForm.querySelector("button.add-emp-submit-btn");
 
-  empImageAddBtn.addEventListener("click", (e) => {
-    imageInput.click();
-  });
+  addEmpLoader.style.display = "none";
+  imageInput.value = "";
+
+  const handleImageInput = () => imageInput.click();
+  empImageAddBtn.addEventListener("click", handleImageInput);
+
+  const resetSelectedImage = () => {
+    imageInput.value = "";
+    empImageContainer.src = "./assets/images/placeholder-image.png";
+    empImageAddBtn.innerHTML = "+";
+    empImageAddBtn.removeEventListener("click", resetSelectedImage);
+    setTimeout(() => {
+      empImageAddBtn.addEventListener("click", handleImageInput);
+    }, 100);
+  };
 
   imageInput.addEventListener("input", (e) => {
     empImageContainer.src = URL.createObjectURL(imageInput.files[0]);
+    if (e.target.files[0]) {
+      empImageAddBtn.innerHTML = "x";
+      empImageAddBtn.removeEventListener("click", handleImageInput);
+      empImageAddBtn.addEventListener("click", resetSelectedImage);
+    }
   });
 
   empAddForm.addEventListener("submit", (e) => {
@@ -414,13 +444,16 @@ export const renderAddEmployeeForm = () => {
       dateOfJoin: dateOfJoin?.value,
       email: email?.value,
       mobile: mobileNumber?.value,
-      workLocation: workLocation?.file,
-      imageURL: imageInput?.value,
+      workLocation: workLocation?.value,
+      imageURL: imageInput?.files[0],
       department: department?.value,
       role: role?.value,
       skill: ["REACT005", "JS001"],
     };
 
-    console.log(empData);
+    const isValid = validateForm(empData);
+    if (isValid) {
+      addEmployee(empData, empAddForm);
+    }
   });
 };

@@ -4,8 +4,20 @@ import {
   ref,
   onValue,
   update,
+  get,
+  child,
+  set,
 } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+import {
+  getStorage,
+  uploadBytes,
+  getDownloadURL,
+  ref as strRef,
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
+
 import { showToast } from "../utils/toast.js";
+import { closeModal } from "../ui.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCVJaFfoEBM3-ZqT89iRzQ-1K9dKIoThO8",
@@ -21,6 +33,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const storage = getStorage(app);
 
 let loadingState = false;
 export const isLoading = () => loadingState;
@@ -64,6 +77,41 @@ export const fetchSkills = (dataCallback) => {
     (error) => showToast("error", "Error from fetching skills", error)
   );
   dataCallback([]);
+};
+
+const uploadImage = async (file) => {
+  const storageRef = strRef(storage, "some-child");
+
+  return uploadBytes(storageRef, file).then((snapshot) => {
+    return getDownloadURL(snapshot.ref);
+  });
+};
+
+function generateUniqueKey() {
+  const key = Math.floor(1000 + Math.random() * 9000).toString();
+
+  return get(child(ref(db), `employee/${key}`)).then((snapshot) => {
+    if (snapshot.exists()) return generateUniqueKey();
+    else return key;
+  });
+}
+
+export const addEmployee = async (data, formElement) => {
+  loadingState = true;
+  if (data.imageURL) data.imageURL = await uploadImage(data.imageURL);
+  else data.imageURL = "";
+
+  const uniqueKey = await generateUniqueKey();
+
+  set(ref(db, `employee/${uniqueKey}`), data, (error) => {
+    loadingState = false;
+    showToast("error", "Add Employee failed. Try again.", error);
+  }).then(() => {
+    loadingState = false;
+    showToast("success", "Employee added successfully");
+    formElement.reset();
+    closeModal();
+  });
 };
 
 export const deleteEmployee = (employeeId, isDeleted) => {

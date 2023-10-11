@@ -447,7 +447,6 @@ tr:not(:last-child),
 
 .add-employee-form {
   display: flex;
-  align-items: center;
   flex-direction: column;
 }
 
@@ -481,6 +480,9 @@ tr:not(:last-child),
   gap: 20px;
 }
 
+.add-employee-form {
+  margin-top: 20px;
+}
 .add-employee-input-image {
   display: none;
 }
@@ -504,7 +506,7 @@ tr:not(:last-child),
   background-color: var(--primary-color);
   color: #fff;
   border-radius: 50%;
-  font-size: 28px;
+  font-size: 24px;
   cursor: pointer;
   transition: 0.4s;
   border: 2px solid var(--secondary-color);
