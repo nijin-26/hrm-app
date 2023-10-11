@@ -2,9 +2,11 @@ import { renderTable } from "./ui.js";
 import { employeeData, selectedSkillsArray } from "./main.js";
 import { currentSortColumn, sortTable } from "./sort.js";
 
-const searchEmployeeInput = document.querySelector(".search-employee-input");
-const departmentFilterInput = document.querySelector(".department-filter");
-const roleFilterInput = document.querySelector(".role-filter");
+import {
+  searchEmployeeInput,
+  departmentFilterInput,
+  roleFilterInput,
+} from "./utils/elementSelectors.js";
 
 export let filteredEmployees = [];
 

@@ -1,4 +1,4 @@
-const toastContainer = document.querySelector(".toast-container");
+import { toastContainer } from "./elementSelectors.js";
 
 const icons = {
   success: "new_releases",

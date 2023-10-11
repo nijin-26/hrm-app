@@ -1,5 +1,4 @@
-const toggleThemeBtn = document.querySelector(".toggle-theme");
-const body = document.body;
+import { toggleThemeBtn, body } from "./utils/elementSelectors.js";
 
 const setTheme = (theme) => {
   body.classList.toggle("dark-theme", theme === "mode_night");

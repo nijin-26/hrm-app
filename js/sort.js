@@ -2,7 +2,7 @@ import { filteredEmployees } from "./filter.js";
 import { employeeData } from "./main.js";
 import { renderTable } from "./ui.js";
 
-const headers = document.querySelectorAll(".employee-list-table th");
+import { headers } from "./utils/elementSelectors.js";
 
 export let currentSortColumn = "";
 let currentSortFlag = 1;

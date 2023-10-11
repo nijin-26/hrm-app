@@ -1,9 +1,8 @@
-import {
-  deleteEmployee,
-  fetchEmployees,
-  fetchSkills,
-  isLoading,
-} from "./firebase/firebase.js";
+import { fetchEmployees, fetchSkills, isLoading } from "./firebase/firebase.js";
+import { toggleTheme } from "./toggleTheme.js";
+import { filterTable } from "./filter.js";
+import { sortTable } from "./sort.js";
+
 import {
   renderTable,
   renderSkills,
@@ -14,31 +13,24 @@ import {
   closeModal,
   deleteBtnHandler,
 } from "./ui.js";
-import { toggleTheme } from "./toggleTheme.js";
-import { filterTable } from "./filter.js";
-import { sortTable } from "./sort.js";
 
-const searchEmployeeInput = document.querySelector(".search-employee-input");
-const employeeTable = document.querySelector(".employee-list-table");
-const departmentFilterInput = document.querySelector(".department-filter");
-const roleFilterInput = document.querySelector(".role-filter");
-const filterContainer = document.querySelector(".filter-container");
-const searchSkillInput = document.querySelector(".skill-search-input");
-const skillList = document.querySelector(".dropdown-content");
-const selectedSkillsContainer = document.querySelector(".selected-skill");
-const tableLoader = document.querySelector(
-  ".loader-container.table-data-loader"
-);
-const skillsLoader = document.querySelector(".loader-container.skills-loader");
-const modalContainer = document.querySelector(".modal");
-const modalContent = document.querySelector(".modal-content");
-const overlayContainer = document.querySelector(".overlay");
-
-// Buttons
-const openFilterBtn = document.querySelector(".enable-filter-btn");
-const clearFilterBtn = document.querySelector(".clear-filter-btn");
-const addEmployeeBtn = document.querySelector(".add-employee-btn");
-const modalCloseBtn = document.querySelector(".modal-close-btn");
+import {
+  searchEmployeeInput,
+  employeeTable,
+  departmentFilterInput,
+  roleFilterInput,
+  filterContainer,
+  searchSkillInput,
+  dropdownContent,
+  selectedSkillsContainer,
+  tableLoader,
+  skillsLoader,
+  overlayContainer,
+  openFilterBtn,
+  clearFilterBtn,
+  addEmployeeBtn,
+  modalCloseBtn,
+} from "./utils/elementSelectors.js";
 
 export let selectedSkillsArray = [];
 export let employeeData = [];
@@ -96,19 +88,19 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   searchSkillInput.addEventListener("focus", () => {
-    skillList.style.display = "block";
+    dropdownContent.style.display = "block";
     searchSkillInput.dispatchEvent(new Event("input"));
   });
 
   searchSkillInput.addEventListener("blur", () => {
     setTimeout(() => {
-      skillList.style.display = "none";
+      dropdownContent.style.display = "none";
     }, 100);
   });
 
   searchSkillInput.addEventListener("input", (e) => renderSkillDropdown(e));
 
-  skillList.addEventListener("click", (e) =>
+  dropdownContent.addEventListener("click", (e) =>
     renderSelectedSkills(e, setSelectedSkills)
   );
 
@@ -137,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // <<<<<< Keyboard shortcuts for Skill Search Input >>>>>>>>
   searchSkillInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
-      skillList.style.display = "none";
+      dropdownContent.style.display = "none";
       renderSelectedSkills(event, setSelectedSkills);
       return;
     } else if (event.key === "Backspace" && event.target.value === "") {
@@ -145,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         removeSelectedSkills(event, setSelectedSkills);
       }
     } else {
-      skillList.style.display = "block";
+      dropdownContent.style.display = "block";
     }
   });
 });

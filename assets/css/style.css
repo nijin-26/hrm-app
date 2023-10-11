@@ -397,6 +397,7 @@ tr:not(:last-child),
 }
 
 .view-employee-container {
+  color: var(--primary-color);
   justify-content: center;
   align-items: center;
   gap: 30px;
@@ -413,6 +414,10 @@ tr:not(:last-child),
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.employee-detail-tag span {
+  color: inherit;
 }
 
 .delete-employee-confirmation {

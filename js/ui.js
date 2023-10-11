@@ -3,14 +3,16 @@ import { deleteEmployee } from "./firebase/firebase.js";
 import { employeeData, selectedSkillsArray } from "./main.js";
 import { showToast } from "./utils/toast.js";
 
-const searchSkillInput = document.querySelector(".skill-search-input");
-const skillList = document.querySelector(".dropdown-content > .skill-list");
-const selectedSkillsContainer = document.querySelector(".selected-skill");
-const tableErrorTag = document.querySelector(".error-tag");
-const employeeTable = document.querySelector(".employee-list-table");
-const modalContainer = document.querySelector(".modal");
-const modalContent = document.querySelector(".modal-content");
-const overlayContainer = document.querySelector(".overlay");
+import {
+  searchSkillInput,
+  skillList,
+  selectedSkillsContainer,
+  tableErrorTag,
+  employeeTable,
+  modalContainer,
+  modalContent,
+  overlayContainer,
+} from "./utils/elementSelectors.js";
 
 const createSkillListItem = (skillID, name) => {
   const li = document.createElement("li");
