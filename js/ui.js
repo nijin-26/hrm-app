@@ -12,6 +12,7 @@ import {
   modalContainer,
   modalContent,
   overlayContainer,
+  body,
 } from "./utils/elementSelectors.js";
 
 const createSkillListItem = (skillID, name) => {
@@ -164,11 +165,14 @@ export const removeSelectedSkills = (e, setSelectedSkills) => {
 export const openModal = () => {
   overlayContainer.classList.add("open");
   modalContainer.classList.add("open");
+  body.style.overflow = "hidden";
 };
 
 export const closeModal = () => {
   overlayContainer.classList.remove("open");
   modalContainer.classList.remove("open");
+  body.style.overflow = "auto";
+  modalContent.innerHTML = "";
 };
 
 export const viewEmployee = (employeeId) => {
@@ -266,4 +270,157 @@ export const deleteBtnHandler = (employeeId) => {
   cancelBtn.addEventListener("click", closeModal);
 };
 
-export const renderAddEmployeeForm = () => {};
+export const renderAddEmployeeForm = () => {
+  const addEmpFormTemp = `
+    <form class="add-employee-form">
+    <div class="employee-form-image-container flex">
+      <input type="file" class="add-employee-input-image" />
+      <button type="button" class="add-image-btn">+</button>
+      <div class="image-round-container">
+        <img
+        src="./assets/images/placeholder-image.png"
+        alt="placeholder image"
+        />
+      </div>
+    </div>
+    <div class="form-input-container">
+      <div class="input-group flex justify-between">
+        <div class="input-sub-group">
+          <label for="fullName">Full Name</label>
+          <input required
+            class="emp-fullname"
+            placeholder="Enter full name"
+            type="text"
+            id="fullName"
+          />
+        </div>
+        <div class="input-sub-group">
+          <label for="dateOfJoin">Date of Join</label>
+          <input required class="emp-dateOfJoin" type="date" id="dateOfJoin" />
+        </div>
+      </div>
+      <div class="input-group flex justify-between">
+        <div class="input-sub-group">
+          <label for="email">Email ID</label>
+          <input required
+            class="emp-email"
+            placeholder="Enter email address"
+            type="email"
+            id="email"
+          />
+        </div>
+        <div class="input-sub-group">
+          <label for="mobileNumber">Mobile Number</label>
+          <input required
+            class="emp-mobileNumber"
+            placeholder="Enter Mobile Number"
+            type="text"
+            id="mobileNumber"
+          />
+        </div>
+      </div>
+      <div class="input-group flex justify-between">
+        <div class="input-sub-group">
+          <label for="dateOfBirth">Date of Birth</label>
+          <input required class="emp-dateOfBirth" type="date" id="dateOfBirth" />
+        </div>
+        <div class="input-sub-group">
+          <label for="workLocation">Work Location</label>
+          <select required
+            class="emp-workLocation"
+            name="workLocation"
+            id="workLocation"
+            autocomplete="off"
+          >
+            <option value="" selected disabled>
+              Select work location
+            </option>
+            <option value="tvm">Trivandrum</option>
+            <option value="koch">Kochi</option>
+            <option value="cal">Calicut</option>
+          </select>
+        </div>
+      </div>
+      <div class="input-group flex justify-between">
+        <div class="input-sub-group">
+          <label for="department">Department</label>
+          <select required class="emp-department" name="department" id="department" autocomplete="off">
+            <option value="" selected disabled>Select Department</option>
+            <option value="tvm">Development</option>
+            <option value="tvm">Design</option>
+          </select>
+        </div>
+        <div class="input-sub-group">
+          <label for="role">Role</label>
+          <select required class="emp-role" name="role" id="role" autocomplete="off">
+            <option value="" selected disabled>Select Role</option>
+            <option value="tvm">Intern</option>
+            <option value="koch">Architect</option>
+          </select>
+        </div>
+      </div>
+      <div class="input-group flex justify-between">
+      // TODO: Skills containers
+      </div>
+      <div class="input-group btns flex">
+        <button
+          type="button"
+          class="btn btn-secondary add-emp-cancel-btn"
+        >
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary add-emp-submit-btn">
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+  `;
+
+  modalContent.innerHTML = addEmpFormTemp;
+
+  const empAddForm = document.querySelector(".add-employee-form");
+  const imageInput = empAddForm.querySelector(".add-employee-input-image");
+  const empImageAddBtn = empAddForm.querySelector(".add-image-btn");
+  const empImageContainer = empAddForm.querySelector(
+    ".employee-form-image-container img"
+  );
+  const fullName = empAddForm.querySelector("input.emp-fullname");
+  const dateOfJoin = empAddForm.querySelector("input.emp-dateOfJoin");
+  const email = empAddForm.querySelector("input.emp-email");
+  const mobileNumber = empAddForm.querySelector("input.emp-mobileNumber");
+  const dateOfBirth = empAddForm.querySelector("input.emp-dateOfBirth");
+  const workLocation = empAddForm.querySelector("select.emp-workLocation");
+  const department = empAddForm.querySelector("select.emp-department");
+  const role = empAddForm.querySelector("select.emp-role");
+  // TODO: Skills containers
+  const cancelBtn = empAddForm.querySelector("button.add-emp-cancel-btn");
+  const submitBtn = empAddForm.querySelector("button.add-emp-submit-btn");
+
+  empImageAddBtn.addEventListener("click", (e) => {
+    imageInput.click();
+  });
+
+  imageInput.addEventListener("input", (e) => {
+    empImageContainer.src = URL.createObjectURL(imageInput.files[0]);
+  });
+
+  empAddForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const empData = {
+      fullName: fullName?.value,
+      dateOfBirth: dateOfBirth?.value,
+      dateOfJoin: dateOfJoin?.value,
+      email: email?.value,
+      mobile: mobileNumber?.value,
+      workLocation: workLocation?.file,
+      imageURL: imageInput?.value,
+      department: department?.value,
+      role: role?.value,
+      skill: ["REACT005", "JS001"],
+    };
+
+    console.log(empData);
+  });
+};

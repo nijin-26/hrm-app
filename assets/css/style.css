@@ -444,3 +444,86 @@ tr:not(:last-child),
   background-color: #908f8f;
   color: #ccc;
 }
+
+.add-employee-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.input-group {
+  margin: 20px 0;
+  width: 100%;
+  overflow: hidden;
+  gap: 60px;
+  font-size: 14px;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  font-size: 14px;
+}
+
+.input-sub-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-sub-group label {
+  font-weight: 500;
+}
+
+.input-group.btns {
+  justify-content: center;
+  gap: 20px;
+}
+
+.add-employee-input-image {
+  display: none;
+}
+
+.employee-form-image-container {
+  justify-content: center;
+}
+
+.employee-form-image-container {
+  position: relative;
+}
+
+.employee-form-image-container .add-image-btn {
+  position: absolute;
+  bottom: -20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 28px;
+  cursor: pointer;
+  transition: 0.4s;
+  border: 2px solid var(--secondary-color);
+}
+.employee-form-image-container .add-image-btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.employee-form-image-container .image-round-container {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: red;
+  border: 2px solid var(--primary-color);
+  overflow: hidden;
+}
+
+.image-round-container img {
+  max-width: 100%;
+  object-fit: cover;
+}

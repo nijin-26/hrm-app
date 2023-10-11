@@ -15,7 +15,7 @@
   display: none;
   padding: 16px;
   position: fixed;
-  /* height: 80vh; */
+  max-height: 90vh;
   background-color: #fff;
   border-radius: 6px;
   overflow: auto;
