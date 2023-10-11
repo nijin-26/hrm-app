@@ -12,6 +12,8 @@ import {
   viewEmployee,
   closeModal,
   deleteBtnHandler,
+  openModal,
+  renderAddEmployeeForm,
 } from "./ui.js";
 
 import {
@@ -114,7 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   addEmployeeBtn.addEventListener("click", () => {
-    console.log("Add employee btn clicked");
+    openModal();
+    renderAddEmployeeForm();
   });
 
   selectedSkillsContainer.addEventListener("click", (e) =>

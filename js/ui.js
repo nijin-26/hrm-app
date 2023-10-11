@@ -265,3 +265,5 @@ export const deleteBtnHandler = (employeeId) => {
 
   cancelBtn.addEventListener("click", closeModal);
 };
+
+export const renderAddEmployeeForm = () => {};
