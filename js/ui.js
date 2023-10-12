@@ -5,6 +5,7 @@ import {
   updateEmployee,
 } from "./firebase/firebase.js";
 import {
+  allSkills,
   departments,
   employeeData,
   roles,
@@ -38,10 +39,14 @@ const createEmployeeTableRow = (employee) => {
     <td> ${employee.id} </td>
     <td> ${employee.fullName} </td>
     <td> ${employee.email} </td>
-    <td> ${employee.dateOfJoin} </td>
+    <td> ${getFormattedDate(employee.dateOfJoin)[0]} </td>
     <td class="action-btn-container">
-    <span class="material-symbols-outlined edit-action-btn"   data-employee-id="${employee.id}"> edit_document </span>
-    <span class="material-symbols-outlined delete-action-btn" data-employee-id="${employee.id}"> person_remove </span>
+    <span class="material-symbols-outlined edit-action-btn"   data-employee-id="${
+      employee.id
+    }"> edit_document </span>
+    <span class="material-symbols-outlined delete-action-btn" data-employee-id="${
+      employee.id
+    }"> person_remove </span>
     </td>
   `;
   const tr = document.createElement("tr");
@@ -191,8 +196,8 @@ export const viewEmployee = (employeeId) => {
     (employee) => employee.id === employeeId
   );
 
-  const dateOfBirth = getFormattedDate(selectedEmployee.dateOfBirth);
-  const dateOfJoin = getFormattedDate(selectedEmployee.dateOfJoin);
+  const dateOfBirth = getFormattedDate(selectedEmployee.dateOfBirth)[0];
+  const dateOfJoin = getFormattedDate(selectedEmployee.dateOfJoin)[0];
 
   openModal();
 
@@ -235,7 +240,26 @@ export const viewEmployee = (employeeId) => {
     </div>
   </div>
   `;
+
   modalContent.innerHTML = employeeDetailsContainer;
+
+  const skillsHead = document.createElement("h2");
+  skillsHead.innerText = "Skills";
+  skillsHead.style.margin = "0";
+  modalContent.append(skillsHead);
+  const employeeSkillsContainer = document.createElement("div");
+  employeeSkillsContainer.classList.add(
+    "flex",
+    "selected-skill",
+    "view-employee"
+  );
+  selectedEmployee.skill.forEach((skill) => {
+    const skillTag = `<p  class="selected-skill-tag flex">
+    <span>${allSkills[skill].name}</span>
+    </p>`;
+    employeeSkillsContainer.innerHTML += skillTag;
+  });
+  modalContent.append(employeeSkillsContainer);
 };
 
 export const deleteBtnHandler = (employeeId) => {
@@ -505,7 +529,7 @@ export const editEmployee = (selectedEmp) => {
   const cancelBtn = empAddForm.querySelector("button.add-emp-cancel-btn");
   const submitBtn = empAddForm.querySelector("button.add-emp-submit-btn");
 
-  cancelBtn.addEventListener("click", () => console.log(dateOfBirth.value));
+  cancelBtn.addEventListener("click", closeModal);
   addEmpLoader.style.display = "none";
   imageInput.value = "";
 
@@ -522,12 +546,14 @@ export const editEmployee = (selectedEmp) => {
     option.value = id;
     role.append(option);
   }
+  console.log(selectedEmp.dateOfBirth);
+  console.log(selectedEmp.dateOfBirth);
 
   fullName.value = selectedEmp.fullName;
-  dateOfJoin.valueAsDate = new Date(selectedEmp.dateOfJoin);
+  dateOfJoin.value = getFormattedDate(selectedEmp.dateOfJoin)[1];
   email.value = selectedEmp.email;
   mobileNumber.value = selectedEmp.mobile;
-  dateOfBirth.valueAsDate = new Date(selectedEmp.dateOfBirth);
+  dateOfBirth.value = getFormattedDate(selectedEmp.dateOfBirth)[1];
   workLocation.value = selectedEmp.workLocation;
   department.value = selectedEmp.department;
   role.value = selectedEmp.role;
@@ -537,8 +563,8 @@ export const editEmployee = (selectedEmp) => {
 
     const empData = {
       fullName: fullName?.value,
-      dateOfBirth: getFormattedDate(dateOfBirth?.value),
-      dateOfJoin: getFormattedDate(dateOfJoin?.value),
+      dateOfBirth: dateOfBirth?.valueAsDate.getTime(),
+      dateOfJoin: dateOfJoin?.valueAsDate.getTime(),
       email: email?.value,
       mobile: mobileNumber?.value,
       workLocation: workLocation?.value,

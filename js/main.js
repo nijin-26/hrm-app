@@ -41,6 +41,7 @@ import {
   modalCloseBtn,
 } from "./utils/elementSelectors.js";
 
+export let allSkills;
 export let selectedSkillsArray = [];
 export let employeeData = [];
 export let departments;
@@ -83,6 +84,7 @@ const handleEmployeeTableClick = (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   fetchSkills((skills) => {
     if (skills && !isLoading()) skillsLoader.style.display = "none";
+    allSkills = skills;
     renderSkills(skills);
   });
 

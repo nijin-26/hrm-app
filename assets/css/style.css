@@ -297,6 +297,12 @@ ul li:hover {
   scrollbar-width: thin;
 }
 
+.selected-skill.view-employee {
+  gap: 12px;
+  max-width: none;
+  font-size: 16px;
+}
+
 .selected-skill::-webkit-scrollbar {
   display: none;
 }
@@ -320,6 +326,11 @@ ul li:hover {
   gap: 6px;
   border-radius: 50px;
   padding: 8px;
+}
+
+.selected-skill.view-employee .selected-skill-tag {
+  gap: 10px;
+  padding: 10px;
 }
 
 .selected-skill-tag:nth-child(even) {
@@ -397,10 +408,13 @@ tr:not(:last-child),
 }
 
 .view-employee-container {
+  padding: 20px 0;
   color: var(--primary-color);
   justify-content: center;
   align-items: center;
   gap: 30px;
+  border-bottom: 1px solid #000;
+  margin-bottom: 20px;
 }
 
 .view-employee-image {
