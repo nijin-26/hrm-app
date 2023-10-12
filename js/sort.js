@@ -5,7 +5,7 @@ import { renderTable } from "./ui.js";
 import { headers } from "./utils/elementSelectors.js";
 
 export let currentSortColumn = "";
-let currentSortFlag = 1;
+let currentSortFlag = -1;
 
 function toggleSortIndicator(column) {
   headers.forEach((header) => {

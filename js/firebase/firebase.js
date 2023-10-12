@@ -79,6 +79,30 @@ export const fetchSkills = (dataCallback) => {
   dataCallback([]);
 };
 
+export const fetchDeparments = (callback) => {
+  const deptRef = ref(db, "department/");
+  onValue(
+    deptRef,
+    (snapshot) => {
+      if (snapshot.exists()) callback(snapshot.val());
+      else callback({});
+    },
+    (error) => showToast("error", "Error in fetching department.", error)
+  );
+};
+
+export const fetchRoles = (callback) => {
+  const roleRef = ref(db, "role/");
+  onValue(
+    roleRef,
+    (snapshot) => {
+      if (snapshot.exists()) callback(snapshot.val());
+      else callback({});
+    },
+    (error) => showToast("error", "Error in fetching department.", error)
+  );
+};
+
 const uploadImage = async (file) => {
   const storageRef = strRef(storage, "some-child");
 
@@ -109,6 +133,23 @@ export const addEmployee = async (data, formElement) => {
   }).then(() => {
     loadingState = false;
     showToast("success", "Employee added successfully");
+    formElement.reset();
+    closeModal();
+  });
+};
+
+export const updateEmployee = async (id, data, formElement) => {
+  console.log("udpate employee is called");
+  loadingState = true;
+  // if (data.imageURL) data.imageURL = await uploadImage(data.imageURL);
+  // else data.imageURL = "";
+
+  update(ref(db, `employee/${id}`), data, (error) => {
+    loadingState = false;
+    showToast("error", "Update Employee failed. Try again.", error);
+  }).then(() => {
+    loadingState = false;
+    showToast("success", "Employee data updated successfully");
     formElement.reset();
     closeModal();
   });

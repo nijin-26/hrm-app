@@ -1,4 +1,10 @@
-import { fetchEmployees, fetchSkills, isLoading } from "./firebase/firebase.js";
+import {
+  fetchDeparments,
+  fetchEmployees,
+  fetchRoles,
+  fetchSkills,
+  isLoading,
+} from "./firebase/firebase.js";
 import { toggleTheme } from "./toggleTheme.js";
 import { filterTable } from "./filter.js";
 import { sortTable } from "./sort.js";
@@ -14,6 +20,7 @@ import {
   deleteBtnHandler,
   openModal,
   renderAddEmployeeForm,
+  editEmployee,
 } from "./ui.js";
 
 import {
@@ -36,6 +43,8 @@ import {
 
 export let selectedSkillsArray = [];
 export let employeeData = [];
+export let departments;
+export let roles;
 
 const setSelectedSkills = (selectedSkills) => {
   selectedSkillsArray = selectedSkills;
@@ -58,7 +67,9 @@ const resetSkillFilter = () => {
 // <<<< Employee Table Events >>>>>>>>>>
 const handleEmployeeTableClick = (e) => {
   if (e.target.classList.contains("edit-action-btn")) {
-    console.log("Edit btn clicked", e.target.dataset.employeeId);
+    const empId = e.target.dataset.employeeId;
+    const selectedEmp = employeeData.find((emp) => emp.id === empId);
+    editEmployee(selectedEmp);
   } else if (e.target.classList.contains("delete-action-btn")) {
     deleteBtnHandler(e.target.dataset.employeeId);
   } else if (e.target.tagName === "TH") {
@@ -80,6 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
     employeeData = employeeArr;
     renderTable(employeeArr);
   });
+
+  fetchDeparments((depts) => (departments = depts));
+  fetchRoles((roleData) => (roles = roleData));
 
   searchEmployeeInput.addEventListener("input", () => filterTable());
   departmentFilterInput.addEventListener("input", filterTable);

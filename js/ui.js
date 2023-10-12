@@ -1,6 +1,15 @@
 import { filterTable } from "./filter.js";
-import { addEmployee, deleteEmployee } from "./firebase/firebase.js";
-import { employeeData, selectedSkillsArray } from "./main.js";
+import {
+  addEmployee,
+  deleteEmployee,
+  updateEmployee,
+} from "./firebase/firebase.js";
+import {
+  departments,
+  employeeData,
+  roles,
+  selectedSkillsArray,
+} from "./main.js";
 import { showToast } from "./utils/toast.js";
 
 import {
@@ -15,6 +24,7 @@ import {
   body,
 } from "./utils/elementSelectors.js";
 import { validateForm } from "./utils/validation.js";
+import { getFormattedDate } from "./utils/formatDate.js";
 
 const createSkillListItem = (skillID, name) => {
   const li = document.createElement("li");
@@ -181,6 +191,9 @@ export const viewEmployee = (employeeId) => {
     (employee) => employee.id === employeeId
   );
 
+  const dateOfBirth = getFormattedDate(selectedEmployee.dateOfBirth);
+  const dateOfJoin = getFormattedDate(selectedEmployee.dateOfJoin);
+
   openModal();
 
   const employeeDetailsContainer = `
@@ -195,7 +208,9 @@ export const viewEmployee = (employeeId) => {
     </div>
     <div class="employee-details-container">
       <h1>${selectedEmployee.fullName}</h1>
-      <h2>Development - Trainee</h2>
+      <h2>${departments[selectedEmployee.department]} - ${
+    roles[selectedEmployee.role]
+  }</h2>
       <div class="employee-detail-tag employee-email">
         <span class="material-symbols-outlined"> mail </span><span>
         <a href="mailto:${selectedEmployee.email}">${selectedEmployee.email}</a>
@@ -212,12 +227,10 @@ export const viewEmployee = (employeeId) => {
       </div>
       <div class="employee-detail-tag employee-join-date">
         <span class="material-symbols-outlined"> calendar_month </span
-        ><span>${selectedEmployee.dateOfJoin}</span>
+        ><span>${dateOfJoin}</span>
       </div>
       <div class="employee-detail-tag employee-dob">
-        <span class="material-symbols-outlined"> cake </span><span>${
-          selectedEmployee.dateOfBirth
-        }</span>
+        <span class="material-symbols-outlined"> cake </span><span>${dateOfBirth}</span>
       </div>
     </div>
   </div>
@@ -277,8 +290,7 @@ export const deleteBtnHandler = (employeeId) => {
   cancelBtn.addEventListener("click", closeModal);
 };
 
-export const renderAddEmployeeForm = () => {
-  const addEmpFormTemp = `
+const addEmpFormTemp = `
     <form class="add-employee-form">
     <div class="employee-form-image-container flex">
       <input type="file" class="add-employee-input-image" />
@@ -342,9 +354,9 @@ export const renderAddEmployeeForm = () => {
             <option value="" selected disabled>
               Select work location
             </option>
-            <option value="tvm">Trivandrum</option>
-            <option value="koch">Kochi</option>
-            <option value="cal">Calicut</option>
+            <option value="Trivandrum">Trivandrum</option>
+            <option value="Kochi">Kochi</option>
+            <option value="Calicut">Calicut</option>
           </select>
         </div>
       </div>
@@ -353,16 +365,12 @@ export const renderAddEmployeeForm = () => {
           <label for="department">Department</label>
           <select required class="emp-department" name="department" id="department" autocomplete="off">
             <option value="" selected disabled>Select Department</option>
-            <option value="tvm">Development</option>
-            <option value="tvm">Design</option>
           </select>
         </div>
         <div class="input-sub-group">
           <label for="role">Role</label>
           <select required class="emp-role" name="role" id="role" autocomplete="off">
             <option value="" selected disabled>Select Role</option>
-            <option value="tvm">Intern</option>
-            <option value="koch">Architect</option>
           </select>
         </div>
       </div>
@@ -388,6 +396,7 @@ export const renderAddEmployeeForm = () => {
   </form>
   `;
 
+export const renderAddEmployeeForm = () => {
   modalContent.innerHTML = addEmpFormTemp;
 
   const empAddForm = document.querySelector(".add-employee-form");
@@ -410,6 +419,7 @@ export const renderAddEmployeeForm = () => {
   const cancelBtn = empAddForm.querySelector("button.add-emp-cancel-btn");
   const submitBtn = empAddForm.querySelector("button.add-emp-submit-btn");
 
+  cancelBtn.addEventListener("click", closeModal);
   addEmpLoader.style.display = "none";
   imageInput.value = "";
 
@@ -435,17 +445,104 @@ export const renderAddEmployeeForm = () => {
     }
   });
 
+  for (const id in departments) {
+    const option = document.createElement("option");
+    option.innerHTML = departments[id];
+    option.value = id;
+    department.append(option);
+  }
+
+  for (const id in roles) {
+    const option = document.createElement("option");
+    option.innerHTML = roles[id];
+    option.value = id;
+    role.append(option);
+  }
+
   empAddForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const empData = {
       fullName: fullName?.value,
-      dateOfBirth: dateOfBirth?.value,
-      dateOfJoin: dateOfJoin?.value,
+      dateOfBirth: dateOfBirth?.valueAsDate.getTime(),
+      dateOfJoin: dateOfJoin?.valueAsDate.getTime(),
       email: email?.value,
       mobile: mobileNumber?.value,
       workLocation: workLocation?.value,
-      imageURL: imageInput?.files[0],
+      imageURL: imageInput?.files[0] ? imageInput.files[0] : "",
+      department: department?.value,
+      role: role?.value,
+      skill: ["REACT005", "JS001"],
+    };
+    const isValid = validateForm(empData);
+    if (isValid) {
+      addEmployee(empData, empAddForm);
+    }
+  });
+};
+
+export const editEmployee = (selectedEmp) => {
+  modalContent.innerHTML = addEmpFormTemp;
+  openModal();
+
+  const empAddForm = document.querySelector(".add-employee-form");
+  const imageInput = empAddForm.querySelector(".add-employee-input-image");
+  const empImageAddBtn = empAddForm.querySelector(".add-image-btn");
+  const empImageContainer = empAddForm.querySelector(
+    ".employee-form-image-container img"
+  );
+  const fullName = empAddForm.querySelector("input.emp-fullname");
+  const dateOfJoin = empAddForm.querySelector("input.emp-dateOfJoin");
+  const email = empAddForm.querySelector("input.emp-email");
+  const mobileNumber = empAddForm.querySelector("input.emp-mobileNumber");
+  const dateOfBirth = empAddForm.querySelector("input.emp-dateOfBirth");
+  const workLocation = empAddForm.querySelector("select.emp-workLocation");
+  const department = empAddForm.querySelector("select.emp-department");
+  const role = empAddForm.querySelector("select.emp-role");
+  // TODO: Skills containers
+
+  const addEmpLoader = empAddForm.querySelector(".add-employee-loader");
+  const cancelBtn = empAddForm.querySelector("button.add-emp-cancel-btn");
+  const submitBtn = empAddForm.querySelector("button.add-emp-submit-btn");
+
+  cancelBtn.addEventListener("click", () => console.log(dateOfBirth.value));
+  addEmpLoader.style.display = "none";
+  imageInput.value = "";
+
+  for (const id in departments) {
+    const option = document.createElement("option");
+    option.innerHTML = departments[id];
+    option.value = id;
+    department.append(option);
+  }
+
+  for (const id in roles) {
+    const option = document.createElement("option");
+    option.innerHTML = roles[id];
+    option.value = id;
+    role.append(option);
+  }
+
+  fullName.value = selectedEmp.fullName;
+  dateOfJoin.valueAsDate = new Date(selectedEmp.dateOfJoin);
+  email.value = selectedEmp.email;
+  mobileNumber.value = selectedEmp.mobile;
+  dateOfBirth.valueAsDate = new Date(selectedEmp.dateOfBirth);
+  workLocation.value = selectedEmp.workLocation;
+  department.value = selectedEmp.department;
+  role.value = selectedEmp.role;
+
+  empAddForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const empData = {
+      fullName: fullName?.value,
+      dateOfBirth: getFormattedDate(dateOfBirth?.value),
+      dateOfJoin: getFormattedDate(dateOfJoin?.value),
+      email: email?.value,
+      mobile: mobileNumber?.value,
+      workLocation: workLocation?.value,
+      imageURL: imageInput?.files[0] ? imageInput?.files[0] : "",
       department: department?.value,
       role: role?.value,
       skill: ["REACT005", "JS001"],
@@ -453,7 +550,7 @@ export const renderAddEmployeeForm = () => {
 
     const isValid = validateForm(empData);
     if (isValid) {
-      addEmployee(empData, empAddForm);
+      updateEmployee(selectedEmp.id, empData, empAddForm);
     }
   });
 };
