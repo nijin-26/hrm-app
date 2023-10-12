@@ -413,7 +413,7 @@ tr:not(:last-child),
   justify-content: center;
   align-items: center;
   gap: 30px;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #ccc;
   margin-bottom: 20px;
 }
 
@@ -467,7 +467,7 @@ tr:not(:last-child),
 .input-group {
   margin: 20px 0;
   width: 100%;
-  overflow: hidden;
+  /* overflow: hidden;   */
   gap: 60px;
   font-size: 14px;
 }
@@ -542,4 +542,22 @@ tr:not(:last-child),
 .image-round-container img {
   max-width: 100%;
   object-fit: cover;
+}
+
+.form-skills-container {
+  justify-content: center;
+  height: 100%;
+}
+
+.form-skills-container input {
+  height: 50px;
+  border: 1px solid #000;
+}
+
+.form-skills-container .skills-fitler-dropdown {
+  height: 100%;
+}
+
+.form-skills-container .dropdown-content {
+  max-height: 100px;
 }

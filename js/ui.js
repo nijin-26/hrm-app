@@ -55,10 +55,11 @@ const createEmployeeTableRow = (employee) => {
   return tr;
 };
 
-export const renderSkills = (skills) => {
+export const renderSkills = (skills, skillListElement) => {
   for (const skillID in skills) {
     const li = createSkillListItem(skillID, skills[skillID].name);
-    skillList.append(li);
+    if (skillListElement) skillListElement.append(li);
+    else skillList.append(li);
   }
 };
 
@@ -84,14 +85,18 @@ export const renderTable = (dataArr) => {
   });
 };
 
-export const renderSkillDropdown = (e) => {
+export const renderSkillDropdown = (e, dropdownContainer, selSkills) => {
+  console.log(dropdownContainer, selSkills, "render skill dropdown is called");
   const searchValue = e.target.value.toLowerCase();
-  const skills = skillList.querySelectorAll("li");
+
+  let skills = dropdownContainer
+    ? dropdownContainer.querySelectorAll("li")
+    : skillList.querySelectorAll("li");
 
   skills.forEach((skill) => {
-    const isSkillSelected = selectedSkillsArray.some(
-      (selSkill) => selSkill.id === skill.dataset.skillId
-    );
+    let isSkillSelected = selSkills
+      ? selSkills.some((selSkill) => selSkill.id === skill.dataset.skillId)
+      : selectedSkillsArray.some((s) => s.id === s.dataset.skillId);
 
     if (searchValue === "") {
       skill.style.display = isSkillSelected ? "none" : "block";
@@ -106,7 +111,12 @@ export const renderSkillDropdown = (e) => {
   });
 };
 
-export const renderSelectedSkills = (e, setSelectedSkills) => {
+export const renderSelectedSkills = (
+  e,
+  setSelectedSkills,
+  selectedSkills,
+  skillsContainer
+) => {
   let target;
   const skills = skillList.querySelectorAll("li");
 
@@ -127,10 +137,12 @@ export const renderSelectedSkills = (e, setSelectedSkills) => {
   let skillID = target.dataset.skillId;
   const skillName = target.textContent;
 
-  if (!selectedSkillsArray.some((skill) => skill.id === skillID)) {
+  const arrayToRender = selectedSkills ? selectedSkills : selectedSkillsArray;
+
+  if (!arrayToRender.some((skill) => skill.id === skillID)) {
     searchSkillInput.value = "";
-    selectedSkillsArray.push({ id: skillID, name: skillName });
-    setSelectedSkills(selectedSkillsArray);
+    arrayToRender.push({ id: skillID, name: skillName });
+    setSelectedSkills(arrayToRender);
     const temp = `<p  class="selected-skill-tag flex">
       <span>${skillName}</span>
       <span class="material-symbols-outlined remove-selected-skill-tag" data-skill-id=${skillID}>
@@ -294,6 +306,8 @@ export const deleteBtnHandler = (employeeId) => {
     "#delete-confirmation-id-input"
   );
 
+  confirmationInput.focus();
+
   confirmationInput.addEventListener("input", (e) => {
     if (e.target.value === "") {
       deleteBtn.disabled = true;
@@ -313,6 +327,26 @@ export const deleteBtnHandler = (employeeId) => {
 
   cancelBtn.addEventListener("click", closeModal);
 };
+
+const skillsContainerTemp = `
+    <div class="skills-fitler-dropdown">
+        <input
+          class="skill-search-input"
+          type="text"
+          placeholder="Search skills to add"
+        />
+      <div class="dropdown-content">
+        <ul class="skill-list">
+          <div class="flex loader-container skills-loader">
+            <span class="loader"></span>
+          </div>
+        </ul>
+      </div>
+      <div class="selected-skill flex">
+        <!-- <span class="material-symbols-outlined"> page_control </span> -->
+      </div>
+    </div>
+`;
 
 const addEmpFormTemp = `
     <form class="add-employee-form">
@@ -398,8 +432,8 @@ const addEmpFormTemp = `
           </select>
         </div>
       </div>
-      <div class="input-group flex justify-between">
-      // TODO: Skills containers
+      <div class="input-group flex form-skills-container">
+      ${skillsContainerTemp}
       </div>
         <div class="flex loader-container add-employee-loader">
                     <span class="loader"></span>
@@ -437,11 +471,48 @@ export const renderAddEmployeeForm = () => {
   const workLocation = empAddForm.querySelector("select.emp-workLocation");
   const department = empAddForm.querySelector("select.emp-department");
   const role = empAddForm.querySelector("select.emp-role");
-  // TODO: Skills containers
 
   const addEmpLoader = empAddForm.querySelector(".add-employee-loader");
   const cancelBtn = empAddForm.querySelector("button.add-emp-cancel-btn");
   const submitBtn = empAddForm.querySelector("button.add-emp-submit-btn");
+
+  // Skills
+  const skillsContainer = empAddForm.querySelector(".form-skills-container");
+  const skillsLoader = skillsContainer.querySelector(".skills-loader");
+  const skillInput = skillsContainer.querySelector(".skill-search-input");
+  const dropdownContainer = skillsContainer.querySelector(".dropdown-content");
+  const skillListContainer = skillsContainer.querySelector(
+    ".dropdown-content .skill-list"
+  );
+
+  skillsLoader.style.display = "none";
+
+  renderSkills(allSkills, skillListContainer);
+
+  skillInput.addEventListener("focus", () => {
+    dropdownContainer.style.display = "block";
+    skillInput.dispatchEvent(new Event("input"));
+  });
+
+  skillInput.addEventListener("blur", () => {
+    setTimeout(() => {
+      dropdownContainer.style.display = "none";
+    }, 100);
+  });
+
+  const selectedSkillsArr = [];
+
+  skillInput.addEventListener("input", (e) => {
+    renderSkillDropdown(e, skillListContainer, selectedSkillsArr);
+  });
+
+  const setSelectedSkills = (selSkills) => {
+    selectedSkillsArr = selSkills;
+  };
+
+  dropdownContainer.addEventListener("click", (e) =>
+    renderSelectedSkills(e, setSelectedSkills, selectedSkillsArr)
+  );
 
   cancelBtn.addEventListener("click", closeModal);
   addEmpLoader.style.display = "none";

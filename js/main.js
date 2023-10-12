@@ -51,7 +51,7 @@ const setSelectedSkills = (selectedSkills) => {
   selectedSkillsArray = selectedSkills;
 };
 
-const isModalOpen = () => {
+export const isModalOpen = () => {
   return overlayContainer.classList.contains("open") ? true : false;
 };
 
