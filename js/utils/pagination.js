@@ -1,10 +1,10 @@
 import { renderTable } from "../ui.js";
+
 const nxtBtn = document.querySelector("#next-btn");
 const prevBtn = document.querySelector("#prev-btn");
-
 const itemsPerPage = 5;
-let currentPage = 1;
 
+let currentPage = 1;
 let employeeData = [];
 
 const showEmployees = (page) => {
@@ -12,31 +12,16 @@ const showEmployees = (page) => {
   const endIndex = startIndex + itemsPerPage;
   const maxPage = Math.ceil(employeeData.length / itemsPerPage);
 
-  let currentEmpsArr = [];
+  const currentEmpsArr = employeeData.slice(startIndex, endIndex);
 
-  for (let i = startIndex; i < endIndex && i < employeeData.length; i++) {
-    currentEmpsArr.push(employeeData[i]);
-  }
-  prevBtn.disabled = false;
-  nxtBtn.disabled = false;
-  prevBtn.classList.remove("disabled");
-  nxtBtn.classList.remove("disabled");
-
-  console.log(endIndex, itemsPerPage);
-
-  if (page === 1) {
-    prevBtn.disabled = true;
-    prevBtn.classList.add("disabled");
-  } else if (page === maxPage) {
-    nxtBtn.disabled = true;
-    nxtBtn.classList.add("disabled");
-  }
+  prevBtn.disabled = page === 1;
+  nxtBtn.disabled = page === maxPage;
 
   renderTable(currentEmpsArr);
 };
 
-function updatePageNumbers(empls) {
-  employeeData = empls;
+// Function to update page numbers
+const updatePageNumbers = () => {
   const maxPage = Math.ceil(employeeData.length / itemsPerPage);
   const pageNumbers = document.getElementById("page-numbers");
   pageNumbers.innerHTML = "";
@@ -48,42 +33,41 @@ function updatePageNumbers(empls) {
     pageNumbers.appendChild(pageNumber);
   }
 
-  pageNumbers.firstElementChild.classList.add("active");
-}
+  setActivePage(currentPage);
+};
 
 const setActivePage = (page) => {
-  document.querySelectorAll("#page-numbers button").forEach((el) => {
-    if (el.textContent === String(page)) el.classList.add("active");
-    else el.classList.remove("active");
+  const buttons = document.querySelectorAll("#page-numbers button");
+  buttons.forEach((button, index) => {
+    button.classList.toggle("active", index + 1 === page);
   });
 };
 
-function goToPage(page) {
+const goToPage = (page) => {
   if (page >= 1 && page <= Math.ceil(employeeData.length / itemsPerPage)) {
     currentPage = page;
     setActivePage(page);
-    showEmployees(currentPage, employeeData);
+    showEmployees(currentPage);
   }
-}
+};
 
-function previousPage() {
+const previousPage = () => {
   if (currentPage > 1) {
-    updatePageNumbers(employeeData);
     goToPage(currentPage - 1);
   }
-}
+};
 
-function nextPage() {
+const nextPage = () => {
   if (currentPage < Math.ceil(employeeData.length / itemsPerPage)) {
-    updatePageNumbers(employeeData);
     goToPage(currentPage + 1);
   }
-}
-
-export const displayEmployees = (page = 1, emplsData) => {
-  updatePageNumbers(emplsData);
-  showEmployees(page);
 };
 
 nxtBtn.addEventListener("click", nextPage);
 prevBtn.addEventListener("click", previousPage);
+
+export const displayEmployees = (page = 1, emplsData) => {
+  employeeData = emplsData;
+  updatePageNumbers();
+  goToPage(page);
+};
