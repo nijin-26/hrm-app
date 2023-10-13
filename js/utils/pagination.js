@@ -1,6 +1,8 @@
 import { renderTable } from "../ui.js";
+const nxtBtn = document.querySelector("#next-btn");
+const prevBtn = document.querySelector("#prev-btn");
 
-const itemsPerPage = 5;
+const itemsPerPage = 2;
 let currentPage = 1;
 
 let employeeData = [];
@@ -8,12 +10,28 @@ let employeeData = [];
 const showEmployees = (page) => {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+  const maxPage = Math.ceil(employeeData.length / itemsPerPage);
 
   let currentEmpsArr = [];
 
   for (let i = startIndex; i < endIndex && i < employeeData.length; i++) {
     currentEmpsArr.push(employeeData[i]);
   }
+  prevBtn.disabled = false;
+  nxtBtn.disabled = false;
+  prevBtn.classList.remove("disabled");
+  nxtBtn.classList.remove("disabled");
+
+  console.log(endIndex, itemsPerPage);
+
+  if (page === 1) {
+    prevBtn.disabled = true;
+    prevBtn.classList.add("disabled");
+  } else if (page === maxPage) {
+    nxtBtn.disabled = true;
+    nxtBtn.classList.add("disabled");
+  }
+
   renderTable(currentEmpsArr);
 };
 
@@ -67,5 +85,5 @@ export const displayEmployees = (page = 1, emplsData) => {
   showEmployees(page);
 };
 
-document.querySelector("#next-btn").addEventListener("click", nextPage);
-document.querySelector("#prev-btn").addEventListener("click", previousPage);
+nxtBtn.addEventListener("click", nextPage);
+prevBtn.addEventListener("click", previousPage);

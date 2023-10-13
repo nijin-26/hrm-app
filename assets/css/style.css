@@ -619,3 +619,15 @@ tr:not(:last-child),
   color: var(--secondary-color);
   background-color: var(--primary-color);
 }
+
+.pagination button.disabled {
+  color: #979696;
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination button.disabled:hover {
+  color: #979696;
+  background-color: #ccc;
+  cursor: not-allowed;
+}
