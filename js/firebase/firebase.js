@@ -17,7 +17,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
 
 import { showToast } from "../utils/toast.js";
-import { closeModal } from "../ui.js";
+import { closeModal } from "../UI/modal.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCVJaFfoEBM3-ZqT89iRzQ-1K9dKIoThO8",

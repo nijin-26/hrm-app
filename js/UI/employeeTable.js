@@ -9,7 +9,7 @@ import {
 } from "../utils/elementSelectors.js";
 import { getFormattedDate } from "../utils/formatDate.js";
 
-import { openModal, closeModal } from "../ui.js";
+import { openModal, closeModal } from "./modal.js";
 
 const createEmployeeTableRow = (employee) => {
   const temp = `

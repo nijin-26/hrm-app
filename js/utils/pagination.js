@@ -1,4 +1,4 @@
-import { renderTable } from "../ui.js";
+import { renderTable } from "../UI/employeeTable.js";
 
 const nxtBtn = document.querySelector("#next-btn");
 const prevBtn = document.querySelector("#prev-btn");
