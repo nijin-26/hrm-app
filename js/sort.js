@@ -1,8 +1,9 @@
 import { filteredEmployees } from "./filter.js";
 import { employeeData } from "./main.js";
-import { renderTable } from "./ui.js";
+// import { renderTable } from "./ui.js";
 
 import { headers } from "./utils/elementSelectors.js";
+import { displayEmployees } from "./utils/pagination.js";
 
 export let currentSortColumn = "";
 let currentSortFlag = -1;
@@ -33,6 +34,6 @@ export const sortTable = (column) => {
     return 0;
   });
   currentSortFlag = currentSortFlag * -1;
-  renderTable(sortedEmployeeData);
+  displayEmployees(1, sortedEmployeeData);
   toggleSortIndicator(column);
 };

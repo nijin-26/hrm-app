@@ -590,6 +590,17 @@ tr:not(:last-child),
   gap: 10px;
   justify-content: center;
 }
+
+.pagination-numbers {
+  display: flex;
+  gap: 10px;
+}
+
+.pagination-numbers .active {
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+}
+
 .pagination button {
   background-color: var(--secondary-color);
   color: var(--primary-color);

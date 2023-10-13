@@ -1,4 +1,3 @@
-import { renderTable } from "./ui.js";
 import { employeeData, selectedSkillsArray } from "./main.js";
 import { currentSortColumn, sortTable } from "./sort.js";
 
@@ -7,6 +6,7 @@ import {
   departmentFilterInput,
   roleFilterInput,
 } from "./utils/elementSelectors.js";
+import { displayEmployees } from "./utils/pagination.js";
 
 export let filteredEmployees = [];
 
@@ -44,5 +44,5 @@ export const filterTable = () => {
   }
 
   if (currentSortColumn) sortTable(currentSortColumn);
-  else renderTable(filteredEmployees);
+  else displayEmployees(1, filteredEmployees);
 };

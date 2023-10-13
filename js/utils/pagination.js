@@ -1,20 +1,24 @@
-import { employeeData } from "../main.js";
+import { renderTable } from "../ui.js";
 
-const itemsPerPage = 10;
+const itemsPerPage = 5;
 let currentPage = 1;
+
+let employeeData = [];
 
 export const showEmployees = (page) => {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  let currentSetOfEmps;
+  let currentEmpsArr = [];
 
   for (let i = startIndex; i < endIndex && i < employeeData.length; i++) {
-    currentSetOfEmps.push(employeeData[i]);
+    currentEmpsArr.push(employeeData[i]);
   }
+  renderTable(currentEmpsArr);
 };
 
-function updatePageNumbers() {
+function updatePageNumbers(empls) {
+  employeeData = empls;
   const maxPage = Math.ceil(employeeData.length / itemsPerPage);
   const pageNumbers = document.getElementById("page-numbers");
   pageNumbers.innerHTML = "";
@@ -22,27 +26,46 @@ function updatePageNumbers() {
   for (let i = 1; i <= maxPage; i++) {
     const pageNumber = document.createElement("button");
     pageNumber.textContent = i;
-    pageNumber.onclick = () => goToPage(i);
+    pageNumber.addEventListener("click", (e) => goToPage(i));
     pageNumbers.appendChild(pageNumber);
   }
+
+  pageNumbers.firstElementChild.classList.add("active");
 }
+
+const setActivePage = (page) => {
+  document.querySelectorAll("#page-numbers button").forEach((el) => {
+    if (el.textContent === String(page)) el.classList.add("active");
+    else el.classList.remove("active");
+  });
+};
 
 function goToPage(page) {
   if (page >= 1 && page <= Math.ceil(employeeData.length / itemsPerPage)) {
     currentPage = page;
-    showEmployees(currentPage);
-    updatePageNumbers();
+    setActivePage(page);
+    showEmployees(currentPage, employeeData);
   }
 }
 
 function previousPage() {
   if (currentPage > 1) {
+    updatePageNumbers(employeeData);
     goToPage(currentPage - 1);
   }
 }
 
 function nextPage() {
   if (currentPage < Math.ceil(employeeData.length / itemsPerPage)) {
+    updatePageNumbers(employeeData);
     goToPage(currentPage + 1);
   }
 }
+
+export const displayEmployees = (page = 1, emplsData) => {
+  updatePageNumbers(emplsData);
+  showEmployees(page);
+};
+
+document.querySelector("#next-btn").addEventListener("click", nextPage);
+document.querySelector("#prev-btn").addEventListener("click", previousPage);

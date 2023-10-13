@@ -10,7 +10,6 @@ import { filterTable } from "./filter.js";
 import { sortTable } from "./sort.js";
 
 import {
-  renderTable,
   renderSkills,
   removeSelectedSkills,
   renderSelectedSkills,
@@ -40,6 +39,7 @@ import {
   addEmployeeBtn,
   modalCloseBtn,
 } from "./utils/elementSelectors.js";
+import { displayEmployees } from "./utils/pagination.js";
 
 export let allSkills;
 export let selectedSkillsArray = [];
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchEmployees((employeeArr) => {
     if (employeeArr && !isLoading()) tableLoader.style.display = "none";
     employeeData = employeeArr;
-    renderTable(employeeArr);
+    displayEmployees(1, employeeData);
   });
 
   fetchDeparments((depts) => (departments = depts));
