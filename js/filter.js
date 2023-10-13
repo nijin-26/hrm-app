@@ -38,7 +38,7 @@ export const filterTable = () => {
   if (selectedSkillsArray.length > 0) {
     filteredEmployees = filteredEmployees.filter((employee) => {
       return selectedSkillsArray.every((selectedSkill) =>
-        employee.skill.includes(selectedSkill.id)
+        employee.skill?.includes(selectedSkill.id)
       );
     });
   }
