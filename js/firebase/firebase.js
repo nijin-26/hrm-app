@@ -104,7 +104,7 @@ export const fetchRoles = (callback) => {
 };
 
 const uploadImage = async (file) => {
-  const storageRef = strRef(storage, "some-child");
+  const storageRef = strRef(storage, crypto.randomUUID());
 
   return uploadBytes(storageRef, file).then((snapshot) => {
     return getDownloadURL(snapshot.ref);
@@ -139,10 +139,11 @@ export const addEmployee = async (data, formElement) => {
 };
 
 export const updateEmployee = async (id, data, formElement) => {
-  console.log("udpate employee is called");
   loadingState = true;
-  // if (data.imageURL) data.imageURL = await uploadImage(data.imageURL);
-  // else data.imageURL = "";
+  if (data.imageURL) {
+    if (typeof data.imageURL === "object")
+      data.imageURL = await uploadImage(data.imageURL);
+  }
 
   update(ref(db, `employee/${id}`), data, (error) => {
     loadingState = false;

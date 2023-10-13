@@ -16,7 +16,8 @@
   padding: 16px;
   position: fixed;
   max-height: 90vh;
-  background-color: #fff;
+  background-color: var(--bg-color);
+  border: 1px solid var(--secondary-color);
   border-radius: 6px;
   overflow: auto;
   z-index: 3;
@@ -32,7 +33,7 @@
   right: 10px;
   top: 10px;
   transition: 0.3s;
-  color: var(--primary-color);
+  color: var(--font-color);
 }
 
 .modal-close-btn:hover {

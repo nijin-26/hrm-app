@@ -1,25 +1,21 @@
-const employees = [
-  /* Your employee data here */
-];
+import { employeeData } from "../main.js";
+
 const itemsPerPage = 10;
 let currentPage = 1;
 
-function showEmployees(page) {
+export const showEmployees = (page) => {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const employeeTable = document.getElementById("employee-table");
-  employeeTable.innerHTML = ""; // Clear previous data
 
-  for (let i = startIndex; i < endIndex && i < employees.length; i++) {
-    const employee = employees[i];
-    const row = document.createElement("tr");
-    row.innerHTML = `<td>${employee.name}</td><td>${employee.position}</td>`;
-    employeeTable.appendChild(row);
+  let currentSetOfEmps;
+
+  for (let i = startIndex; i < endIndex && i < employeeData.length; i++) {
+    currentSetOfEmps.push(employeeData[i]);
   }
-}
+};
 
 function updatePageNumbers() {
-  const maxPage = Math.ceil(employees.length / itemsPerPage);
+  const maxPage = Math.ceil(employeeData.length / itemsPerPage);
   const pageNumbers = document.getElementById("page-numbers");
   pageNumbers.innerHTML = "";
 
@@ -32,7 +28,7 @@ function updatePageNumbers() {
 }
 
 function goToPage(page) {
-  if (page >= 1 && page <= Math.ceil(employees.length / itemsPerPage)) {
+  if (page >= 1 && page <= Math.ceil(employeeData.length / itemsPerPage)) {
     currentPage = page;
     showEmployees(currentPage);
     updatePageNumbers();
@@ -46,10 +42,7 @@ function previousPage() {
 }
 
 function nextPage() {
-  if (currentPage < Math.ceil(employees.length / itemsPerPage)) {
+  if (currentPage < Math.ceil(employeeData.length / itemsPerPage)) {
     goToPage(currentPage + 1);
   }
 }
-
-showEmployees(currentPage);
-updatePageNumbers();

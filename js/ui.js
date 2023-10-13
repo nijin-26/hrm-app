@@ -232,11 +232,11 @@ export const viewEmployee = (employeeId) => {
           ? selectedEmployee.imageURL
           : "./assets/images/placeholder-image.png"
       }" width="200" alt="employee_image" />
-      <p>${selectedEmployee.id}</p>
+      <p style="font-weight:500">${selectedEmployee.id}</p>
     </div>
     <div class="employee-details-container">
       <h1>${selectedEmployee.fullName}</h1>
-      <h2>${departments[selectedEmployee.department]} - ${
+      <h3>${departments[selectedEmployee.department]} - ${
     roles[selectedEmployee.role]
   }</h2>
       <div class="employee-detail-tag employee-email">
@@ -701,6 +701,31 @@ export const editEmployee = (selectedEmp) => {
   cancelBtn.addEventListener("click", closeModal);
   addEmpLoader.style.display = "none";
   imageInput.value = "";
+  empImageContainer.src = selectedEmp.imageURL
+    ? selectedEmp.imageURL
+    : "./assets/images/placeholder-image.png";
+
+  const handleImageInput = () => imageInput.click();
+  empImageAddBtn.addEventListener("click", handleImageInput);
+
+  const resetSelectedImage = () => {
+    imageInput.value = "";
+    empImageContainer.src = "./assets/images/placeholder-image.png";
+    empImageAddBtn.innerHTML = "+";
+    empImageAddBtn.removeEventListener("click", resetSelectedImage);
+    setTimeout(() => {
+      empImageAddBtn.addEventListener("click", handleImageInput);
+    }, 100);
+  };
+
+  imageInput.addEventListener("input", (e) => {
+    empImageContainer.src = URL.createObjectURL(imageInput.files[0]);
+    if (e.target.files[0]) {
+      empImageAddBtn.innerHTML = "x";
+      empImageAddBtn.removeEventListener("click", handleImageInput);
+      empImageAddBtn.addEventListener("click", resetSelectedImage);
+    }
+  });
 
   for (const id in departments) {
     const option = document.createElement("option");
@@ -727,6 +752,9 @@ export const editEmployee = (selectedEmp) => {
 
   empAddForm.addEventListener("submit", (e) => {
     e.preventDefault();
+    let selectedImage = "";
+    if (imageInput.files[0]) selectedImage = imageInput.files[0];
+    else if (selectedEmp.imageURL !== "") selectedImage = selectedEmp.imageURL;
 
     const empData = {
       fullName: fullName?.value,
@@ -735,7 +763,7 @@ export const editEmployee = (selectedEmp) => {
       email: email?.value,
       mobile: mobileNumber?.value,
       workLocation: workLocation?.value,
-      imageURL: imageInput?.files[0] ? imageInput?.files[0] : "",
+      imageURL: selectedImage,
       department: department?.value,
       role: role?.value,
       skill: selectedSkillsArr.map((skill) => skill.id),
