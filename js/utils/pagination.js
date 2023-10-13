@@ -5,7 +5,7 @@ let currentPage = 1;
 
 let employeeData = [];
 
-export const showEmployees = (page) => {
+const showEmployees = (page) => {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
