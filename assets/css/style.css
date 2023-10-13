@@ -561,3 +561,14 @@ tr:not(:last-child),
 .form-skills-container .dropdown-content {
   max-height: 100px;
 }
+
+.pagination {
+  display: inline-block;
+}
+.pagination button {
+  background-color: #008cba;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+}

@@ -141,12 +141,20 @@
             <th>Actions</th>
           </tr>
         </table>
+
         <div class="flex loader-container table-data-loader">
           <span class="loader"></span>
         </div>
         <p class="error-tag">No data found. Add an employee.</p>
         <!-- TODO: Pagination -->
       </section>
+      <div class="pagination">
+        <button id="prev-btn" onclick="previousPage()">Previous</button>
+        <div id="page-numbers" class="pagination-numbers">
+          <!-- Page numbers will be dynamically added here -->
+        </div>
+        <button id="next-btn" onclick="nextPage()">Next</button>
+      </div>
     </main>
 
     <div class="overlay"></div>
