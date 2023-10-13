@@ -122,17 +122,19 @@ document.addEventListener("DOMContentLoaded", () => {
     renderSelectedSkills(e, setSelectedSkills)
   );
 
-  clearFilterBtn.addEventListener("click", () => {
+  const clearFilters = () => {
     filterContainer.classList.toggle("open-filter-options");
     searchEmployeeInput.value = "";
     departmentFilterInput.value = "";
     roleFilterInput.value = "";
     resetSkillFilter();
     filterTable();
-  });
+  };
+  clearFilterBtn.addEventListener("click", clearFilters);
 
   addEmployeeBtn.addEventListener("click", () => {
     openModal();
+    clearFilters();
     renderAddEmployeeForm();
   });
 
