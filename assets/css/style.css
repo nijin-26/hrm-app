@@ -560,7 +560,7 @@ tr:not(:last-child),
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background-color: red;
+  background-color: var(--bg-color);
   border: 2px solid var(--primary-color);
   overflow: hidden;
 }

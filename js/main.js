@@ -10,17 +10,20 @@ import { filterTable } from "./filter.js";
 import { sortTable } from "./sort.js";
 
 import {
+  closeModal,
+  openModal,
+  renderAddEmployeeForm,
+  editEmployee,
+} from "./UI/modal.js";
+
+import {
   renderSkills,
   removeSelectedSkills,
   renderSelectedSkills,
   renderSkillDropdown,
-  viewEmployee,
-  closeModal,
-  deleteBtnHandler,
-  openModal,
-  renderAddEmployeeForm,
-  editEmployee,
-} from "./ui.js";
+} from "./UI/skills.js";
+
+import { viewEmployee, deleteBtnHandler } from "./UI/employeeTable.js";
 
 import {
   searchEmployeeInput,
@@ -123,13 +126,14 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   const clearFilters = () => {
-    filterContainer.classList.toggle("open-filter-options");
+    filterContainer.classList.remove("open-filter-options");
     searchEmployeeInput.value = "";
     departmentFilterInput.value = "";
     roleFilterInput.value = "";
     resetSkillFilter();
     filterTable();
   };
+
   clearFilterBtn.addEventListener("click", clearFilters);
 
   addEmployeeBtn.addEventListener("click", () => {
