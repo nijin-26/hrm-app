@@ -2,7 +2,7 @@ import { renderTable } from "../ui.js";
 const nxtBtn = document.querySelector("#next-btn");
 const prevBtn = document.querySelector("#prev-btn");
 
-const itemsPerPage = 2;
+const itemsPerPage = 5;
 let currentPage = 1;
 
 let employeeData = [];
