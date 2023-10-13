@@ -423,6 +423,12 @@ tr:not(:last-child),
   gap: 20px;
 }
 
+.view-employee-image img {
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+  object-fit: contain;
+}
+
 .employee-detail-tag {
   margin: 10px 0;
   display: flex;
