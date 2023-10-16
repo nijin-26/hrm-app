@@ -16,6 +16,7 @@ import {
 } from "../utils/elementSelectors.js";
 import { validateForm } from "../utils/validation.js";
 import { getFormattedDate } from "../utils/formatDate.js";
+import { showToast } from "../utils/toast.js";
 
 const openModal = () => {
   overlayContainer.classList.add("open");
@@ -29,6 +30,14 @@ const closeModal = () => {
   body.style.overflow = "auto";
   modalContent.innerHTML = "";
 };
+
+function checkFileSize(input) {
+  const maxFileSize = 2 * 1024 * 1024; // 2MB
+  const fileSize = input.files[0]?.size;
+
+  if (fileSize && fileSize > maxFileSize) return false;
+  else return true;
+}
 
 const skillsContainerTemp = `
     <div class="skills-fitler-dropdown">
@@ -176,7 +185,6 @@ const renderAddEmployeeForm = () => {
 
   const addEmpLoader = empAddForm.querySelector(".add-employee-loader");
   const cancelBtn = empAddForm.querySelector("button.add-emp-cancel-btn");
-  const submitBtn = empAddForm.querySelector("button.add-emp-submit-btn");
 
   // Skills
   const skillsContainer = empAddForm.querySelector(".form-skills-container");
@@ -251,6 +259,11 @@ const renderAddEmployeeForm = () => {
   };
 
   imageInput.addEventListener("input", (e) => {
+    if (!checkFileSize(e.target)) {
+      e.target.value = "";
+      showToast("warning", "The selected  image size exceeds 2MB.");
+      return;
+    }
     empImageContainer.src = URL.createObjectURL(imageInput.files[0]);
     if (e.target.files[0]) {
       empImageAddBtn.innerHTML = "x";
@@ -317,7 +330,6 @@ const editEmployee = (selectedEmp) => {
 
   const addEmpLoader = empAddForm.querySelector(".add-employee-loader");
   const cancelBtn = empAddForm.querySelector("button.add-emp-cancel-btn");
-  const submitBtn = empAddForm.querySelector("button.add-emp-submit-btn");
 
   // Skills
   const skillsContainer = empAddForm.querySelector(".form-skills-container");
@@ -410,7 +422,8 @@ const editEmployee = (selectedEmp) => {
   };
 
   imageInput.addEventListener("input", (e) => {
-    empImageContainer.src = URL.createObjectURL(imageInput.files[0]);
+    if (checkFileSize(e.target))
+      empImageContainer.src = URL.createObjectURL(imageInput.files[0]);
     if (e.target.files[0]) {
       empImageAddBtn.innerHTML = "x";
       empImageAddBtn.removeEventListener("click", handleImageInput);
