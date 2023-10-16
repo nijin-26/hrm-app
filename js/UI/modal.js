@@ -53,7 +53,7 @@ const skillsContainerTemp = `
 const addEmpFormTemp = `
     <form class="add-employee-form">
     <div class="employee-form-image-container flex">
-      <input type="file" class="add-employee-input-image" />
+      <input type="file" class="add-employee-input-image" accept="image/*" />
       <button type="button" class="add-image-btn">+</button>
       <div class="image-round-container">
         <img

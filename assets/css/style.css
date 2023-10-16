@@ -392,6 +392,8 @@ th,
 td {
   padding: 16px;
   border-collapse: collapse;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 tr {
@@ -601,13 +603,13 @@ tr:not(:last-child),
 }
 
 .pagination-numbers .active {
-  color: var(--secondary-color);
-  background-color: var(--primary-color);
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
 }
 
 .pagination button {
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
   padding: 8px 12px;
   border: none;
   border-radius: 50px;
@@ -616,8 +618,8 @@ tr:not(:last-child),
 }
 
 .pagination button:hover {
-  color: var(--secondary-color);
-  background-color: var(--primary-color);
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
 }
 
 .pagination button:disabled {
