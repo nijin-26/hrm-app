@@ -713,7 +713,7 @@ tr:not(:last-child),
 
   .add-employee-btn {
     position: absolute;
-    right: 2px;
+    right: 8px;
     font-size: 10px;
   }
 
