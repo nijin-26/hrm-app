@@ -114,33 +114,41 @@ const addEmpFormTemp = `
         </div>
         <div class="input-sub-group">
           <label for="workLocation">Work Location</label>
+          <div class="custom-select">     
           <select required
-            class="emp-workLocation"
-            name="workLocation"
-            id="workLocation"
-            autocomplete="off"
+          class="emp-workLocation"
+          name="workLocation"
+          id="workLocation"
+          autocomplete="off"
           >
-            <option value="" selected disabled>
-              Select work location
-            </option>
-            <option value="Trivandrum">Trivandrum</option>
-            <option value="Kochi">Kochi</option>
-            <option value="Calicut">Calicut</option>
+          <option value="" selected disabled>
+          Select work location
+          </option>
+          <option value="Trivandrum">Trivandrum</option>
+          <option value="Kochi">Kochi</option>
+          <option value="Calicut">Calicut</option>
           </select>
+          </div>
+        
         </div>
       </div>
       <div class="input-group flex justify-between">
         <div class="input-sub-group">
           <label for="department">Department</label>
-          <select required class="emp-department" name="department" id="department" autocomplete="off">
-            <option value="" selected disabled>Select Department</option>
-          </select>
+          
+          <div class="custom-select">
+            <select required class="emp-department" name="department" id="department" autocomplete="off">
+              <option value="" selected disabled>Select Department</option>
+            </select>
+          </div>
         </div>
         <div class="input-sub-group">
           <label for="role">Role</label>
-          <select required class="emp-role" name="role" id="role" autocomplete="off">
-            <option value="" selected disabled>Select Role</option>
-          </select>
+          <div class="custom-select">
+            <select required class="emp-role" name="role" id="role" autocomplete="off">
+              <option value="" selected disabled>Select Role</option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="input-group flex form-skills-container">

@@ -87,6 +87,27 @@ select {
   outline: none;
 }
 
+.custom-select {
+  height: 100%;
+  position: relative;
+}
+
+.custom-select > select {
+  padding-right: 40px;
+  appearance: none;
+}
+
+.custom-select::after {
+  content: "ᐁ";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: black;
+  font-size: 18px;
+}
+
 a {
   text-decoration: none;
   color: var(--font-color);

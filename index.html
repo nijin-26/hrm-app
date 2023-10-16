@@ -66,25 +66,33 @@
             </button>
           </div>
           <div class="filter-container open-filter-options flex">
-            <select
-              name="department"
-              class="department-filter"
-              autocomplete="off"
-            >
-              <option value="" disabled selected>Department</option>
-              <option value="D1">Development</option>
-              <option value="D2">DevOps</option>
-              <option value="D3">QA</option>
-              <option value="D4">User Experience</option>
-            </select>
-            <select name="role" class="role-filter" autocomplete="off">
-              <option value="" disabled selected>Role</option>
-              <option value="R1">Engineer</option>
-              <option value="R2">Senior Engineer</option>
-              <option value="R3">Lead Engineer</option>
-              <option value="Role">Architect</option>
-              <option value="Role">Intern</option>
-            </select>
+            <div class="custom-select">
+              <select
+                name="department"
+                class="department-filter custom-select"
+                autocomplete="off"
+              >
+                <option value="" disabled selected>Department</option>
+                <option value="D1">Development</option>
+                <option value="D2">DevOps</option>
+                <option value="D3">QA</option>
+                <option value="D4">User Experience</option>
+              </select>
+            </div>
+            <div class="custom-select">
+              <select
+                name="role"
+                class="role-filter custom-select"
+                autocomplete="off"
+              >
+                <option value="" disabled selected>Role</option>
+                <option value="R1">Engineer</option>
+                <option value="R2">Senior Engineer</option>
+                <option value="R3">Lead Engineer</option>
+                <option value="Role">Architect</option>
+                <option value="Role">Intern</option>
+              </select>
+            </div>
             <div class="skills-fitler-dropdown">
               <div class="skill-search-view-container flex">
                 <div class="selected-skill flex">
