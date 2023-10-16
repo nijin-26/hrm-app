@@ -603,7 +603,7 @@ tr:not(:last-child),
 }
 
 .pagination-numbers .active {
-  color: var(--primary-color);
+  color: var(--primary-colorr);
   background-color: var(--secondary-color);
 }
 
@@ -632,4 +632,10 @@ tr:not(:last-child),
   color: #979696;
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+.pagination > button {
+  background-color: var(--bg-color);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
 }
