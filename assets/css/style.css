@@ -93,19 +93,20 @@ select {
 }
 
 .custom-select > select {
+  width: 100%;
   padding-right: 40px;
   appearance: none;
 }
 
 .custom-select::after {
-  content: "ᐁ";
+  content: "⌄";
   position: absolute;
   right: 18px;
-  top: 50%;
+  top: 38%;
   transform: translateY(-50%);
   pointer-events: none;
-  color: black;
-  font-size: 18px;
+  color: var(--primary-color);
+  font-size: 24px;
 }
 
 a {
@@ -172,11 +173,12 @@ header {
   margin: 0 auto;
   padding: 0 16px;
   height: 80px;
+  gap: 20px;
 }
 
 .search-employee-container {
-  width: 30%;
   position: relative;
+  flex-basis: 40%;
 }
 .search-employee-container .search-icon {
   position: absolute;
@@ -192,6 +194,7 @@ main {
   max-width: var(--max-width);
   margin: 20px auto;
   padding: 0 16px;
+  overflow-x: hidden;
 }
 
 .heading {
@@ -201,15 +204,22 @@ main {
 
 .topbar-container {
   margin-top: 20px;
-}
-
-.topbar-container > div {
-  flex: 1;
+  align-items: center;
 }
 
 .topbar-header {
   align-items: center;
   gap: 20px;
+}
+
+.topbar-filter-group-2 {
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+}
+
+.topbar-container > div {
+  flex: 1;
 }
 
 .enable-filter-btn {
@@ -236,7 +246,6 @@ main {
 
 .skills-fitler-dropdown {
   height: 100%;
-  width: 50%;
   position: relative;
 }
 
@@ -522,7 +531,6 @@ tr:not(:last-child),
 
 .input-group input,
 .input-group select {
-  width: 100%;
   font-size: 14px;
 }
 
@@ -659,4 +667,91 @@ tr:not(:last-child),
   background-color: var(--bg-color);
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
+}
+
+@media screen and (max-width: 768px) {
+  .heading {
+    font-size: 24px;
+  }
+
+  main {
+    margin-top: 0;
+  }
+
+  .topbar-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .topbar-header {
+    gap: 5px;
+  }
+
+  .filter-container {
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .filter-container > div {
+    flex-grow: 1;
+  }
+
+  .topbar-filter-group-2 {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .filter-container.open-filter-options {
+    margin-bottom: 140px;
+  }
+
+  .topbar-container .selected-skill {
+    max-width: 180px;
+  }
+
+  .add-employee-btn {
+    position: absolute;
+    right: 2px;
+    font-size: 10px;
+  }
+
+  table {
+    table-layout: auto;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .filter-container.open-filter-options {
+    margin-bottom: 180px;
+  }
+
+  .topbar-container .selected-skill {
+    max-width: 80px;
+  }
+
+  .add-employee-form .form-input-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input-group {
+    flex-grow: 1;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .input-sub-group {
+    flex-grow: 1;
+  }
+
+  .search-employee-container {
+    flex-grow: 1;
+  }
+
+  .view-employee-container {
+    flex-wrap: wrap;
+    gap: 0px;
+  }
 }

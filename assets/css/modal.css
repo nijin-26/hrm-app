@@ -15,7 +15,8 @@
   display: none;
   padding: 16px;
   position: fixed;
-  max-height: 90vh;
+  max-height: 70vh;
+  width: 600px;
   background-color: var(--bg-color);
   border: 1px solid var(--secondary-color);
   border-radius: 6px;
@@ -42,8 +43,16 @@
 
 .modal.open {
   display: block;
-  width: 600px;
+  margin: 0 auto;
+  min-width: 290px;
+  max-width: 600px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 425px) {
+  .modal {
+    width: 350px;
+  }
 }
