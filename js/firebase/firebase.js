@@ -104,11 +104,16 @@ export const fetchRoles = (callback) => {
 };
 
 const uploadImage = async (file) => {
-  const storageRef = strRef(storage, crypto.randomUUID());
+  try {
+    const storageRef = strRef(storage, crypto.randomUUID());
 
-  return uploadBytes(storageRef, file).then((snapshot) => {
-    return getDownloadURL(snapshot.ref);
-  });
+    return uploadBytes(storageRef, file).then((snapshot) => {
+      return getDownloadURL(snapshot.ref);
+    });
+  } catch (err) {
+    loadingState = false;
+    showToast("error", "Image upload failed.Try again.", err);
+  }
 };
 
 function generateUniqueKey() {

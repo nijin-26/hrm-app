@@ -16,6 +16,7 @@ const defaultMsgs = {
 // let timeOutId_2;
 
 export const showToast = (type, msg, payloadObj) => {
+  console.log(payloadObj);
   const toast = document.createElement("div");
   toast.innerHTML = `
     <span class="material-symbols-outlined toast-icon">${icons[type]}</span>

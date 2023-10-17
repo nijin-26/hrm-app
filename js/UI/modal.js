@@ -106,6 +106,7 @@ const addEmpFormTemp = `
           <input required
             class="emp-mobileNumber"
             placeholder="Enter Mobile Number"
+            maxLength="10"
             type="text"
             id="mobileNumber"
           />
