@@ -521,6 +521,13 @@ tr:not(:last-child),
   flex-direction: column;
 }
 
+button.form-submit-btn:disabled,
+button.add-emp-cancel-btn:disabled {
+  background-color: #ccc;
+  color: var(--primary-color);
+  cursor: not-allowed;
+}
+
 .input-group {
   margin: 20px 0;
   width: 100%;
@@ -607,6 +614,7 @@ tr:not(:last-child),
 }
 
 .form-skills-container input {
+  width: 100%;
   height: 50px;
   border: 1px solid #000;
 }

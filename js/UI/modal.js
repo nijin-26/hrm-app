@@ -1,4 +1,8 @@
-import { addEmployee, updateEmployee } from "../firebase/firebase.js";
+import {
+  addEmployee,
+  isLoading,
+  updateEmployee,
+} from "../firebase/firebase.js";
 import { allSkills, departments, roles } from "../main.js";
 
 import {
@@ -154,18 +158,17 @@ const addEmpFormTemp = `
       <div class="input-group flex form-skills-container">
       ${skillsContainerTemp}
       </div>
-        <div class="flex loader-container add-employee-loader">
+     <div class="flex loader-container form-loader">
                     <span class="loader"></span>
          </div>
       <div class="input-group btns flex">
-  
         <button
           type="button"
           class="btn btn-secondary add-emp-cancel-btn"
         >
           Cancel
         </button>
-        <button type="submit" class="btn btn-primary add-emp-submit-btn">
+        <button type="submit" class="btn btn-primary form-submit-btn">
           Submit
         </button>
       </div>
@@ -191,8 +194,9 @@ const renderAddEmployeeForm = () => {
   const department = empAddForm.querySelector("select.emp-department");
   const role = empAddForm.querySelector("select.emp-role");
 
-  const addEmpLoader = empAddForm.querySelector(".add-employee-loader");
+  const formLoader = empAddForm.querySelector(".form-loader");
   const cancelBtn = empAddForm.querySelector("button.add-emp-cancel-btn");
+  const submitBtn = empAddForm.querySelector("button.form-submit-btn");
 
   // Skills
   const skillsContainer = empAddForm.querySelector(".form-skills-container");
@@ -250,7 +254,7 @@ const renderAddEmployeeForm = () => {
   });
 
   cancelBtn.addEventListener("click", closeModal);
-  addEmpLoader.style.display = "none";
+  formLoader.style.display = "none";
   imageInput.value = "";
 
   const handleImageInput = () => imageInput.click();
@@ -309,9 +313,15 @@ const renderAddEmployeeForm = () => {
       role: role?.value,
       skill: selectedSkillsArr.map((skill) => skill.id),
     };
+
     const isValid = validateForm(empData);
     if (isValid) {
       addEmployee(empData, empAddForm);
+      if (isLoading()) {
+        formLoader.style.display = "flex";
+        submitBtn.disabled = true;
+        cancelBtn.disabled = true;
+      }
     }
   });
 };
@@ -336,8 +346,9 @@ const editEmployee = (selectedEmp) => {
   const role = empAddForm.querySelector("select.emp-role");
   // TODO: Skills containers
 
-  const addEmpLoader = empAddForm.querySelector(".add-employee-loader");
+  const formLoader = empAddForm.querySelector(".form-loader");
   const cancelBtn = empAddForm.querySelector("button.add-emp-cancel-btn");
+  const submitBtn = empAddForm.querySelector("button.form-submit-btn");
 
   // Skills
   const skillsContainer = empAddForm.querySelector(".form-skills-container");
@@ -410,7 +421,7 @@ const editEmployee = (selectedEmp) => {
   });
 
   cancelBtn.addEventListener("click", closeModal);
-  addEmpLoader.style.display = "none";
+  formLoader.style.display = "none";
   imageInput.value = "";
   empImageContainer.src = selectedEmp.imageURL
     ? selectedEmp.imageURL
@@ -484,6 +495,11 @@ const editEmployee = (selectedEmp) => {
     const isValid = validateForm(empData);
     if (isValid) {
       updateEmployee(selectedEmp.id, empData, empAddForm);
+      if (isLoading()) {
+        formLoader.style.display = "flex";
+        submitBtn.disabled = true;
+        cancelBtn.disabled = true;
+      }
     }
   });
 };
