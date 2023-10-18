@@ -1,8 +1,4 @@
-import {
-  addEmployee,
-  isLoading,
-  updateEmployee,
-} from "../firebase/firebase.js";
+import { addEmployee, isLoading, updateEmployee } from "../firebase/api.js";
 import { allSkills, departments, roles } from "../main.js";
 
 import {

@@ -1,4 +1,4 @@
-import { deleteEmployee } from "../firebase/firebase.js";
+import { deleteEmployee } from "../firebase/api.js";
 import { allSkills, departments, employeeData, roles } from "../main.js";
 import { showToast } from "../utils/toast.js";
 

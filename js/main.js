@@ -4,7 +4,7 @@ import {
   fetchRoles,
   fetchSkills,
   isLoading,
-} from "./firebase/firebase.js";
+} from "./firebase/api.js";
 import { toggleTheme } from "./toggleTheme.js";
 import { filterTable } from "./filter.js";
 import { sortTable } from "./sort.js";
