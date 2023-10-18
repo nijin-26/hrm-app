@@ -2,10 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Human Resource Management App" />
-    <title>HRM App</title>
+    <link
+      rel="shortcut icon"
+      href="./assets/images/logo.png"
+      type="image/x-icon"
+    />
+    <!-- Normalize CSS -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
@@ -13,13 +17,24 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <!-- Google Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <title>HRM App</title>
     <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/modal.css" />
+    <link rel="stylesheet" href="assets/css/loading-spinner.css" />
+    <link rel="stylesheet" href="assets/css/toast.css" />
   </head>
   <body>
     <header>
@@ -29,16 +44,15 @@
           alt="HR Management App Logo"
           width="40"
         />
-        <form class="search-employee-form">
-          <!-- TODO: Search Icon. -->
-          <input type="text" placeholder="Search Employee" />
-        </form>
-        <img
-          style="visibility: hidden"
-          src="./assets/images/hamburger_menu.png"
-          alt="Hamburger Menu"
-          width="40"
-        />
+        <div class="search-employee-container">
+          <span class="material-symbols-outlined search-icon"> search </span>
+          <input
+            class="search-employee-input"
+            type="text"
+            placeholder="Search Employee by Name"
+          />
+        </div>
+        <span class="material-symbols-outlined toggle-theme"> light_mode </span>
       </div>
     </header>
     <main>
@@ -46,73 +60,108 @@
         <div>
           <div class="flex topbar-header">
             <h1 class="heading">Employees</h1>
-            <img
-              width="20"
-              class="enable-filter-btn"
-              src="./assets/images/icons/enable-filter.svg"
-              alt="enable-filter-icon"
-            />
+            <button class="btn enable-filter-btn tooltip">
+              <span class="material-symbols-outlined"> filter_list </span>
+              <span class="tooltiptext">Toggle filters</span>
+            </button>
           </div>
-          <div class="filter-container flex">
-            <select name="department" class="department-filter">
-              <option value="Department">Department</option>
+          <div class="filter-container open-filter-options flex">
+            <select
+              name="department"
+              class="department-filter"
+              autocomplete="off"
+            >
+              <option value="" disabled selected>Department</option>
+              <option value="D1">Development</option>
+              <option value="D2">DevOps</option>
+              <option value="D3">QA</option>
+              <option value="D4">User Experience</option>
             </select>
-            <select name="role" class="role-filter">
-              <option value="Role">Role</option>
+            <select name="role" class="role-filter" autocomplete="off">
+              <option value="" disabled selected>Role</option>
+              <option value="R1">Engineer</option>
+              <option value="R2">Senior Engineer</option>
+              <option value="R3">Lead Engineer</option>
+              <option value="Role">Architect</option>
+              <option value="Role">Intern</option>
             </select>
             <div class="skills-fitler-dropdown">
-              <input
-                class="skill-search-input"
-                type="text"
-                placeholder="Search for Skills"
-              />
+              <div class="skill-search-view-container flex">
+                <div class="selected-skill flex">
+                  <!-- <span class="material-symbols-outlined"> page_control </span> -->
+                </div>
+                <input
+                  class="skill-search-input"
+                  type="text"
+                  placeholder="Filter by skills"
+                />
+              </div>
+
               <div class="dropdown-content">
                 <ul class="skill-list">
-                  <li data-skill="HTML">HTML</li>
-                  <li data-skill="CSS">CSS</li>
-                  <li data-skill="JavaScript">JavaScript</li>
+                  <div class="flex loader-container skills-loader">
+                    <span class="loader"></span>
+                  </div>
                 </ul>
               </div>
             </div>
-            <img src="./assets/images/icons/clear_filter_icon.svg" alt="" />
+            <div class="tooltip">
+              <button class="btn secondary-btn clear-filter-btn">
+                <span class="material-symbols-outlined"> filter_list_off </span>
+              </button>
+              <span class="tooltiptext">Clear filters</span>
+            </div>
           </div>
         </div>
-        <button class="add-employee-btn flex justify-between">
-          <img
-            width="20"
-            src="./assets/images/icons/add_user_icon.svg"
-            alt=""
-          />
+        <button class="btn add-employee-btn flex justify-between">
+          <span class="material-symbols-outlined"> person_add </span>
         </button>
       </section>
+      <!-- <div class="selected-skill flex"></div> -->
 
       <section class="employee-list-container">
-        <table>
-          <tr>
-            <th>ID</th>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Hire Date</th>
+        <table class="employee-list-table">
+          <tr id="table-header">
+            <th data-column="id">
+              ID
+              <span class="material-symbols-outlined sort-indicator"> </span>
+            </th>
+            <th data-column="fullName">
+              Full Name
+              <span class="material-symbols-outlined sort-indicator"> </span>
+            </th>
+            <th data-column="email">
+              Email
+              <span class="material-symbols-outlined sort-indicator"> </span>
+            </th>
+            <th data-column="dateOfJoin">
+              Hire Date
+              <span class="material-symbols-outlined sort-indicator"> </span>
+            </th>
             <th>Actions</th>
           </tr>
-          <tr>
-            <td>1</td>
-            <td>Nijin</td>
-            <td>nijin@qburst.com</td>
-            <td>11/07/2023</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Nijin</td>
-            <td>nijin@qburst.com</td>
-            <td>11/07/2023</td>
-            <td></td>
-          </tr>
         </table>
+        <div class="flex loader-container table-data-loader">
+          <span class="loader"></span>
+        </div>
+        <p class="error-tag">No data found. Add an employee.</p>
         <!-- TODO: Pagination -->
       </section>
     </main>
-    <script src="./js/script.js"></script>
+
+    <div class="overlay"></div>
+    <div class="modal">
+      <span class="material-symbols-outlined modal-close-btn">cancel</span>
+      <div class="modal-content"></div>
+    </div>
+
+    <section class="toast-container"></section>
+
+    <script src="./js/utils/elementSelectors.js" type="module"></script>
+    <script src="./js/main.js" type="module"></script>
+    <script src="./js/ui.js" type="module"></script>
+    <script src="./js/firebase/firebase.js" type="module"></script>
+    <script src="./js/filter.js" type="module"></script>
+    <script src="./js/toggleTheme.js" type="module"></script>
   </body>
 </html>
