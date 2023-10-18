@@ -15,12 +15,13 @@
   display: none;
   padding: 16px;
   position: fixed;
-  max-height: 70vh;
+  max-height: 80vh;
   width: 600px;
   background-color: var(--bg-color);
   border: 1px solid var(--secondary-color);
   border-radius: 6px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   z-index: 3;
 }
 
