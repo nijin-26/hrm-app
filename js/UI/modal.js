@@ -80,42 +80,50 @@ const addEmpFormTemp = `
         <div class="input-sub-group">
           <label for="fullName">Full Name</label>
           <input required
+            name="fullName"
             class="emp-fullname"
             placeholder="Enter full name"
             type="text"
             id="fullName"
           />
+          <span class="fullName-error input-error-tag">Should only contain Alphabets.</span>
         </div>
         <div class="input-sub-group">
           <label for="dateOfJoin">Date of Join</label>
           <input required class="emp-dateOfJoin" type="date" id="dateOfJoin" />
+          <span class="input-error-tag">Error</span>
         </div>
       </div>
       <div class="input-group flex justify-between">
         <div class="input-sub-group">
           <label for="email">Email ID</label>
           <input required
+            name="email"
             class="emp-email"
             placeholder="Enter email address"
             type="email"
             id="email"
           />
+          <span class="email-error input-error-tag">Invalid Email</span>
         </div>
         <div class="input-sub-group">
           <label for="mobileNumber">Mobile Number</label>
           <input required
+           name="mobileNumber"
             class="emp-mobileNumber"
             placeholder="Enter Mobile Number"
             maxLength="10"
             type="text"
             id="mobileNumber"
           />
+          <span class="mobile-error input-error-tag">It should have 10 digits.</span>
         </div>
       </div>
       <div class="input-group flex justify-between">
         <div class="input-sub-group">
           <label for="dateOfBirth">Date of Birth</label>
           <input required class="emp-dateOfBirth" type="date" id="dateOfBirth" />
+          <span class="input-error-tag">Error</span>
         </div>
         <div class="input-sub-group">
           <label for="workLocation">Work Location</label>
@@ -133,6 +141,8 @@ const addEmpFormTemp = `
           <option value="Kochi">Kochi</option>
           <option value="Calicut">Calicut</option>
           </select>
+          <span class="input-error-tag">Error</span>
+
           </div>
         
         </div>
@@ -145,6 +155,8 @@ const addEmpFormTemp = `
             <select required class="emp-department" name="department" id="department" autocomplete="off">
               <option value="" selected disabled>Select Department</option>
             </select>
+          <span class="input-error-tag">Error</span>
+
           </div>
         </div>
         <div class="input-sub-group">
@@ -153,6 +165,8 @@ const addEmpFormTemp = `
             <select required class="emp-role" name="role" id="role" autocomplete="off">
               <option value="" selected disabled>Select Role</option>
             </select>
+          <span class="input-error-tag">Error</span>
+
           </div>
         </div>
       </div>
@@ -298,6 +312,18 @@ const renderAddEmployeeForm = () => {
     option.value = id;
     role.append(option);
   }
+  fullName.addEventListener("input", (e) => {
+    empAddForm.querySelector(".fullName-error").style.visibility = "hidden";
+    e.target.classList.remove("error");
+  });
+  email.addEventListener("input", (e) => {
+    empAddForm.querySelector(".email-error").style.visibility = "hidden";
+    e.target.classList.remove("error");
+  });
+  mobileNumber.addEventListener("input", (e) => {
+    empAddForm.querySelector(".mobile-error").style.visibility = "hidden";
+    e.target.classList.remove("error");
+  });
 
   empAddForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -315,7 +341,7 @@ const renderAddEmployeeForm = () => {
       skill: selectedSkillsArr.map((skill) => skill.id),
     };
 
-    const isValid = validateForm(empData);
+    const isValid = validateForm(empData, empAddForm);
     if (isValid) {
       addEmployee(empData, empAddForm);
       if (isLoading()) {
@@ -465,6 +491,19 @@ const editEmployee = (selectedEmp) => {
     role.append(option);
   }
 
+  fullName.addEventListener("input", (e) => {
+    empAddForm.querySelector(".fullName-error").style.visibility = "hidden";
+    e.target.classList.remove("error");
+  });
+  email.addEventListener("input", (e) => {
+    empAddForm.querySelector(".email-error").style.visibility = "hidden";
+    e.target.classList.remove("error");
+  });
+  mobileNumber.addEventListener("input", (e) => {
+    empAddForm.querySelector(".mobile-error").style.visibility = "hidden";
+    e.target.classList.remove("error");
+  });
+
   fullName.value = selectedEmp.fullName;
   dateOfJoin.value = getFormattedDate(selectedEmp.dateOfJoin)[1];
   email.value = selectedEmp.email;
@@ -493,7 +532,7 @@ const editEmployee = (selectedEmp) => {
       skill: selectedSkillsArr.map((skill) => skill.id),
     };
 
-    const isValid = validateForm(empData);
+    const isValid = validateForm(empData, empAddForm);
     if (isValid) {
       updateEmployee(selectedEmp.id, empData, empAddForm);
       if (isLoading()) {

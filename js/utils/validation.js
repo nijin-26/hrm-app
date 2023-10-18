@@ -1,17 +1,26 @@
 import { showToast } from "./toast.js";
 
-export const validateForm = (data) => {
+export const validateForm = (data, formEl) => {
   const validationErrors = {};
 
-  if (!isValidFullName(data.fullName))
+  if (!isValidFullName(data.fullName)) {
     validationErrors.fullName = "Full name is invalid";
+    formEl["fullName"].classList.add("error");
+    formEl.querySelector(".fullName-error").style.visibility = "visible";
+  }
 
-  if (!isValidEmail(data.email))
+  if (!isValidEmail(data.email)) {
     validationErrors.email = "Email address is invalid";
+    formEl["email"].classList.add("error");
+    formEl.querySelector(".email-error").style.visibility = "visible";
+  }
 
-  if (!isValidMobile(data.mobile))
+  if (!isValidMobile(data.mobile)) {
     validationErrors.mobileNumber =
       "Invalid mobile number. It should have 10 digits.";
+    formEl["mobileNumber"].classList.add("error");
+    formEl.querySelector(".mobile-error").style.visibility = "visible";
+  }
 
   if (Object.keys(validationErrors).length === 0) return true;
 

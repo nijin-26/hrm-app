@@ -533,13 +533,28 @@ button.add-emp-cancel-btn:disabled {
   margin: 20px 0;
   width: 100%;
   /* overflow: hidden;   */
-  gap: 60px;
+  gap: 30px;
   font-size: 14px;
 }
 
 .input-group input,
 .input-group select {
   font-size: 14px;
+}
+
+.input-group input.error {
+  transition: 0.5s;
+  background-color: rgba(255, 0, 0, 0.399);
+}
+
+.input-group .input-error-tag {
+  color: red;
+  font-weight: 500;
+  visibility: hidden;
+}
+
+body.dark-theme .input-group input.error {
+  color: #fff;
 }
 
 .input-sub-group {
