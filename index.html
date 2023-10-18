@@ -31,10 +31,10 @@
     />
 
     <title>HRM App</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/modal.css" />
-    <link rel="stylesheet" href="assets/css/loading-spinner.css" />
-    <link rel="stylesheet" href="assets/css/toast.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/modal.css" />
+    <link rel="stylesheet" href="./assets/css/loading-spinner.css" />
+    <link rel="stylesheet" href="./assets/css/toast.css" />
   </head>
   <body>
     <header>
@@ -49,7 +49,7 @@
           <input
             class="search-employee-input"
             type="text"
-            placeholder="Search Employee by Name"
+            placeholder="Search by Name"
           />
         </div>
         <span class="material-symbols-outlined toggle-theme"> light_mode </span>
@@ -66,50 +66,60 @@
             </button>
           </div>
           <div class="filter-container open-filter-options flex">
-            <select
-              name="department"
-              class="department-filter"
-              autocomplete="off"
-            >
-              <option value="" disabled selected>Department</option>
-              <option value="D1">Development</option>
-              <option value="D2">DevOps</option>
-              <option value="D3">QA</option>
-              <option value="D4">User Experience</option>
-            </select>
-            <select name="role" class="role-filter" autocomplete="off">
-              <option value="" disabled selected>Role</option>
-              <option value="R1">Engineer</option>
-              <option value="R2">Senior Engineer</option>
-              <option value="R3">Lead Engineer</option>
-              <option value="Role">Architect</option>
-              <option value="Role">Intern</option>
-            </select>
-            <div class="skills-fitler-dropdown">
-              <div class="skill-search-view-container flex">
-                <div class="selected-skill flex">
-                  <!-- <span class="material-symbols-outlined"> page_control </span> -->
-                </div>
-                <input
-                  class="skill-search-input"
-                  type="text"
-                  placeholder="Filter by skills"
-                />
-              </div>
-
-              <div class="dropdown-content">
-                <ul class="skill-list">
-                  <div class="flex loader-container skills-loader">
-                    <span class="loader"></span>
-                  </div>
-                </ul>
-              </div>
+            <div class="custom-select">
+              <select
+                name="department"
+                class="department-filter custom-select"
+                autocomplete="off"
+              >
+                <option value="" disabled selected>Department</option>
+                <option value="D1">Development</option>
+                <option value="D2">DevOps</option>
+                <option value="D3">QA</option>
+                <option value="D4">User Experience</option>
+              </select>
             </div>
-            <div class="tooltip">
-              <button class="btn secondary-btn clear-filter-btn">
-                <span class="material-symbols-outlined"> filter_list_off </span>
-              </button>
-              <span class="tooltiptext">Clear filters</span>
+            <div class="custom-select">
+              <select
+                name="role"
+                class="role-filter custom-select"
+                autocomplete="off"
+              >
+                <option value="" disabled selected>Role</option>
+                <option value="R1">Engineer</option>
+                <option value="R2">Senior Engineer</option>
+                <option value="R3">Lead Engineer</option>
+                <option value="Role">Architect</option>
+                <option value="Role">Intern</option>
+              </select>
+            </div>
+            <div class="flex topbar-filter-group-2">
+              <div class="skills-fitler-dropdown">
+                <div class="skill-search-view-container flex">
+                  <div class="selected-skill flex"></div>
+                  <input
+                    class="skill-search-input"
+                    type="text"
+                    placeholder="Filter by skills"
+                  />
+                </div>
+
+                <div class="dropdown-content">
+                  <ul class="skill-list">
+                    <div class="flex loader-container skills-loader">
+                      <span class="loader"></span>
+                    </div>
+                  </ul>
+                </div>
+              </div>
+              <div class="tooltip">
+                <button class="btn secondary-btn clear-filter-btn">
+                  <span class="material-symbols-outlined">
+                    filter_list_off
+                  </span>
+                </button>
+                <span class="tooltiptext">Clear filters</span>
+              </div>
             </div>
           </div>
         </div>
@@ -117,7 +127,6 @@
           <span class="material-symbols-outlined"> person_add </span>
         </button>
       </section>
-      <!-- <div class="selected-skill flex"></div> -->
 
       <section class="employee-list-container">
         <table class="employee-list-table">
@@ -141,12 +150,20 @@
             <th>Actions</th>
           </tr>
         </table>
+
         <div class="flex loader-container table-data-loader">
           <span class="loader"></span>
         </div>
         <p class="error-tag">No data found. Add an employee.</p>
-        <!-- TODO: Pagination -->
       </section>
+
+      <div class="pagination">
+        <button id="prev-btn">Previous</button>
+        <div id="page-numbers" class="pagination-numbers">
+          <!-- Page numbers will be dynamically added here -->
+        </div>
+        <button id="next-btn">Next</button>
+      </div>
     </main>
 
     <div class="overlay"></div>
@@ -159,8 +176,12 @@
 
     <script src="./js/utils/elementSelectors.js" type="module"></script>
     <script src="./js/main.js" type="module"></script>
-    <script src="./js/ui.js" type="module"></script>
-    <script src="./js/firebase/firebase.js" type="module"></script>
+    <script src="./js/utils/pagination.js" type="module"></script>
+    <script src="./js/UI/employeeTable.js" type="module"></script>
+    <script src="./js/UI/modal.js" type="module"></script>
+    <script src="./js/UI/skills.js" type="module"></script>
+    <script src="./js/firebase/config.js" type="module"></script>
+    <script src="./js/firebase/api.js" type="module"></script>
     <script src="./js/filter.js" type="module"></script>
     <script src="./js/toggleTheme.js" type="module"></script>
   </body>

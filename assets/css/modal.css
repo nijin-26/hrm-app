@@ -15,10 +15,13 @@
   display: none;
   padding: 16px;
   position: fixed;
-  /* height: 80vh; */
-  background-color: #fff;
+  max-height: 80vh;
+  width: 600px;
+  background-color: var(--bg-color);
+  border: 1px solid var(--secondary-color);
   border-radius: 6px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   z-index: 3;
 }
 
@@ -32,7 +35,7 @@
   right: 10px;
   top: 10px;
   transition: 0.3s;
-  color: var(--primary-color);
+  color: var(--font-color);
 }
 
 .modal-close-btn:hover {
@@ -41,8 +44,16 @@
 
 .modal.open {
   display: block;
-  width: 600px;
+  margin: 0 auto;
+  min-width: 290px;
+  max-width: 600px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 425px) {
+  .modal {
+    width: 350px;
+  }
 }

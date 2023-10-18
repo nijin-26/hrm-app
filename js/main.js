@@ -1,20 +1,29 @@
-import { fetchEmployees, fetchSkills, isLoading } from "./firebase/firebase.js";
+import {
+  fetchDeparments,
+  fetchEmployees,
+  fetchRoles,
+  fetchSkills,
+  isLoading,
+} from "./firebase/api.js";
 import { toggleTheme } from "./toggleTheme.js";
 import { filterTable } from "./filter.js";
 import { sortTable } from "./sort.js";
 
 import {
-  renderTable,
+  closeModal,
+  openModal,
+  renderAddEmployeeForm,
+  editEmployee,
+} from "./UI/modal.js";
+
+import {
   renderSkills,
   removeSelectedSkills,
   renderSelectedSkills,
   renderSkillDropdown,
-  viewEmployee,
-  closeModal,
-  deleteBtnHandler,
-  openModal,
-  renderAddEmployeeForm,
-} from "./ui.js";
+} from "./UI/skills.js";
+
+import { viewEmployee, deleteBtnHandler } from "./UI/employeeTable.js";
 
 import {
   searchEmployeeInput,
@@ -33,15 +42,19 @@ import {
   addEmployeeBtn,
   modalCloseBtn,
 } from "./utils/elementSelectors.js";
+import { displayEmployees } from "./utils/pagination.js";
 
+export let allSkills;
 export let selectedSkillsArray = [];
 export let employeeData = [];
+export let departments;
+export let roles;
 
 const setSelectedSkills = (selectedSkills) => {
   selectedSkillsArray = selectedSkills;
 };
 
-const isModalOpen = () => {
+export const isModalOpen = () => {
   return overlayContainer.classList.contains("open") ? true : false;
 };
 
@@ -58,7 +71,9 @@ const resetSkillFilter = () => {
 // <<<< Employee Table Events >>>>>>>>>>
 const handleEmployeeTableClick = (e) => {
   if (e.target.classList.contains("edit-action-btn")) {
-    console.log("Edit btn clicked", e.target.dataset.employeeId);
+    const empId = e.target.dataset.employeeId;
+    const selectedEmp = employeeData.find((emp) => emp.id === empId);
+    editEmployee(selectedEmp);
   } else if (e.target.classList.contains("delete-action-btn")) {
     deleteBtnHandler(e.target.dataset.employeeId);
   } else if (e.target.tagName === "TH") {
@@ -72,14 +87,18 @@ const handleEmployeeTableClick = (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   fetchSkills((skills) => {
     if (skills && !isLoading()) skillsLoader.style.display = "none";
+    allSkills = skills;
     renderSkills(skills);
   });
 
   fetchEmployees((employeeArr) => {
     if (employeeArr && !isLoading()) tableLoader.style.display = "none";
     employeeData = employeeArr;
-    renderTable(employeeArr);
+    displayEmployees(1, employeeData);
   });
+
+  fetchDeparments((depts) => (departments = depts));
+  fetchRoles((roleData) => (roles = roleData));
 
   searchEmployeeInput.addEventListener("input", () => filterTable());
   departmentFilterInput.addEventListener("input", filterTable);
@@ -106,17 +125,20 @@ document.addEventListener("DOMContentLoaded", () => {
     renderSelectedSkills(e, setSelectedSkills)
   );
 
-  clearFilterBtn.addEventListener("click", () => {
-    filterContainer.classList.toggle("open-filter-options");
+  const clearFilters = () => {
+    filterContainer.classList.remove("open-filter-options");
     searchEmployeeInput.value = "";
     departmentFilterInput.value = "";
     roleFilterInput.value = "";
     resetSkillFilter();
     filterTable();
-  });
+  };
+
+  clearFilterBtn.addEventListener("click", clearFilters);
 
   addEmployeeBtn.addEventListener("click", () => {
     openModal();
+    clearFilters();
     renderAddEmployeeForm();
   });
 

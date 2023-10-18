@@ -1,4 +1,3 @@
-import { renderTable } from "./ui.js";
 import { employeeData, selectedSkillsArray } from "./main.js";
 import { currentSortColumn, sortTable } from "./sort.js";
 
@@ -7,6 +6,7 @@ import {
   departmentFilterInput,
   roleFilterInput,
 } from "./utils/elementSelectors.js";
+import { displayEmployees } from "./utils/pagination.js";
 
 export let filteredEmployees = [];
 
@@ -38,11 +38,11 @@ export const filterTable = () => {
   if (selectedSkillsArray.length > 0) {
     filteredEmployees = filteredEmployees.filter((employee) => {
       return selectedSkillsArray.every((selectedSkill) =>
-        employee.skill.includes(selectedSkill.id)
+        employee.skill?.includes(selectedSkill.id)
       );
     });
   }
 
   if (currentSortColumn) sortTable(currentSortColumn);
-  else renderTable(filteredEmployees);
+  else displayEmployees(1, filteredEmployees);
 };
