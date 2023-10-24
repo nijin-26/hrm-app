@@ -18,6 +18,12 @@ const showEmployees = (page) => {
   nxtBtn.disabled = page === maxPage;
 
   renderTable(currentEmpsArr);
+
+  if (currentEmpsArr.length <= itemsPerPage && maxPage <= 1) {
+    hidePagination();
+  } else {
+    showPagination();
+  }
 };
 
 // Function to update page numbers
@@ -29,7 +35,7 @@ const updatePageNumbers = () => {
   for (let i = 1; i <= maxPage; i++) {
     const pageNumber = document.createElement("button");
     pageNumber.textContent = i;
-    pageNumber.addEventListener("click", (e) => goToPage(i));
+    pageNumber.addEventListener("click", () => goToPage(i));
     pageNumbers.appendChild(pageNumber);
   }
 
@@ -63,10 +69,25 @@ const nextPage = () => {
   }
 };
 
+const hidePagination = () => {
+  const pageNumbers = document.getElementById("page-numbers");
+  pageNumbers.style.display = "none";
+  prevBtn.style.display = "none";
+  nxtBtn.style.display = "none";
+};
+
+const showPagination = () => {
+  const pageNumbers = document.getElementById("page-numbers");
+  pageNumbers.style.display = "flex";
+  prevBtn.style.display = "block";
+  nxtBtn.style.display = "block";
+};
+
 nxtBtn.addEventListener("click", nextPage);
 prevBtn.addEventListener("click", previousPage);
 
 export const displayEmployees = (page = 1, emplsData) => {
+  if (emplsData.length === 0) return renderTable([]);
   employeeData = emplsData;
   updatePageNumbers();
   goToPage(page);

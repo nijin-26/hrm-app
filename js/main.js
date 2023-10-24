@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchEmployees((employeeArr) => {
     if (employeeArr && !isLoading()) tableLoader.style.display = "none";
     employeeData = employeeArr;
-    displayEmployees(1, employeeData);
+    filterTable();
   });
 
   fetchDeparments((depts) => (departments = depts));
