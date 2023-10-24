@@ -5,8 +5,8 @@ import { employeeData } from "./main.js";
 import { headers } from "./utils/elementSelectors.js";
 import { displayEmployees } from "./utils/pagination.js";
 
-export let currentSortColumn = "";
-let currentSortFlag = -1;
+export let currentSortColumn = "fullName";
+let currentSortFlag = 1;
 
 function toggleSortIndicator(column) {
   headers.forEach((header) => {
@@ -25,8 +25,7 @@ function toggleSortIndicator(column) {
 export const sortTable = (column) => {
   currentSortColumn = column;
 
-  const sortedEmployeeData =
-    filteredEmployees.length === 0 ? employeeData : filteredEmployees;
+  const sortedEmployeeData = [...filteredEmployees];
 
   sortedEmployeeData.sort((a, b) => {
     if (a[column] < b[column]) return -1 * currentSortFlag;
